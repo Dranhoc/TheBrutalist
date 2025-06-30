@@ -5,6 +5,7 @@ import VueSVG from "@/components/VueSVG.vue";
 import me from "@/assets/img/me.png?w=100;150&format=webp&as=srcset";
 import office from "@/assets/img/office.png?w=300;500;800;1100;1500;1800;2200&format=webp&as=srcset";
 import Footer from "@/components/sections/Footer.vue";
+import MagnifierCanvas from "@/components/MagnifierCanvas.vue";
 
 import { useSEO } from "@/composables/useSEO";
 
@@ -72,11 +73,12 @@ useSEO({
         ADVOCATE. LOADING SPEED FREAK. COMPONENT RECYCLER. NAMING THING PHILOSOPHER.
       </span>
     </section>
-    <section class="s-office">
-      <figure>
+    <section class="s-office w-full">
+      <MagnifierCanvas />
+      <!-- <figure>
         <img :srcset="office" alt="The office" />
         <span>Where the dream comes true</span>
-      </figure>
+      </figure> -->
     </section>
     <Footer />
   </main>
@@ -131,8 +133,6 @@ useSEO({
 .s-softskills {
   height: 500px;
   z-index: 1;
-  // border-bottom: 5px solid black;
-  // box-shadow: rgba(0, 0, 0, 0.2) 4px 4px 4px;
 
   .title {
     position: absolute;
