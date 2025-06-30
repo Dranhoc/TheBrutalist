@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-
 // spacing from 1 to 1000
 function generateSpacing() {
   const spacing = {};
@@ -8,7 +7,6 @@ function generateSpacing() {
   }
   return spacing;
 }
-
 // fontSize from 1 to 100
 function generateFontSizes() {
   const fontSize = {};
@@ -17,17 +15,17 @@ function generateFontSizes() {
   }
   return fontSize;
 }
-
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
   theme: {
     extend: {
       colors: {
         custom: {
-          red: "var(--red-color)",
+          pink: "var(--pink-color)",
+          yellow: "var(--yellow-color)",
+          green: "var(--green-color)",
           blue: "var(--blue-color)",
         },
-
         text: {
           primary: "var(--text-primary)",
           secondary: "var(--text-secondary)",
@@ -58,12 +56,10 @@ export default {
         "pos-8": 0.08, // +8%
       },
     },
-
     fontFamily: {
       montserrat: ["Montserrat", "sans serif"],
       fira: ["Fira Code", "monospace"],
     },
-
     transitionTimingFunction: {
       "smooth-out": "cubic-bezier(.39, .575, .28, .995)",
       smooth: "cubic-bezier(.65, 0, .35, 1)",
@@ -75,15 +71,11 @@ export default {
     function ({ addUtilities, theme, e }) {
       const fontSize = theme("fontSize");
       const percentages = theme("letterSpacingPercentages");
-
       const utilities = {};
-
       Object.entries(fontSize).forEach(([sizeKey, sizeValue]) => {
         const size = parseInt(sizeValue);
-
         Object.entries(percentages).forEach(([percentKey, percentValue]) => {
           const letterSpacingValue = `${Math.round(percentValue * size * 100) / 100}px`;
-
           utilities[`.tracking-${percentKey}-${sizeKey}`] = {
             "letter-spacing": letterSpacingValue,
           };
@@ -93,30 +85,45 @@ export default {
           };
         });
       });
-
       addUtilities(utilities);
     },
-
     function ({ matchUtilities, theme }) {
       const percentages = theme("letterSpacingPercentages");
-
       Object.entries(percentages).forEach(([percentKey, percentValue]) => {
         matchUtilities(
           {
             [`text-${percentKey}`]: (value) => {
-              const sizeMatch = value.match(/(\d+)px/);
-              if (!sizeMatch) return {};
+              // Gérer les valeurs en px (existant)
+              const pxMatch = value.match(/(\d+)px/);
+              if (pxMatch) {
+                const size = parseInt(pxMatch[1]);
+                const letterSpacingValue = `${Math.round(percentValue * size * 100) / 100}px`;
+                return {
+                  "font-size": value,
+                  "letter-spacing": letterSpacingValue,
+                };
+              }
 
-              const size = parseInt(sizeMatch[1]);
-              const letterSpacingValue = `${Math.round(percentValue * size * 100) / 100}px`;
+              // Gérer les valeurs vw/vh/rem/em (nouveau)
+              const unitMatch = value.match(/(\d+(?:\.\d+)?)(vw|vh|rem|em|%)/);
+              if (unitMatch) {
+                const number = parseFloat(unitMatch[1]);
+                const unit = unitMatch[2];
+                // Pour les unités relatives, on utilise calc() pour calculer le letter-spacing
+                const letterSpacingValue = `calc(${value} * ${percentValue})`;
+                return {
+                  "font-size": value,
+                  "letter-spacing": letterSpacingValue,
+                };
+              }
 
-              return {
-                "font-size": value,
-                "letter-spacing": letterSpacingValue,
-              };
+              return {};
             },
           },
-          { values: theme("fontSize") }
+          {
+            values: theme("fontSize"),
+            type: "any", // Permet les valeurs arbitraires comme [10vw]
+          }
         );
       });
     },

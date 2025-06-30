@@ -23,20 +23,18 @@
   position: relative;
   background-color: var(--bg-body);
   min-height: 100vh;
+  height: 100%;
   margin-inline: auto;
   overflow-y: auto;
   overflow-x: hidden;
+  display: flex;
   header,
   section,
   footer {
     &:not(.reset) {
       position: relative;
       width: 100%;
-      max-width: 1920px;
       margin-inline: auto;
-      &:not(.full-w) {
-        @apply px-20 md:px-60;
-      }
     }
   }
   main {
