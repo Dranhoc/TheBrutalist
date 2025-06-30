@@ -22,18 +22,22 @@ const toggleLanguage = () => {
 <style scoped lang="scss">
 aside {
   position: relative;
-  display: flex;
   border-right: 5px solid black;
   box-shadow: rgba(0, 0, 0, 0.2) 4px 4px 4px;
   z-index: 5;
+  top: 0;
+  left: 0;
   width: 420px;
   background-color: var(--bg-secondary);
-  @apply float-left py-40 hidden lg:flex;
+  @apply py-40 hidden lg:flex;
 }
 nav {
   position: fixed;
-  left: 0;
-
-  @apply flex flex-col px-20 gap-40 text-neg-5-36 text-right;
+  left: -10px;
+  @apply flex flex-col px-20 gap-40 text-neg-5-36;
+  & > * {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 </style>

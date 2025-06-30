@@ -8,8 +8,12 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onBeforeUnmount, ref } from "vue";
+import { onMounted, onBeforeUnmount, ref, computed } from "vue";
 import * as THREE from "three";
+import { useBreakpoint } from "@/composables/useBreakpoints";
+
+const { isBelow } = useBreakpoint();
+const isMobile = isBelow("md");
 
 const containerRef = ref<HTMLDivElement | null>(null);
 const secretTextRef = ref<HTMLDivElement | null>(null);
@@ -62,9 +66,17 @@ function initCanvasWithDimensions(width: number, height: number) {
 
   const loader = new THREE.TextureLoader();
 
+  // Utiliser le composable pour détecter mobile
+  const imagePath = isMobile.value ? "/office-mobile.png" : "/office.png";
+
+  console.log("Screen width:", window.innerWidth);
+  console.log("isMobile.value:", isMobile.value);
+  console.log("Loading image:", imagePath);
+
   loader.load(
-    "/office.png",
+    imagePath,
     (texture) => {
+      console.log("✅ Image loaded successfully:", imagePath);
       texture.wrapS = THREE.ClampToEdgeWrapping;
       texture.wrapT = THREE.ClampToEdgeWrapping;
       texture.minFilter = THREE.LinearFilter;
@@ -73,8 +85,11 @@ function initCanvasWithDimensions(width: number, height: number) {
 
       createMaterial(texture, width, height);
     },
-    undefined,
+    (progress) => {
+      console.log("📥 Loading progress:", progress);
+    },
     (error) => {
+      console.error("❌ Error loading image:", imagePath, error);
       const fallbackTexture = createFallbackTexture();
       createMaterial(fallbackTexture, width, height);
     }
@@ -171,7 +186,6 @@ function createMaterial(texture: THREE.Texture, width: number, height: number) {
 
     uniforms.uMouse.value.set(x, y);
 
-    // Test simple : changer la couleur du texte quand on passe dessus
     checkTextReveal(e.clientX, e.clientY);
   };
 
@@ -208,29 +222,18 @@ function checkTextReveal(mouseX: number, mouseY: number) {
   const containerBounds = containerRef.value.getBoundingClientRect();
   const textBounds = secretTextRef.value.getBoundingClientRect();
 
-  // Coordonnées relatives au conteneur (pour la détection)
-  const relativeX = mouseX - containerBounds.left;
-  const relativeY = mouseY - containerBounds.top;
-
-  // Coordonnées relatives au TEXTE lui-même (pour le clip-path)
   const textRelativeX = mouseX - textBounds.left;
   const textRelativeY = mouseY - textBounds.top;
 
-  // Rayon de la loupe en pixels
   const loupeRadius = (containerBounds.width * 0.2) / 2;
 
-  // Distance du curseur par rapport au centre du texte
   const textCenterX = textBounds.left + textBounds.width / 2;
   const textCenterY = textBounds.top + textBounds.height / 2;
 
   const distance = Math.sqrt(Math.pow(mouseX - textCenterX, 2) + Math.pow(mouseY - textCenterY, 2));
 
-  // Si on est proche du texte
   if (distance < loupeRadius * 2) {
-    // Zone de détection plus large
-    // Appliquer le masque circulaire avec les coordonnées relatives au texte
     const clipPath = `circle(${loupeRadius}px at ${textRelativeX}px ${textRelativeY}px)`;
-
     secretTextRef.value.style.clipPath = clipPath;
     secretTextRef.value.style.opacity = "1";
   } else {
@@ -240,7 +243,6 @@ function checkTextReveal(mouseX: number, mouseY: number) {
 
 function hideText() {
   if (secretTextRef.value) {
-    // Masquer en déplaçant le cercle hors de la vue
     secretTextRef.value.style.clipPath = "circle(0px at -1000px -1000px)";
     secretTextRef.value.style.opacity = "0";
   }
@@ -288,12 +290,15 @@ onBeforeUnmount(() => {
 <style scoped>
 .magnifier-canvas {
   width: 100%;
-  height: 500px;
+  aspect-ratio: 1/1;
   position: relative;
   overflow: hidden;
   cursor: none;
   border-radius: 5px;
-  min-height: 400px;
+  padding: 5vw;
+  @screen md {
+    aspect-ratio: 16/9;
+  }
 }
 
 .secret-text {
@@ -302,7 +307,7 @@ onBeforeUnmount(() => {
   right: 14%;
   text-align: center;
   font-family: "Permanent Marker", cursive;
-  font-size: 18px;
+  font-size: 2vw;
   font-weight: 400;
   color: var(--pink-color);
   pointer-events: none;
@@ -317,6 +322,8 @@ onBeforeUnmount(() => {
   display: block;
   width: 100% !important;
   height: 100% !important;
+  margin-inline: auto;
   border-radius: 5px;
+  object-fit: cover;
 }
 </style>
