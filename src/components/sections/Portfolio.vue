@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import VueSVG from "@/components/VueSVG.vue";
+import GlitchAnimation from "@/components/GlitchAnimation.vue";
 </script>
 
 <template>
@@ -19,7 +20,7 @@ import VueSVG from "@/components/VueSVG.vue";
     <div>test</div>
     <div>test</div>
     <div>test</div>
-    <div class="title-6 pl-20">AND MORE...</div>
+    <div class="title-6 pl-20"><GlitchAnimation text="AND MORE..." /></div>
   </section>
 </template>
 

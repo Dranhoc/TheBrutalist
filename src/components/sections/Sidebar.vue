@@ -2,6 +2,7 @@
 import { useLanguageSwitcher } from "@/composables/useLanguageSwitcher";
 import { ref, onMounted, onUnmounted } from "vue";
 import type { Ref } from "vue";
+import GlitchAnimation from "@/components/GlitchAnimation.vue";
 
 const { setLanguage, currentLanguage } = useLanguageSwitcher();
 const toggleLanguage = () => {
@@ -21,7 +22,7 @@ const resetNavigation = () => {
     nav.value.style.gap = "40px";
     const links = nav.value.querySelectorAll("a");
     links.forEach((link) => {
-      (link as HTMLElement).style.transform = "rotate(0deg)";
+      (link as HTMLElement).style.transform = "rotate(0deg) translateY(0px)";
     });
   }
   smoothedVelocity = 0;
@@ -29,25 +30,43 @@ const resetNavigation = () => {
 
 const updateScrollVelocity = () => {
   const currentScrollY = window.scrollY;
-  scrollVelocity = Math.abs(currentScrollY - lastScrollY);
-  lastScrollY = currentScrollY;
+  const rawVelocity = currentScrollY - lastScrollY;
+  const scrollDirection = rawVelocity > 0 ? "down" : "up";
 
+  scrollVelocity = Math.abs(rawVelocity);
+  lastScrollY = currentScrollY;
   smoothedVelocity = smoothedVelocity * 0.7 + scrollVelocity * 0.3;
 
   if (nav.value) {
-    const maxGap = 40;
-    const maxVelocity = 100;
-
-    const velocityRatio = Math.min(smoothedVelocity / maxVelocity, 1);
-    const newGap = maxGap * (1 - velocityRatio);
-
-    nav.value.style.gap = `${newGap}px`;
-
     const links = nav.value.querySelectorAll("a");
-    links.forEach((link, index) => {
-      const rotation = velocityRatio * (index % 2 === 0 ? -6 : 6);
-      (link as HTMLElement).style.transform = `rotate(${rotation}deg)`;
-    });
+    const velocityRatio = Math.min(smoothedVelocity / 100, 1);
+
+    if (scrollDirection === "down") {
+      const maxGap = 40;
+      const newGap = maxGap * (1 - velocityRatio);
+      nav.value.style.gap = `${newGap}px`;
+
+      links.forEach((link, index) => {
+        const isFirst = index === 0;
+        const rotation = isFirst ? 0 : velocityRatio * (index % 2 === 0 ? -6 : 6);
+        (link as HTMLElement).style.transform = `rotate(${rotation}deg)`;
+      });
+    } else {
+      nav.value.style.gap = "40px";
+
+      links.forEach((link, index) => {
+        const isLast = index === links.length - 1;
+
+        if (isLast) {
+          (link as HTMLElement).style.transform = "rotate(0deg)";
+        } else {
+          const rotation = velocityRatio * (index % 2 === 0 ? -6 : 6);
+          const adjustedVelocity = Math.pow(velocityRatio, 0.5);
+          const moveDistance = adjustedVelocity * 40 * (links.length - 1 - index);
+          (link as HTMLElement).style.transform = `rotate(${rotation}deg) translateY(${moveDistance}px)`;
+        }
+      });
+    }
   }
 
   ticking = false;
@@ -55,19 +74,14 @@ const updateScrollVelocity = () => {
 
 const handleScroll = () => {
   const now = Date.now();
-
   if (now - lastThrottleTime < 50) {
     return;
   }
-
   lastThrottleTime = now;
-
   if (debounceTimer) {
     clearTimeout(debounceTimer);
   }
-
   debounceTimer = setTimeout(resetNavigation, 500);
-
   if (!ticking) {
     requestAnimationFrame(updateScrollVelocity);
     ticking = true;
@@ -89,10 +103,10 @@ onUnmounted(() => {
 <template>
   <aside>
     <nav ref="nav">
-      <router-link to="/">HOME</router-link>
-      <router-link to="/typography">ABOUT</router-link>
-      <router-link to="/admin">WORK</router-link>
-      <router-link to="/admin">CONTACT</router-link>
+      <router-link to="/"><GlitchAnimation text="HOME" trigger="hover" /></router-link>
+      <router-link to="/typography"><GlitchAnimation text="ABOUT" trigger="hover" /></router-link>
+      <router-link to="/admin"><GlitchAnimation text="WORK" trigger="hover" /></router-link>
+      <router-link to="/admin"><GlitchAnimation text="CONTACT" trigger="hover" /></router-link>
     </nav>
   </aside>
 </template>
@@ -130,7 +144,7 @@ nav {
     margin-left: auto;
     line-height: 1;
     z-index: 1;
-    transition: transform 0.1s ease-out;
+    transition: transform 0.5s ease-out;
 
     &::before {
       position: absolute;

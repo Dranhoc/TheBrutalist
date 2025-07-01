@@ -10,6 +10,7 @@ import Portfolio from "@/components/sections/Portfolio.vue";
 import { ref, onMounted, onUnmounted } from "vue";
 import type { Ref } from "vue";
 import { useSEO } from "@/composables/useSEO";
+import GlitchAnimation from "@/components/GlitchAnimation.vue";
 
 const t = usePageTranslation();
 
@@ -80,7 +81,11 @@ useSEO({
     <div ref="cursor" class="cursor-invert"></div>
 
     <section class="s-hi">
-      <h1>HI. I'M A CREATIVE FRONT-END DEVELOPER.</h1>
+      <h1>
+        HI. I'M A CREATIVE
+        <GlitchAnimation text="FRONT-END" />
+        DEVELOPER.
+      </h1>
       <figure class="s-hi__me">
         <figure class="s-hi__svg animate-sticker">
           <VueSVG src="/svg/tohire.svg" />
