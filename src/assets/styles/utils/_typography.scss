@@ -11,20 +11,20 @@
 
     --bg-body: #ffffff;
 
-    --bg-primary: #000000;
+    --bg-primary: #212121;
     --bg-secondary: #eeeeee;
     --bg-accent: #585454;
 
     --bg-overlay: rgba(0, 0, 0, 0.5);
 
-    --text-primary: #000000;
+    --text-primary: #212121;
     --text-secondary: #ffffff;
     --text-accent: #a1a1a1;
 
     --pink-color: #ff00d4;
     --yellow-color: #eaff00;
     --green-color: #00ff2b;
-    --blue-color: #08c5ff;
+    --blue-color: #08d6ff;
 
     ////////
     //typo//
@@ -37,7 +37,7 @@
     .title-1 {
       &:not(.reset) {
         line-height: 1;
-        @apply text-neg-5-[18vw] lg:text-neg-5-[10vw];
+        @apply text-neg-5-[18vw] md:text-neg-5-[11vw];
       }
     }
 

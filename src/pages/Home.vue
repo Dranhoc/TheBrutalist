@@ -2,7 +2,8 @@
 import { useI18n as useVueI18n } from "vue-i18n";
 import { usePageTranslation } from "@/i18n";
 import VueSVG from "@/components/VueSVG.vue";
-import me from "@/assets/img/me.png?w=100;150&format=webp&as=srcset";
+import me from "@/assets/img/me.png?w=100;150;300;450&format=webp&as=srcset";
+import me2 from "@/assets/img/me.png?w=350;500;700;1000;1300;1600;2000&format=webp&as=srcset";
 import Footer from "@/components/sections/Footer.vue";
 import MagnifierCanvas from "@/components/MagnifierCanvas.vue";
 import SoftSkillsParallax from "@/components/sections/SoftSkillsParallax.vue";
@@ -11,6 +12,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import type { Ref } from "vue";
 import { useSEO } from "@/composables/useSEO";
 import GlitchAnimation from "@/components/GlitchAnimation.vue";
+import ScrollAnimation from "@/components/ScrollAnimation.vue";
 
 const t = usePageTranslation();
 
@@ -105,14 +107,30 @@ useSEO({
         <h3 class="py-60 md:py-0 text-center md:text-left">I BUILD UIs THAT DON'T SUCK.</h3>
       </div>
     </section>
+
     <SoftSkillsParallax />
+
     <section class="s-office w-full">
       <MagnifierCanvas />
     </section>
+
     <Portfolio />
+
+    <ScrollAnimation animation-class="animate-from-bottom" :delay="0" :threshold="0" :once="false">
+      <section class="s-hello">
+        <figure class="s-hello__picture">
+          <img :srcset="me2" alt="my photo" />
+        </figure>
+        <figure class="s-hello__dialog">
+          <VueSVG src="/svg/dialog.svg" />
+          <div class="text"><GlitchAnimation text="HEY, IT'S ME AGAIN." /> CONTACT ME YOU WON'T REGRET IT!</div>
+        </figure>
+      </section>
+    </ScrollAnimation>
+
     <section class="s-bottom">
       <div class="s-bottom__contact">
-        <h2 class="title-4">NEED A WEBSITE&nbsp;?{{ "\n" }}LET'S TALK.</h2>
+        <h2 class="title-4">NEED A WEBSITE {{ "\n" }}OR AN APP&nbsp;?{{ "\n" }}LET'S TALK.</h2>
         <a class="contact-link" href=""
           >Contact me
           <figure class="left">
@@ -122,7 +140,7 @@ useSEO({
             <VueSVG src="/svg/arrow-top.svg" />
           </figure>
           <figure class="right">
-            <VueSVG src="/svg/arrow-right.svg" />
+            <VueSVG src="/svg/arrow-right.svg" class="w-full" />
           </figure>
         </a>
       </div>
@@ -140,6 +158,7 @@ useSEO({
         </ul>
       </div>
     </section>
+
     <Footer />
   </main>
 </template>
@@ -167,18 +186,32 @@ useSEO({
 
 .s-hi {
   position: relative;
-  padding: 40px 20px 8%;
+  padding: 40px 20px 200px;
   border-bottom: 5px solid black;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 4px;
   background-color: transparent;
   z-index: 2;
   overflow: hidden;
+  min-height: 70vh;
+  white-space: pre-line;
+  @screen sm {
+    min-height: 100vh;
+  }
+  @screen lg {
+    min-height: 100vh;
+  }
   &__me {
     position: absolute;
-    width: 11vw;
-    right: 15vw;
-    bottom: -1.5vw;
+    width: 40vw;
+    bottom: 0;
+    left: 0;
     z-index: -1;
+    @screen md {
+      width: 13vw;
+      right: 15vw;
+      left: unset;
+      bottom: -1.5vw;
+    }
     img {
       opacity: 0;
       animation: translateFromBottom 0.5s forwards 1.5s;
@@ -186,11 +219,16 @@ useSEO({
   }
   &__svg {
     position: absolute;
+    width: 45vw;
     right: -10vw;
-    top: -90px;
-    width: 26vw;
+    top: -5em;
     z-index: -2;
     opacity: 0;
+    @screen md {
+      width: 26vw;
+      right: -10vw;
+      top: -90px;
+    }
   }
 }
 .s-about {
@@ -233,6 +271,8 @@ useSEO({
 
   &__contact {
     border-bottom: 5px solid black;
+    background-color: var(--bg-body);
+    border-top: 5px solid black;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 4px;
     padding-block: 40px;
     padding-inline: 20px;
@@ -247,8 +287,9 @@ useSEO({
       font-size: 18px;
       font-weight: 300;
       text-decoration: underline;
-      margin-top: 60px;
+      margin-top: 100px;
       margin-left: 60%;
+      @apply md:mt-60;
 
       .left,
       .right,
@@ -293,12 +334,60 @@ useSEO({
     ul {
       margin-top: 20px;
       list-style-type: disc;
-      padding-left: 15%;
+      padding-left: 30px;
       li {
         font-family: "JetBrains Mono", serif;
         font-size: 20px;
+        padding-left: 10px;
         @apply lg:text-[1.3vw];
       }
+    }
+  }
+}
+
+.s-hello {
+  display: flex;
+  @apply mt-100 sm:mt-150 md:mt-250 lg:mt-300;
+
+  &__picture {
+    width: 60vw;
+    margin-bottom: -5px;
+    @screen md {
+      width: 40vw;
+    }
+  }
+  &__dialog {
+    position: relative;
+    display: flex;
+    width: 40vw;
+    max-width: 100%;
+    height: auto;
+    transform: translate(-20%, -30%);
+    @screen md {
+      width: 40vw;
+    }
+    .vue-svg-container {
+      max-height: 200px !important;
+      @screen md {
+        max-height: 500px !important;
+      }
+    }
+
+    :deep(svg) {
+      overflow: hidden;
+      aspect-ratio: 15/10;
+      height: auto;
+    }
+
+    .text {
+      position: absolute;
+      display: block;
+      right: 50%;
+      width: 80%;
+      transform: translate(50%, 0%);
+      text-align: center;
+      line-height: 1;
+      @apply text-neg-5-[3vw];
     }
   }
 }
