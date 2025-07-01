@@ -8,6 +8,14 @@
       <span class="title-2">SOFT&nbsp;SKILLS</span>
       <span class="title-2">SOFT&nbsp;SKILLS</span>
       <span class="title-2">SOFT&nbsp;SKILLS</span>
+      <span class="title-2">SOFT&nbsp;SKILLS</span>
+      <span class="title-2">SOFT&nbsp;SKILLS</span>
+      <span class="title-2">SOFT&nbsp;SKILLS</span>
+      <span class="title-2">SOFT&nbsp;SKILLS</span>
+      <span class="title-2">SOFT&nbsp;SKILLS</span>
+      <span class="title-2">SOFT&nbsp;SKILLS</span>
+      <span class="title-2">SOFT&nbsp;SKILLS</span>
+      <span class="title-2">SOFT&nbsp;SKILLS</span>
     </div>
     <div class="text" ref="textRef" :style="{ transform: `translateX(${textOffset}px)` }">
       PIXEL PERFECTIONIST. DEBUGGING DETECTIVE. CSS WHISPERER. BUTTON ALIGNMENT NINJA. RESPONSIVE MINDSET. TYPESCRIPT THERAPIST. UI MOOD READER. DEADLINE SURFER. GIT CONFLICT NEGOTIATOR. HOVER STATE ENTHOUSIAST. EMPATHY-DRIVEN DESIGN. DARK MODE
@@ -147,7 +155,7 @@ function easeInOutCubic(t: number): number {
     display: flex;
     top: 130px;
     left: 20px;
-    width: 180vw;
+    width: 300vw;
     height: 300px;
     overflow-y: hidden;
     z-index: -1;

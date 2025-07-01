@@ -23,7 +23,7 @@
 
     --pink-color: #ff00d4;
     --yellow-color: #eaff00;
-    --green-color: #45ff08;
+    --green-color: #00ff2b;
     --blue-color: #08c5ff;
 
     ////////
@@ -45,7 +45,7 @@
     .title-2 {
       &:not(.reset) {
         line-height: 1.2;
-        @apply text-neg-5-[3.5vw];
+        @apply lg:text-neg-5-[3.5vw];
       }
     }
 
@@ -53,15 +53,15 @@
     .title-3 {
       &:not(.reset) {
         line-height: 1;
-        @apply text-neg-5-[12vw] lg:text-neg-5-[7vw];
+        @apply text-neg-5-60 sm:text-neg-5-90 md:text-neg-5-[7vw];
       }
     }
 
     h4,
     .title-4 {
       &:not(.reset) {
-        line-height: 1.34;
-        @apply text-[26px] font-bold mb-20;
+        line-height: 1;
+        @apply text-neg-5-[70px] sm:text-neg-5-[80px] lg:text-neg-5-[6vw];
       }
     }
 
@@ -77,8 +77,13 @@
     .title-6 {
       &:not(.reset) {
         line-height: 1;
-        @apply text-neg-5-[5.5vw];
+        @apply text-neg-5-50 sm:text-neg-5-65 md:text-neg-5-[5.5vw];
       }
+    }
+
+    h6.title-7 {
+      line-height: 1;
+      @apply text-neg-5-20;
     }
 
     p {

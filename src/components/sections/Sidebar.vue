@@ -119,8 +119,9 @@ aside {
   z-index: 5;
   top: 0;
   left: 0;
-  width: 420px;
+  width: 180px;
   background-color: var(--bg-body);
+  flex-shrink: 0;
   @apply py-40 hidden lg:flex justify-center;
 }
 
