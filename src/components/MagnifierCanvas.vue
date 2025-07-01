@@ -66,7 +66,6 @@ function initCanvasWithDimensions(width: number, height: number) {
 
   const loader = new THREE.TextureLoader();
 
-  // Utiliser le composable pour détecter mobile
   const imagePath = isMobile.value ? "/office-mobile.png" : "/office.png";
 
   console.log("Screen width:", window.innerWidth);
@@ -316,6 +315,9 @@ onBeforeUnmount(() => {
   transition: opacity 0.1s ease, clip-path 0.05s ease-out;
   clip-path: circle(0px at -1000px -1000px);
   transform: rotate(10deg);
+  @screen md {
+    font-size: 1.2vw;
+  }
 }
 
 :deep(canvas) {

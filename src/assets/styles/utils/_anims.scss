@@ -162,7 +162,42 @@
   }
 }
 
+@keyframes stickerImpact {
+  0% {
+    opacity: 0;
+    transform: scale(5) translateZ(2000px);
+  }
+
+  20% {
+    opacity: 0.4;
+    transform: scale(3) translateZ(1000px);
+  }
+
+  60% {
+    opacity: 0.9;
+    transform: scale(1.5) translateZ(200px);
+  }
+
+  80% {
+    opacity: 1;
+    transform: scale(0.8) translateZ(0px);
+  }
+
+  90% {
+    transform: scale(1.1) translateZ(0px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateZ(0px);
+  }
+}
+
 //animate classes
+
+.animate-sticker {
+  animation: stickerImpact 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 2.8s;
+}
 
 .animate-left-to-right {
   animation: translateLeftToRight 0.5s forwards;

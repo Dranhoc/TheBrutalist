@@ -28,16 +28,26 @@ aside {
   top: 0;
   left: 0;
   width: 420px;
-  background-color: var(--bg-secondary);
-  @apply py-40 hidden lg:flex;
+  background-color: var(--bg-body);
+  @apply py-40 hidden lg:flex justify-center;
 }
 nav {
   position: fixed;
   left: -10px;
-  @apply flex flex-col px-20 gap-40 text-neg-5-36;
+  @apply flex flex-col px-20 gap-40 text-neg-5-32;
   & > * {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
+    padding-inline: 10px;
+    margin-left: auto;
+    transition: background-color 0.2s ease;
+    &:hover {
+      background-color: var(--pink-color);
+    }
   }
 }
 </style>
