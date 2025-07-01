@@ -4,7 +4,12 @@ import VueSVG from "@/components/VueSVG.vue";
 
 <template>
   <section class="s-portfolio">
-    <div><h2 class="title-5">WORK</h2></div>
+    <div>
+      <h2 class="title-5 relative">
+        WORK
+        <figure class="sticker"><VueSVG src="/public/svg/sticker-new.svg"></VueSVG></figure>
+      </h2>
+    </div>
     <div>test</div>
     <div>test</div>
     <div>test</div>
@@ -34,6 +39,15 @@ import VueSVG from "@/components/VueSVG.vue";
   }
   .wtf {
     aspect-ratio: 2/1;
+  }
+
+  .sticker {
+    height: 1px;
+    width: 8vw;
+    .vue-container-svg {
+      width: 100%;
+    }
+    transform: translateY(-1.1em) translateX(1.2em);
   }
 }
 </style>

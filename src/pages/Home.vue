@@ -102,7 +102,6 @@ useSEO({
     </section>
     <SoftSkillsParallax />
     <section class="s-office w-full">
-      <!-- <span class="text-center text-neg-5-20 block mb-20">FIND THE VERY HIDDEN SECRET</span> -->
       <MagnifierCanvas />
     </section>
     <Portfolio />
@@ -112,7 +111,6 @@ useSEO({
 </template>
 
 <style scoped lang="scss">
-// CSS pour le curseur inversé
 .cursor-invert {
   position: fixed;
   width: 50px;

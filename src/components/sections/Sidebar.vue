@@ -36,16 +36,30 @@ nav {
   left: -10px;
   @apply flex flex-col px-20 gap-40 text-neg-5-32;
   & > * {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     width: fit-content;
-    background-color: var(--bg-primary);
     color: var(--text-secondary);
-    padding-inline: 10px;
+    padding: 10px;
     margin-left: auto;
-    transition: background-color 0.2s ease;
-    &:hover {
+    line-height: 1;
+    z-index: 1;
+
+    &::before {
+      position: absolute;
+      content: "";
+      inset: 0;
+      top: -2px;
+      width: 100%;
+      height: 100%;
+      background-color: var(--bg-primary);
+      z-index: -1;
+      clip-path: polygon(4% 0, 99% 0, 95% 100%, 0% 100%);
+      transition: background-color 0.15s ease;
+    }
+    &:hover::before {
       background-color: var(--pink-color);
     }
   }
