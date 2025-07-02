@@ -1,8 +1,8 @@
 <template>
   <div ref="containerRef" class="magnifier-canvas">
     <div class="secret-text" ref="secretTextRef">
-      Where the dreams<br />
-      comes true
+      Where weird ideas<br />
+      become real
     </div>
   </div>
 </template>

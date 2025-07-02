@@ -7,6 +7,8 @@ import slider2 from "@/assets/img/Portfolio/sypra-1.png?w=150;350;700;900;1200;1
 import slider3 from "@/assets/img/Portfolio/magvice-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 import slider4 from "@/assets/img/Portfolio/studio-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 import slider5 from "@/assets/img/Portfolio/alpsy-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
+import slider6 from "@/assets/img/Portfolio/immovision-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
+import slider7 from "@/assets/img/Portfolio/weshre-app-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 
 const currentSlideIndex = ref(0);
 
@@ -16,30 +18,49 @@ const slides = [
     title: "WESHRE",
     image: slider1,
     text: "2025 \n WeShre \n Design: Hugo",
+    link: "#",
   },
   {
     id: 2,
     title: "SYPRA",
     image: slider2,
     text: "2024 \n Sypra \n Design: Fanny \n Agency: Epekta",
+    link: "#",
   },
   {
     id: 3,
     title: "MAGVICE",
     image: slider3,
     text: "2024 \n Magvice \n Design: Fanny \n Agency: Epekta",
+    link: "#",
   },
   {
     id: 4,
     title: "WS STUDIO",
     image: slider4,
     text: "2025 \n WeShre Studio \n Design: Hugo \n Agency : WeShre Studio",
+    link: "#",
   },
   {
     id: 5,
     title: "ALPSY",
     image: slider5,
     text: "2024 \n Alpsy \n Design: Me",
+    link: "#",
+  },
+  {
+    id: 6,
+    title: "IMMOVISION",
+    image: slider6,
+    text: "2024 \n Alpsy \n Design: Fanny",
+    link: "#",
+  },
+  {
+    id: 7,
+    title: "WESHRE APP",
+    image: slider7,
+    text: "2025 \n Alpsy \n Design: Hugo",
+    link: "#",
   },
 ];
 
@@ -67,6 +88,10 @@ const getSlideClass = (index: number) => {
       return "slide--4";
     case 2:
       return "slide--5";
+    case -3:
+      return "slide--6";
+    case 3:
+      return "slide--7";
     default:
       return "slide--hidden";
   }
@@ -77,7 +102,6 @@ const orderedSlides = computed(() => {
     ...slide,
     originalIndex: index,
     slideClass: getSlideClass(index),
-    // isVisible: Math.abs(index - currentSlideIndex.value) <= 2 || Math.abs(index - currentSlideIndex.value) >= slides.length - 2,
   }));
 });
 
@@ -122,6 +146,10 @@ const handleSlideClick = (slideData: any) => {
       </div>
       <div class="s-slider__height"></div>
     </div>
+
+    <div class="s-slider__button">
+      <a :href="slides[currentSlideIndex].link" target="_blank" rel="noopener noreferrer" class="btn-site"> See website </a>
+    </div>
   </section>
 </template>
 
@@ -134,15 +162,40 @@ const handleSlideClick = (slideData: any) => {
 
   &__height {
     width: 100%;
-    aspect-ratio: 363/416;
+    aspect-ratio: 250/160;
     background-color: white;
     z-index: -1;
-    @screen sm {
-      aspect-ratio: 995/592;
-    }
     @screen lg {
       max-width: 65%;
-      margin-bottom: 160px;
+      // margin-bottom: 160px;
+    }
+  }
+
+  &__button {
+    // margin-top: 40px;
+    text-align: center;
+
+    .btn-site {
+      display: inline-block;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 999px;
+      font-family: "JetBrains Mono", serif;
+      font-size: 16px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: 2px solid var(--text-primary);
+      @screen lg {
+        transform: translateY(-50%);
+      }
+
+      &:hover {
+        background-color: transparent;
+        border-color: var(--bg-primary);
+        color: var(--bg-primary);
+        // transform: translateY(-2px);
+        box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+      }
     }
   }
 
@@ -184,7 +237,7 @@ const handleSlideClick = (slideData: any) => {
       pointer-events: none;
       line-height: 1.5;
       white-space: pre-line;
-      @apply text-neg-5-16 font-medium;
+      @apply text-neg-5-14 p-10 md:text-neg-5-16 md:p-30;
 
       &::before {
         position: absolute;
@@ -210,7 +263,6 @@ const handleSlideClick = (slideData: any) => {
       z-index: 5;
       transform: translateX(-50%);
       cursor: default;
-      // box-shadow: rgba(0, 0, 0, 0.575) 0px 20px 30px -10px;
       box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
       @apply lg:max-w-[65%];
 
@@ -282,6 +334,38 @@ const handleSlideClick = (slideData: any) => {
       }
     }
 
+    &--6,
+    &--7 {
+      width: 100%;
+      max-width: 30%;
+      z-index: 2;
+      box-shadow: rgba(0, 0, 0, 0.4) 0px 15px 25px -10px;
+
+      &:hover {
+        transform: scale(1.03);
+      }
+
+      p {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+    }
+    &--6 {
+      left: 0;
+      transform: translate(5%, 65%);
+      &:hover {
+        transform: translate(5%, 65%) scale(1.03);
+      }
+    }
+    &--7 {
+      left: unset;
+      right: 0;
+      transform: translate(-5%, 65%);
+      &:hover {
+        transform: translate(-5%, 65%) scale(1.03);
+      }
+    }
+
     &--hidden {
       width: 100%;
       max-width: 65%;
@@ -323,6 +407,11 @@ const handleSlideClick = (slideData: any) => {
       &--4,
       &--5 {
         max-width: 30%;
+      }
+
+      &--6,
+      &--7 {
+        max-width: 25%;
       }
     }
   }

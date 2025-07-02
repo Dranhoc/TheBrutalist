@@ -132,7 +132,7 @@ function easeInOutCubic(t: number): number {
   position: relative;
   overflow: hidden;
   z-index: 1;
-  margin-block: 80px;
+  margin-block: 20px;
   // border-bottom: 5px solid black;
 
   .title {

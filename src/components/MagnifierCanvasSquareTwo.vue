@@ -289,14 +289,14 @@ onBeforeUnmount(() => {
   position: absolute;
   bottom: 20%;
   right: 20%;
-  width: 4vw;
-  animation: pulse 5s ease-in-out infinite 2s;
+  width: 5vw;
+
+  transition: opacity 0.1s ease, clip-path 0.05s ease-out;
+  opacity: 0;
+  clip-path: circle(0px at -1000px -1000px);
   @screen md {
     width: 2vw;
-    animation: unset;
-    transition: opacity 0.1s ease, clip-path 0.05s ease-out;
-    opacity: 0;
-    clip-path: circle(0px at -1000px -1000px);
+    /* animation: unset; */
   }
 }
 
@@ -307,7 +307,7 @@ onBeforeUnmount(() => {
 
   object-fit: cover;
   @screen 3xl {
-    object-fit: fill;
+    /* object-fit: fill; */
   }
 }
 </style>

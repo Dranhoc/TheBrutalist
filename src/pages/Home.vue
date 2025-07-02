@@ -3,6 +3,8 @@ import { useI18n as useVueI18n } from "vue-i18n";
 import { usePageTranslation } from "@/i18n";
 import VueSVG from "@/components/VueSVG.vue";
 import me from "@/assets/img/me.png?w=100;150;300;450&format=webp&as=srcset";
+import meBottom from "@/assets/img/me-bottom.png?w=100;150;300;450&format=webp&as=srcset";
+import meTop from "@/assets/img/me-top.png?w=100;150;300;450&format=webp&as=srcset";
 import me2 from "@/assets/img/me.png?w=350;500;700;1000;1300;1600;2000&format=webp&as=srcset";
 import Footer from "@/components/sections/Footer.vue";
 import MagnifierCanvasSquare from "@/components/MagnifierCanvasSquare.vue";
@@ -91,15 +93,14 @@ useSEO({
         DEVELOPER.
       </h1>
       <figure class="s-hi__me">
-        <figure class="s-hi__svg">
-          <VueSVG src="/svg/tohire.svg" />
-        </figure>
-        <img class="w-full h-full object-cover" :srcset="me" alt="my photo" />
+        <div class="s-hi__text whitespace-pre-line">JUST IN TIME. {{ "\n" }}I WAS WAITING{{ "\n" }}FOR YOU!</div>
+        <img class="w-full h-full object-cover me-top" :srcset="meTop" alt="my photo" />
+        <img class="w-full h-full object-cover" :srcset="meBottom" alt="my photo" />
       </figure>
     </section>
     <section class="s-about">
       <div class="s-about__me">
-        <h2>ABOUT ME</h2>
+        <h2>THIS IS ME</h2>
         <p>
           Hey, I’m Christophe — a front-end developer based near Liège, Belgium.
           <br /><br />
@@ -178,35 +179,39 @@ useSEO({
   @screen lg {
     min-height: 100vh;
   }
+
+  .me-top {
+    animation: openMouth 1.4s forwards 2.5s;
+  }
   &__me {
     position: absolute;
+    display: flex;
+    flex-direction: column;
     width: 40vw;
     bottom: 0;
     left: 0;
     z-index: -1;
+    opacity: 0;
+    animation: translateFromBottom 0.5s forwards 1.5s;
     @screen md {
-      width: 13vw;
-      // right: 15vw;
-      left: 180px;
+      left: 0px;
       bottom: -2vw;
     }
-    img {
-      opacity: 0;
-      animation: translateFromBottom 0.5s forwards 1.5s;
-    }
+    @apply md:w-[30vw] lg:w-[15vw];
   }
-  &__svg {
+  &__text {
     position: absolute;
-    width: 45vw;
-    right: -10vw;
-    top: -5em;
-    z-index: -2;
+    top: 0px;
+    transform: translate(90%, -20%);
     opacity: 0;
-    @screen md {
-      width: 26vw;
-      right: -10vw;
-      top: -90px;
-    }
+    line-height: 1;
+    background-color: var(--text-primary);
+    color: var(--text-secondary);
+    padding: 20px 15px;
+    border-radius: 10px;
+    z-index: 2;
+    animation: translateFromMouth 0.5s forwards 2.5s;
+    @apply text-neg-5-16 md:text-neg-5-24;
   }
 }
 .s-about {
@@ -226,6 +231,7 @@ useSEO({
     @apply md:w-[50%];
     p {
       padding-top: 20px;
+      @apply md:pt-40;
     }
   }
 }

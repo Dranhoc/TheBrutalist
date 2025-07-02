@@ -10,7 +10,7 @@ import GlitchAnimation from "@/components/GlitchAnimation.vue";
       <MagnifierCanvasSquare />
     </div>
     <div class="s-work-with__stack">
-      <h3 class="title-2"><GlitchAnimation text="TECH I ARGUE WITH DAILY" /></h3>
+      <h3 class="title-2"><GlitchAnimation text="THINGS I ARGUE WITH DAILY" /></h3>
       <ul>
         <li>Vue3</li>
         <li>React</li>
@@ -43,6 +43,7 @@ import GlitchAnimation from "@/components/GlitchAnimation.vue";
       margin-top: 20px;
       list-style-type: disc;
       padding-left: 30px;
+      @apply md:mt-40;
       li {
         font-family: "JetBrains Mono", serif;
         font-size: 16px;
