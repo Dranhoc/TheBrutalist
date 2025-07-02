@@ -1,8 +1,7 @@
 <template>
   <div ref="containerRef" class="magnifier-canvas">
     <div class="secret-text" ref="secretTextRef">
-      Where the dreams<br />
-      comes true
+      <img src="/slenderman.png" alt="" />
     </div>
   </div>
 </template>
@@ -63,9 +62,9 @@ function initCanvasWithDimensions(width: number, height: number) {
   const loader = new THREE.TextureLoader();
 
   loader.load(
-    "/office-mobile.png",
+    "/cabin-mobile.png",
     (texture) => {
-      console.log("✅ Image loaded successfully: /office-mobile.png");
+      console.log("✅ Image loaded successfully: /cabin-mobile.png");
       texture.wrapS = THREE.ClampToEdgeWrapping;
       texture.wrapT = THREE.ClampToEdgeWrapping;
       texture.minFilter = THREE.LinearFilter;
@@ -78,7 +77,7 @@ function initCanvasWithDimensions(width: number, height: number) {
       console.log("📥 Loading progress:", progress);
     },
     (error) => {
-      console.error("❌ Error loading image: /office-mobile.png", error);
+      console.error("❌ Error loading image: /cabin-mobile.png", error);
       const fallbackTexture = createFallbackTexture();
       createMaterial(fallbackTexture, width, height);
     }
@@ -280,32 +279,24 @@ onBeforeUnmount(() => {
 .magnifier-canvas {
   width: 100%;
   height: 100%;
-  min-height: 500px;
   position: relative;
   overflow: hidden;
   cursor: none;
+  @apply lg:min-h-[600px];
 }
 
 .secret-text {
   position: absolute;
-  top: 30%;
-  right: 14%;
-  text-align: center;
-  font-family: "Permanent Marker", cursive;
-  font-size: 3vw;
-  font-weight: 400;
-  color: var(--pink-color);
-  pointer-events: none;
-  z-index: 10;
-  transform: rotate(10deg);
-  animation: pulse 3s ease-in-out infinite;
+  bottom: 20%;
+  right: 20%;
+  width: 4vw;
+  animation: pulse 5s ease-in-out infinite 2s;
   @screen md {
+    width: 2vw;
     animation: unset;
-    font-size: 2vw;
     transition: opacity 0.1s ease, clip-path 0.05s ease-out;
     opacity: 0;
     clip-path: circle(0px at -1000px -1000px);
-    font-size: 1.2vw;
   }
 }
 

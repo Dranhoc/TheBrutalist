@@ -5,7 +5,6 @@ import VueSVG from "@/components/VueSVG.vue";
 import me from "@/assets/img/me.png?w=100;150;300;450&format=webp&as=srcset";
 import me2 from "@/assets/img/me.png?w=350;500;700;1000;1300;1600;2000&format=webp&as=srcset";
 import Footer from "@/components/sections/Footer.vue";
-import MagnifierCanvas from "@/components/MagnifierCanvas.vue";
 import MagnifierCanvasSquare from "@/components/MagnifierCanvasSquare.vue";
 import SoftSkillsParallax from "@/components/sections/SoftSkillsParallax.vue";
 import ContactMe from "@/components/sections/ContactMe.vue";
@@ -102,8 +101,15 @@ useSEO({
       <div class="s-about__me">
         <h2>ABOUT ME</h2>
         <p>
-          Hi, my name is Christophe, I live near Liège in Belgium. <br /><br />
-          I'm a front end developer who likes thing that work and look right.<br /><br />I build responsive websites, clean UI and reusable components - with just enough personality to stand out but never too much to annoy the user.
+          Hey, I’m Christophe — a front-end developer based near Liège, Belgium.
+          <br /><br />
+          I design and build responsive websites, clean UI and reusable components with just enough personality to stand out, but never too much to annoy the user.
+          <br /><br />
+          I like things that work well, look right, and behave the way users expect — no surprises, no drama.
+          <br /><br />
+          I care about the details that make interfaces feel effortless, and I believe personality belongs in the experience, not in the way of it.
+          <br /><br />
+          My goal? To keep things simple, sharp, and just opinionated enough to leave a mark.
         </p>
       </div>
       <div class="s-about__illustration">
@@ -114,10 +120,6 @@ useSEO({
     <SoftSkillsParallax />
 
     <ContactMe />
-
-    <section class="s-office w-full">
-      <MagnifierCanvas />
-    </section>
 
     <Slider />
 
@@ -163,16 +165,13 @@ useSEO({
 .s-hi {
   position: relative;
   padding: 40px 20px 200px;
-  // border-bottom: 5px solid black;
-  // box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 4px;
+
   background-color: transparent;
   z-index: 2;
   overflow: hidden;
   min-height: 70vh;
   white-space: pre-line;
-  h1 {
-    // text-align: right;
-  }
+
   @screen sm {
     min-height: 100vh;
   }
@@ -215,10 +214,6 @@ useSEO({
   display: flex;
   flex-direction: column;
   margin-inline: 0 !important;
-  // margin-inline: 20px;
-  // border-bottom: 5px solid black;
-  // box-shadow: rgba(0, 0, 0, 0.2) 4px 4px 4px, rgba(0, 0, 0, 0.2) 0px 4px 4px 0px inset;
-  // box-shadow: rgba(0, 0, 0, 0.2) 4px 4px 4px;
 
   @apply md:flex-row;
 
@@ -227,24 +222,14 @@ useSEO({
     color: var(--text-secondary);
     background-color: var(--bg-primary);
     flex-shrink: 0;
-    // border-top-left-radius: 15px;
-    // border-bottom-left-radius: 15px;
-    // border-radius: 20px;
 
     @apply md:w-[50%];
     p {
       padding-top: 20px;
     }
   }
-  &__catchphrase {
-    padding-block: 40px;
-    padding-inline: 20px;
-    margin-block: auto;
-  }
 }
 .s-office {
-  // border-bottom: 5px solid black;
-  // box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 4px;
   padding-block: 80px;
   figure {
     border-radius: 5px;

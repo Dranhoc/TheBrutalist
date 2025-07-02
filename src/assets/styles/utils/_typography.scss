@@ -45,7 +45,8 @@
     .title-2 {
       &:not(.reset) {
         line-height: 1.2;
-        @apply lg:text-neg-5-[3.5vw];
+
+        @apply text-neg-5-36 lg:text-neg-5-[3.5vw];
       }
     }
 
@@ -88,7 +89,7 @@
 
     p {
       font-family: "JetBrains Mono", serif;
-      @apply lg:text-[1.5vw];
+      @apply lg:text-[1.3vw];
     }
   }
 }
