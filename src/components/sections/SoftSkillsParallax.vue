@@ -128,11 +128,12 @@ function easeInOutCubic(t: number): number {
 
 <style scoped lang="scss">
 .s-softskills {
-  height: 500px;
+  height: 600px;
   position: relative;
   overflow: hidden;
   z-index: 1;
-  border-bottom: 5px solid black;
+  margin-block: 80px;
+  // border-bottom: 5px solid black;
 
   .title {
     position: absolute;
@@ -143,6 +144,8 @@ function easeInOutCubic(t: number): number {
     width: 300vw;
     will-change: transform; // Optimisation pour les animations
     transition: transform 0.2s ease;
+    background-color: #e6e6e6;
+    @apply py-40 mb-20;
 
     span {
       @apply text-neg-5-45;
@@ -161,7 +164,8 @@ function easeInOutCubic(t: number): number {
     z-index: -1;
     will-change: transform; // Optimisation pour les animations
     transition: transform 0.3s ease;
-    @apply text-neg-5-26;
+
+    @apply text-neg-5-26 mt-80;
   }
 }
 </style>

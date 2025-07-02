@@ -81,7 +81,8 @@ import weshreapp1 from "@/assets/img/portfolio/weshre-app-1.png?w=100;150;200;25
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 0px;
-  border-bottom: 4px solid black;
+  border-top: 4px solid var(--text-primary);
+  z-index: 2;
   @screen sm {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -96,8 +97,9 @@ import weshreapp1 from "@/assets/img/portfolio/weshre-app-1.png?w=100;150;200;25
       flex-direction: column;
       align-items: center;
     }
+    background-color: #fff;
     justify-content: center;
-    outline: 2px solid black;
+    outline: 2px solid var(--text-primary);
   }
 
   .wtf {

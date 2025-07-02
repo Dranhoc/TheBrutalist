@@ -52,7 +52,7 @@ export default {
       letterSpacingPercentages: {
         "neg-8": -0.08, // -8%
         "neg-5": -0.05, // -5%
-        "pos-4": 0.04, // +4%
+        "pos-5": 0.05, // +5%
         "pos-8": 0.08, // +8%
       },
     },

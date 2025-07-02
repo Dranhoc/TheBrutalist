@@ -42,4 +42,18 @@
       }
     }
   }
+  .btn-primary {
+    padding: 12px 24px;
+    border: 1px solid var(--text-primary);
+    border-radius: 999px;
+    line-height: 1;
+    @apply text-pos-8-12;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+    &:hover {
+      color: var(--text-secondary);
+      background-color: var(--bg-primary);
+    }
+  }
 }

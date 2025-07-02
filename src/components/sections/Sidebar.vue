@@ -114,9 +114,9 @@ onUnmounted(() => {
 <style scoped lang="scss">
 aside {
   position: relative;
-  border-right: 5px solid black;
+  border-right: 3px solid var(--text-primary);
   box-shadow: rgba(0, 0, 0, 0.2) 4px 4px 4px;
-  z-index: 5;
+  z-index: 1;
   top: 0;
   left: 0;
   width: 180px;
