@@ -85,7 +85,7 @@
       transition:
         background-color 0.15s ease,
         color 0.15s ease;
-      border-top: 2px solid white;
+      border-top: 2px solid var(--text-secondary);
     }
 
     &:hover::before {

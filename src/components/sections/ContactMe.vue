@@ -29,7 +29,9 @@ import GlitchAnimation from "@/components/GlitchAnimation.vue";
 .s-work-with {
   display: flex;
   flex-direction: column;
-  @apply md:flex-row;
+  border-bottom: 2px solid var(--text-primary);
+
+  @apply md:flex-row mb-60 sm:pb-80 md:pb-100 lg:pb-120;
 
   &__stack {
     display: flex;

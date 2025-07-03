@@ -11,8 +11,6 @@ import slider6 from "@/assets/img/Portfolio/immovision-1.png?w=150;350;700;900;1
 import slider7 from "@/assets/img/Portfolio/weshre-app-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 
 const currentSlideIndex = ref(0);
-const previousSlideIndex = ref(0);
-const isAnimating = ref(false);
 
 const slides = [
   {
@@ -54,38 +52,48 @@ const slides = [
     id: 6,
     title: "IMMOVISION",
     image: slider6,
-    text: "2024 \n ImmoVision \n Design: Fanny",
+    text: "2024 \n Alpsy \n Design: Fanny",
     link: "#",
   },
   {
     id: 7,
     title: "WESHRE APP",
     image: slider7,
-    text: "2025 \n WeShre App \n Design: Hugo",
+    text: "2025 \n Alpsy \n Design: Hugo",
     link: "#",
   },
 ];
 
 const goToSlide = (index: number) => {
-  if (isAnimating.value || index === currentSlideIndex.value) return;
-
-  isAnimating.value = true;
-  previousSlideIndex.value = currentSlideIndex.value;
   currentSlideIndex.value = index;
-
-  // Débloquer l'animation après la transition
-  setTimeout(() => {
-    isAnimating.value = false;
-  }, 400);
 };
 
 const getSlideClass = (index: number) => {
-  if (index === currentSlideIndex.value) {
-    return "slide--current";
-  } else if (index === previousSlideIndex.value && isAnimating.value) {
-    return "slide--leaving";
-  } else {
-    return "slide--hidden";
+  const diff = index - currentSlideIndex.value;
+  const totalSlides = slides.length;
+
+  let normalizedDiff = diff;
+  if (Math.abs(diff) > totalSlides / 2) {
+    normalizedDiff = diff > 0 ? diff - totalSlides : diff + totalSlides;
+  }
+
+  switch (normalizedDiff) {
+    case 0:
+      return "slide--1";
+    case -1:
+      return "slide--2";
+    case 1:
+      return "slide--3";
+    case -2:
+      return "slide--4";
+    case 2:
+      return "slide--5";
+    case -3:
+      return "slide--6";
+    case 3:
+      return "slide--7";
+    default:
+      return "slide--hidden";
   }
 };
 
@@ -96,6 +104,10 @@ const orderedSlides = computed(() => {
     slideClass: getSlideClass(index),
   }));
 });
+
+const touchStartX = ref(0);
+const touchStartY = ref(0);
+const isSwiping = ref(false);
 
 const goToPrevSlide = () => {
   const newIndex = currentSlideIndex.value === 0 ? slides.length - 1 : currentSlideIndex.value - 1;
@@ -112,46 +124,6 @@ const handleSlideClick = (slideData: any) => {
     goToSlide(slideData.originalIndex);
   }
 };
-
-// Gestion tactile
-const touchStartX = ref(0);
-const touchStartY = ref(0);
-const touchEndX = ref(0);
-const touchEndY = ref(0);
-
-const handleTouchStart = (e: TouchEvent) => {
-  touchStartX.value = e.touches[0].clientX;
-  touchStartY.value = e.touches[0].clientY;
-};
-
-const handleTouchMove = (e: TouchEvent) => {
-  touchEndX.value = e.touches[0].clientX;
-  touchEndY.value = e.touches[0].clientY;
-};
-
-const handleTouchEnd = () => {
-  if (!touchStartX.value || !touchEndX.value) return;
-
-  const deltaX = touchStartX.value - touchEndX.value;
-  const deltaY = touchStartY.value - touchEndY.value;
-
-  // Vérifier que le swipe horizontal est plus important que vertical
-  if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
-    if (deltaX > 0) {
-      // Swipe vers la gauche = slide suivant
-      goToNextSlide();
-    } else {
-      // Swipe vers la droite = slide précédent
-      goToPrevSlide();
-    }
-  }
-
-  // Reset
-  touchStartX.value = 0;
-  touchStartY.value = 0;
-  touchEndX.value = 0;
-  touchEndY.value = 0;
-};
 </script>
 
 <template>
@@ -162,24 +134,24 @@ const handleTouchEnd = () => {
     </div>
     <div class="s-slider__buttons">
       <button class="btn-primary" v-for="(slide, index) in slides" :key="slide.id" :class="{ active: index === currentSlideIndex }" @click="goToSlide(index)">
+        <!-- <VueSVG src="/svg/plane.svg" /> -->
         <GlitchAnimation :text="slide.title" trigger="hover" />
       </button>
     </div>
-    <div class="s-slider__content" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd">
-      <div class="slides-container">
-        <div v-for="slideData in orderedSlides" :key="slideData.id" :class="['slide', slideData.slideClass]" @click="handleSlideClick(slideData)">
-          <div :class="['bg', `bg--${slideData.id}`]">
-            <img :srcset="slideData.image" alt="" role="presentation" />
-          </div>
-          <p class="reset" :class="{ active: slideData.originalIndex === currentSlideIndex }">
-            {{ slideData.text }}
-          </p>
+    <div class="s-slider__content">
+      <div v-for="slideData in orderedSlides" :key="slideData.id" :class="['slide', slideData.slideClass]" v-show="slideData" @click="handleSlideClick(slideData)">
+        <div :class="['bg', `bg--${slideData.id}`]">
+          <img :srcset="slideData.image" alt="" role="presentation" />
         </div>
+        <p class="reset" :class="{ active: slideData.originalIndex === currentSlideIndex }">
+          {{ slideData.text }}
+        </p>
       </div>
+      <div class="s-slider__height"></div>
     </div>
 
     <div class="s-slider__button">
-      <a :href="slides[currentSlideIndex].link" target="_blank" rel="noopener noreferrer" class="btn-site"> Visit website </a>
+      <a :href="slides[currentSlideIndex].link" target="_blank" rel="noopener noreferrer" class="btn-site"> See website </a>
     </div>
   </section>
 </template>
@@ -188,28 +160,43 @@ const handleTouchEnd = () => {
 .s-slider {
   position: relative;
   width: 100%;
-  background-color: var(--bg-secondary);
+  background-color: white;
   @apply px-20  -mt-20;
 
+  &__height {
+    width: 100%;
+    aspect-ratio: 250/160;
+    background-color: white;
+    z-index: -1;
+    @screen lg {
+      max-width: 65%;
+      // margin-bottom: 160px;
+    }
+  }
+
   &__button {
+    // margin-top: 40px;
     text-align: center;
-    margin-top: 30px;
 
     .btn-site {
       display: inline-block;
       padding: 12px 24px;
       text-decoration: none;
+      border-radius: 999px;
       font-family: "JetBrains Mono", serif;
       font-size: 16px;
       font-weight: 500;
       transition: all 0.3s ease;
       border: 2px solid var(--text-primary);
-      transform: translateY(-200%);
+      @screen lg {
+        transform: translateY(-50%);
+      }
 
       &:hover {
         background-color: transparent;
         border-color: var(--bg-primary);
         color: var(--bg-primary);
+        // transform: translateY(-2px);
         box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
       }
     }
@@ -225,36 +212,27 @@ const handleTouchEnd = () => {
   &__content {
     position: relative;
     width: 100%;
+    height: 100%;
     margin-top: 50px;
-    overflow: hidden;
-  }
-
-  .slides-container {
-    position: relative;
-    width: 100%;
-    min-height: calc(100vw / (280 / 150) + 80px);
-    padding: 0;
-    @screen lg {
-      max-width: 65%;
-      margin: 0 auto;
-      min-height: calc(65vw / (280 / 150) + 80px);
-    }
   }
 
   .slide {
     position: absolute;
-    top: 40px;
-    left: 0;
-    width: 100%;
-    aspect-ratio: 280/150;
     display: flex;
+    aspect-ratio: 280/150;
+    border-radius: 10px;
+    top: 0;
+    left: 50%;
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.5s ease;
     cursor: pointer;
+    @screen sm {
+      aspect-ratio: 280/150;
+    }
 
     p {
       position: relative;
-      color: var(--text-secondary);
+      color: white;
       padding: 30px;
       margin-top: auto;
       max-width: 650px;
@@ -282,13 +260,14 @@ const handleTouchEnd = () => {
       }
     }
 
-    // Slide actuellement visible
-    &--current {
+    &--1 {
+      width: 100%;
+      max-width: 100%;
       z-index: 5;
-      transform: translateX(0) scale(1);
+      transform: translateX(-50%);
       cursor: default;
       box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-      opacity: 1;
+      @apply lg:max-w-[65%];
 
       p {
         opacity: 1;
@@ -296,30 +275,109 @@ const handleTouchEnd = () => {
       }
     }
 
-    // Slide qui sort (va vers la gauche)
-    &--leaving {
+    &--2,
+    &--3 {
+      width: 100%;
+      max-width: 50%;
       z-index: 4;
-      transform: translateX(-100%) scale(0.5);
-      opacity: 0;
-      pointer-events: none;
+      box-shadow: rgba(0, 0, 0, 0.575) 0px 20px 30px -10px;
+
+      &:hover {
+        transform: scale(1.02);
+        @apply shadow-lg;
+      }
 
       p {
         opacity: 0;
         transition: opacity 0.3s ease;
       }
     }
+    &--2 {
+      transform: translate(-85%, 15%);
+      &:hover {
+        transform: translate(-85%, 15%) scale(1.02);
+      }
+    }
+    &--3 {
+      transform: translate(-15%, 15%);
+      &:hover {
+        transform: translate(-15%, 15%) scale(1.02);
+      }
+    }
 
-    // Slides cachées (en attente à droite)
-    &--hidden {
-      z-index: 1;
-      transform: translateX(100%) scale(0.5);
-      opacity: 0;
-      pointer-events: none;
+    &--4,
+    &--5 {
+      width: 100%;
+      max-width: 35%;
+      z-index: 3;
+      box-shadow: rgba(0, 0, 0, 0.575) 0px 20px 30px -10px;
+
+      &:hover {
+        transform: scale(1.05);
+      }
 
       p {
         opacity: 0;
         transition: opacity 0.3s ease;
       }
+    }
+    &--4 {
+      left: 0;
+      transform: translate(0%, 45%);
+      &:hover {
+        transform: translate(0%, 45%) scale(1.05);
+      }
+    }
+    &--5 {
+      left: unset;
+      right: 0;
+      transform: translate(0%, 45%);
+      &:hover {
+        transform: translate(0%, 45%) scale(1.05);
+      }
+    }
+
+    &--6,
+    &--7 {
+      width: 100%;
+      max-width: 30%;
+      z-index: 2;
+      box-shadow: rgba(0, 0, 0, 0.4) 0px 15px 25px -10px;
+
+      &:hover {
+        transform: scale(1.03);
+      }
+
+      p {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+    }
+    &--6 {
+      left: 0;
+      transform: translate(5%, 65%);
+      &:hover {
+        transform: translate(5%, 65%) scale(1.03);
+      }
+    }
+    &--7 {
+      left: unset;
+      right: 0;
+      transform: translate(-5%, 65%);
+      &:hover {
+        transform: translate(-5%, 65%) scale(1.03);
+      }
+    }
+
+    &--hidden {
+      width: 100%;
+      max-width: 65%;
+      z-index: 10;
+      top: 0;
+      left: unset;
+      right: 0;
+      transform: translate(100%, 45%) scale(0);
+      pointer-events: none;
     }
   }
 
@@ -341,7 +399,23 @@ const handleTouchEnd = () => {
   .s-slider {
     &__content {
       margin-top: 30px;
-      touch-action: pan-y; // Permet le scroll vertical mais gère les swipes horizontaux
+    }
+
+    .slide {
+      &--2,
+      &--3 {
+        max-width: 45%;
+      }
+
+      &--4,
+      &--5 {
+        max-width: 30%;
+      }
+
+      &--6,
+      &--7 {
+        max-width: 25%;
+      }
     }
   }
 }

@@ -9,7 +9,7 @@
     //colors//
     //////////
 
-    --bg-body: #ffffff;
+    --bg-body: #eeeeee;
 
     --bg-primary: #212121;
     --bg-secondary: #eeeeee;
@@ -18,7 +18,7 @@
     --bg-overlay: rgba(0, 0, 0, 0.5);
 
     --text-primary: #212121;
-    --text-secondary: #ffffff;
+    --text-secondary: #eeeeee;
     --text-accent: #a1a1a1;
 
     --pink-color: #ff00d4;
@@ -38,7 +38,7 @@
     .title-1 {
       &:not(.reset) {
         line-height: 1;
-        @apply text-neg-5-[18vw] md:text-neg-5-[11vw];
+        // @apply text-neg-5-[18vw] md:text-neg-5-[11vw];
       }
     }
 

@@ -282,6 +282,7 @@ onBeforeUnmount(() => {
   position: relative;
   overflow: hidden;
   cursor: none;
+
   @apply lg:min-h-[600px];
 }
 

@@ -169,7 +169,9 @@ onMounted(() => {
 
 <style lang="scss">
 .s-contact {
+  background-color: var(--bg-secondary);
   padding-bottom: 80px;
+  z-index: 3;
   &__content {
     display: grid;
     grid-template-columns: 1fr 1fr;

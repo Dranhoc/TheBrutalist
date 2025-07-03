@@ -1,6 +1,7 @@
 <template>
   <section class="s-softskills" ref="sectionRef">
     <div class="title" ref="titleRef" :style="{ transform: `translateX(${titleOffset}px)` }">
+      <!-- <img :srcset="bg" alt="" role="prensentation" /> -->
       <span class="title-2">SOFT&nbsp;SKILLS</span>
       <span class="title-2">SOFT&nbsp;SKILLS</span>
       <span class="title-2">SOFT&nbsp;SKILLS</span>
@@ -41,19 +42,19 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
+// import bg from "@/assets/img/bg-wall.png?w=150;200&format=webp&as=srcset";
 
 const sectionRef = ref<HTMLElement | null>(null);
 const titleRef = ref<HTMLElement | null>(null);
 const textRef = ref<HTMLElement | null>(null);
 
-const titleOffset = ref(-600); // Position de base à -600px
+const titleOffset = ref(-600);
 const textOffset = ref(0);
 
 let ticking = false;
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll, { passive: true });
-  // Calculer la position initiale
   handleScroll();
 });
 
@@ -79,36 +80,28 @@ function updateParallax() {
   const sectionHeight = section.offsetHeight;
   const windowHeight = window.innerHeight;
 
-  // Calculer le pourcentage de visibilité de la section
   const sectionTop = sectionRect.top;
   const sectionBottom = sectionRect.bottom;
 
-  // Décaler le déclenchement de 300px plus bas
   const triggerOffset = 100;
   const adjustedSectionTop = sectionTop + triggerOffset;
 
-  // La section est visible quand son bottom > triggerOffset et son top ajusté < windowHeight
   const isVisible = sectionBottom > triggerOffset && adjustedSectionTop < windowHeight;
 
   if (isVisible) {
-    // Calculer le progress avec le décalage
     const progress = Math.max(0, Math.min(1, (windowHeight - adjustedSectionTop) / (windowHeight + sectionHeight)));
 
-    // Réduire la vitesse de 20% (multiplier par 0.8)
     const maxTitleOffset = 320; // 400 * 0.8 = 320
     const maxTextOffset = -480; // 600 * 0.8 = 480
 
-    // Position de base du titre à -600px pour qu'il soit visible en continu
     const baseTitleOffset = -400;
 
-    // Appliquer des courbes d'easing différentes
     const titleProgress = easeOutCubic(progress);
     const textProgress = easeInOutCubic(progress);
 
     titleOffset.value = baseTitleOffset + titleProgress * maxTitleOffset;
     textOffset.value = textProgress * maxTextOffset;
   } else {
-    // Quand la section n'est pas visible, garder le titre à sa position de base
     titleOffset.value = -600;
     textOffset.value = 0;
   }
@@ -116,7 +109,6 @@ function updateParallax() {
   ticking = false;
 }
 
-// Fonctions d'easing pour des mouvements plus naturels
 function easeOutCubic(t: number): number {
   return 1 - Math.pow(1 - t, 3);
 }
@@ -128,44 +120,63 @@ function easeInOutCubic(t: number): number {
 
 <style scoped lang="scss">
 .s-softskills {
-  height: 600px;
+  height: 500px;
   position: relative;
   overflow: hidden;
   z-index: 1;
-  margin-block: 20px;
-  // border-bottom: 5px solid black;
+
+  // box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  box-shadow: rgba(47, 50, 53, 0.33) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
 
   .title {
     position: absolute;
     display: flex;
     gap: 100px;
-    top: 40px;
+    // top: 40px;
     left: 20px;
     width: 300vw;
-    will-change: transform; // Optimisation pour les animations
+    will-change: transform;
     transition: transform 0.2s ease;
-    background-color: #e6e6e6;
-    @apply py-40 mb-20;
+    // background-color: #e6e6e6;
+    background-image: url("/public/bg-wall-h.png");
+    background-repeat: repeat;
+    @apply py-40;
 
     span {
-      @apply text-neg-5-45;
+      display: block;
+      padding-inline: 20px !important;
       white-space: nowrap;
+      @apply text-neg-5-45 btn-primary;
+
+      &::before {
+        border-top: 2px solid var(--text-primary);
+      }
+      &:hover::before {
+        background-color: var(--text-primary);
+      }
     }
   }
 
   .text {
     position: absolute;
     display: flex;
-    top: 130px;
+    top: 140px;
     left: 20px;
     width: 300vw;
-    height: 300px;
+    height: 260px;
     overflow-y: hidden;
     z-index: -1;
-    will-change: transform; // Optimisation pour les animations
+    will-change: transform;
     transition: transform 0.3s ease;
 
-    @apply text-neg-5-26 mt-80;
+    @apply text-neg-5-26 mt-40 pb-40;
+  }
+
+  .decor {
+    display: block;
+    height: 40px;
+    width: 100%;
+    background-color: white;
   }
 }
 </style>

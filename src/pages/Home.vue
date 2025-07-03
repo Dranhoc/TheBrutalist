@@ -42,15 +42,17 @@ useSEO({
     />
 
     <section class="s-hi">
-      <h1>
-        HI. I'M A CREATIVE
-        <GlitchAnimation text="FRONT-END" />
-        DEVELOPER.
-      </h1>
+      <div class="s-hi__content">
+        <h1>
+          HI. I'M A CREATIVE
+          <GlitchAnimation text="FRONT-END" />
+          DEVELOPER.
+        </h1>
+      </div>
       <figure class="s-hi__me">
         <div class="s-hi__text whitespace-pre-line">JUST IN TIME. {{ "\n" }}I WAS WAITING{{ "\n" }}FOR YOU!</div>
         <img class="w-full h-full object-cover me-top" :srcset="meTop" alt="my photo" />
-        <img class="w-full h-full object-cover" :srcset="meBottom" alt="my photo" />
+        <img class="w-full h-full object-cover me-bottom" :srcset="meBottom" alt="my photo" />
       </figure>
     </section>
     <section class="s-about">
@@ -79,17 +81,23 @@ useSEO({
 
     <Slider />
 
-    <ScrollAnimation animation-class="animate-from-bottom" :delay="0" :threshold="0" :once="false">
-      <section class="s-hello">
-        <figure class="s-hello__picture">
-          <img :srcset="me2" alt="my photo" />
-        </figure>
-        <figure class="s-hello__dialog">
-          <VueSVG src="/svg/dialog.svg" />
-          <div class="text"><GlitchAnimation text="HEY, IT'S ME AGAIN." /> CONTACT ME YOU WON'T REGRET IT!</div>
-        </figure>
-      </section>
-    </ScrollAnimation>
+    <section class="s-hello">
+      <figure class="s-hello__me">
+        <ScrollAnimation animation-class="left-spiral" :delay="0" :threshold="0" :once="true">
+          <div><VueSVG src="/public/svg/spiral-left.svg" /></div>
+        </ScrollAnimation>
+        <ScrollAnimation animation-class="right-spiral" :delay="0" :threshold="0" :once="true">
+          <div><VueSVG src="/public/svg/spiral.svg" /></div>
+        </ScrollAnimation>
+        <ScrollAnimation animation-class="fade-in" :delay="0" :threshold="0.3" :once="true">
+          <div class="s-hello__text whitespace-pre-line">TRUST&nbsp;ME,{{ "\n" }}CONTACT&nbsp;ME,{{ "\n" }}YOU&nbsp;WON'T{{ "\n" }}REGRET&nbsp;IT!</div>
+        </ScrollAnimation>
+        <ScrollAnimation animation-class="animate-from-bottom" :delay="0" :threshold="0" :once="true">
+          <img class="w-full h-full object-cover me-top" :srcset="meTop" alt="my photo" />
+          <img class="w-full h-full object-cover me-bottom" :srcset="meBottom" alt="my photo" />
+        </ScrollAnimation>
+      </figure>
+    </section>
 
     <Contact />
 
@@ -100,39 +108,65 @@ useSEO({
 <style scoped lang="scss">
 .s-hi {
   position: relative;
-  padding: 40px 20px 200px;
+  padding: 40px 20px;
   background-color: transparent;
   z-index: 2;
   overflow: hidden;
-  min-height: 70vh;
-  white-space: pre-line;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 
-  @screen sm {
-    min-height: 100vh;
-  }
-  @screen lg {
-    min-height: 100vh;
+  &__content {
+    h1 {
+      line-height: 1;
+      @apply text-neg-5-[17vw];
+
+      @screen sm {
+        @apply text-neg-5-[14vw];
+      }
+
+      @screen md {
+        @apply text-neg-5-[12vw];
+      }
+
+      @screen lg {
+        @apply text-neg-5-[10vw];
+        text-align: right;
+      }
+
+      @screen 2xl {
+        @apply text-neg-5-[10vw];
+      }
+      @screen 3xl {
+        @apply text-neg-5-[12vw];
+      }
+    }
   }
 
   .me-top {
-    animation: openMouth 1.4s forwards 2.5s;
+    animation: openMouth 1s forwards 2.5s;
+    position: relative;
   }
+
   &__me {
     position: absolute;
     display: flex;
     flex-direction: column;
-    width: 40vw;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
+    z-index: 2;
     opacity: 0;
     animation: translateFromBottom 0.5s forwards 1.5s;
-    @screen md {
-      left: 0px;
-      bottom: -2vw;
+    left: 0;
+    bottom: 0;
+    @apply w-[50vw] sm:w-[30vw] md:w-[25vw] lg:w-[20vw];
+
+    img {
+      height: 100%;
+      width: auto;
+      object-fit: cover;
+      z-index: 2;
     }
-    @apply md:w-[30vw] lg:w-[15vw];
   }
+
   &__text {
     position: absolute;
     top: 0px;
@@ -148,6 +182,7 @@ useSEO({
     @apply text-neg-5-16 md:text-neg-5-24;
   }
 }
+
 .s-about {
   position: relative;
   display: flex;
@@ -169,6 +204,7 @@ useSEO({
     }
   }
 }
+
 .s-office {
   padding-block: 80px;
   figure {
@@ -178,47 +214,143 @@ useSEO({
 
 .s-hello {
   display: flex;
-  @apply mt-100 sm:mt-150 md:mt-250 lg:mt-300;
+  background-color: var(--bg-primary);
+  padding-top: 60px;
+  width: 100%;
+  aspect-ratio: 16/10;
+  @apply md:pt-100;
 
-  &__picture {
-    width: 60vw;
-    margin-bottom: -5px;
-    @screen md {
-      width: 40vw;
+  &__me {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    left: 0;
+    bottom: 0;
+    @apply w-[50vw] md:w-[40vw];
+
+    img {
+      height: 100%;
+      width: auto;
+      object-fit: cover;
+      z-index: 2;
     }
   }
-  &__dialog {
-    position: relative;
-    display: flex;
-    width: 40vw;
-    max-width: 100%;
-    height: auto;
-    transform: translate(-20%, -30%);
-    @screen md {
-      width: 40vw;
-    }
-    .vue-svg-container {
-      max-height: 200px !important;
-      @screen md {
-        max-height: 500px !important;
-      }
-    }
 
-    :deep(svg) {
-      overflow: hidden;
-      aspect-ratio: 15/10;
-      height: auto;
-    }
+  &__text {
+    position: absolute;
+    top: 0px;
+    left: calc(50vw - 40px);
+    line-height: 1;
+    background-color: var(--text-secondary);
+    color: var(--text-primary);
+    padding-inline: 1.5vw;
+    padding-block: 2vw;
+    z-index: 2;
+    @apply text-neg-5-20 md:text-neg-5-36 md:left-[calc(40vw-40px)];
+  }
+  .left-spiral,
+  .right-spiral {
+    position: absolute;
+    z-index: 4;
 
-    .text {
-      position: absolute;
-      display: block;
-      right: 50%;
-      width: 80%;
-      transform: translate(50%, 0%);
-      text-align: center;
-      line-height: 1;
-      @apply text-neg-5-[3vw];
+    transform-origin: center;
+  }
+  @keyframes spinAndPulse-sm {
+    0% {
+      transform: scale(4) rotate(0deg);
+      opacity: 0.7;
+    }
+    20% {
+      transform: scale(4) rotate(360deg);
+    }
+    40% {
+      transform: scale(4) rotate(720deg);
+    }
+    60% {
+      transform: scale(4) rotate(1080deg);
+    }
+    80% {
+      transform: scale(4) rotate(1540deg);
+    }
+    100% {
+      transform: scale(4) rotate(1800deg);
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes spinAndPulse-md {
+    0% {
+      transform: scale(6) rotate(0deg);
+      opacity: 0.7;
+    }
+    20% {
+      transform: scale(6) rotate(360deg);
+    }
+    40% {
+      transform: scale(6) rotate(720deg);
+    }
+    60% {
+      transform: scale(6) rotate(1080deg);
+    }
+    80% {
+      transform: scale(6) rotate(1540deg);
+    }
+    100% {
+      transform: scale(6) rotate(1800deg);
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes fadeInSpiral-sm {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(4);
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes fadeInSpiral-md {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(6);
+      opacity: 0.7;
+    }
+  }
+
+  .left-spiral {
+    top: 37%;
+    left: 38%;
+    transform: scale(0);
+    animation: fadeInSpiral-sm 0.2s ease forwards, spinAndPulse-sm 4s infinite linear;
+    animation-delay: 2s, 2.2s;
+
+    @media (min-width: 768px) {
+      top: 39%;
+      left: 39%;
+      animation: fadeInSpiral-md 0.2s ease forwards, spinAndPulse-md 4s infinite linear;
+      animation-delay: 2s, 2.2s;
+    }
+  }
+
+  .right-spiral {
+    top: 37%;
+    left: 56%;
+    transform: scale(0);
+    animation: fadeInSpiral-sm 0.2s ease forwards, spinAndPulse-sm 4s infinite linear reverse;
+    animation-delay: 2s, 2.2s;
+
+    @media (min-width: 768px) {
+      top: 39%;
+      left: 57%;
+      animation: fadeInSpiral-md 0.2s ease forwards, spinAndPulse-md 4s infinite linear reverse;
+      animation-delay: 2s, 2.2s;
     }
   }
 }

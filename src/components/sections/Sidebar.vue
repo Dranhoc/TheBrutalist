@@ -3,6 +3,7 @@ import { useLanguageSwitcher } from "@/composables/useLanguageSwitcher";
 import { ref, onMounted, onUnmounted } from "vue";
 import type { Ref } from "vue";
 import GlitchAnimation from "@/components/GlitchAnimation.vue";
+import bg from "@/assets/img/bg-wall.png?w=150;200&format=webp&as=srcset";
 
 const { setLanguage, currentLanguage } = useLanguageSwitcher();
 const toggleLanguage = () => {
@@ -102,6 +103,7 @@ onUnmounted(() => {
 
 <template>
   <aside>
+    <img :srcset="bg" alt="" role="presentation" />
     <nav ref="nav">
       <router-link to="/"><GlitchAnimation text="HOME" trigger="hover" /></router-link>
       <router-link to="/typography"><GlitchAnimation text="ABOUT" trigger="hover" /></router-link>
@@ -114,8 +116,8 @@ onUnmounted(() => {
 <style scoped lang="scss">
 aside {
   position: relative;
-  border-right: 3px solid var(--text-primary);
-  box-shadow: rgba(0, 0, 0, 0.2) 4px 4px 4px;
+  // border-right: 3px solid var(--text-primary);
+  // box-shadow: rgba(0, 0, 0, 0.2) 4px 4px 4px;
   z-index: 1;
   top: 0;
   left: 0;
@@ -123,6 +125,13 @@ aside {
   background-color: var(--bg-body);
   flex-shrink: 0;
   @apply py-40 hidden lg:flex justify-center;
+  img {
+    position: fixed;
+    width: 180px;
+    top: -40px;
+    min-height: calc(100vh + 40px);
+    opacity: 0.6;
+  }
 }
 
 nav {
