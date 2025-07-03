@@ -10,8 +10,7 @@ import Footer from "@/components/sections/Footer.vue";
 import MagnifierCanvasSquare from "@/components/MagnifierCanvasSquare.vue";
 import SoftSkillsParallax from "@/components/sections/SoftSkillsParallax.vue";
 import ContactMe from "@/components/sections/ContactMe.vue";
-import { ref, onMounted, onUnmounted } from "vue";
-import type { Ref } from "vue";
+import CursorFilter from "@/components/CursorFilter.vue";
 import { useSEO } from "@/composables/useSEO";
 import GlitchAnimation from "@/components/GlitchAnimation.vue";
 import ScrollAnimation from "@/components/ScrollAnimation.vue";
@@ -19,59 +18,6 @@ import Slider from "@/components/sections/Slider.vue";
 import Contact from "@/components/sections/Contact.vue";
 
 const t = usePageTranslation();
-
-const cursor: Ref<HTMLElement | null> = ref(null);
-
-const updateCursorPosition = (e: MouseEvent): void => {
-  if (cursor.value) {
-    cursor.value.style.left = e.clientX + "px";
-    cursor.value.style.top = e.clientY + "px";
-  }
-};
-
-onMounted(() => {
-  document.addEventListener("mousemove", updateCursorPosition);
-  document.body.style.cursor = "none";
-});
-
-onUnmounted(() => {
-  document.removeEventListener("mousemove", updateCursorPosition);
-  document.body.style.cursor = "auto";
-});
-
-const enlargeCursor = (): void => {
-  if (cursor.value) {
-    cursor.value.classList.add("enlarged");
-  }
-};
-
-const shrinkCursor = (): void => {
-  if (cursor.value) {
-    cursor.value.classList.remove("enlarged");
-  }
-};
-
-onMounted(() => {
-  document.addEventListener("mousemove", updateCursorPosition);
-  document.body.style.cursor = "none";
-
-  const aboutSection = document.querySelector(".s-about");
-  if (aboutSection) {
-    aboutSection.addEventListener("mouseenter", enlargeCursor);
-    aboutSection.addEventListener("mouseleave", shrinkCursor);
-  }
-});
-
-onUnmounted(() => {
-  document.removeEventListener("mousemove", updateCursorPosition);
-  document.body.style.cursor = "auto";
-
-  const aboutSection = document.querySelector(".s-about");
-  if (aboutSection) {
-    aboutSection.removeEventListener("mouseenter", enlargeCursor);
-    aboutSection.removeEventListener("mouseleave", shrinkCursor);
-  }
-});
 
 useSEO({
   title: "Home",
@@ -84,7 +30,16 @@ useSEO({
 
 <template>
   <main>
-    <div ref="cursor" class="cursor-invert"></div>
+    <CursorFilter
+      :size="50"
+      :enlarge-rules="[
+        { selector: '.s-about', size: 125 },
+        { selector: '.s-work-with', size: 125 },
+        { selector: '.s-slider', size: 20 },
+      ]"
+      color="white"
+      blend-mode="difference"
+    />
 
     <section class="s-hi">
       <h1>
@@ -102,7 +57,7 @@ useSEO({
       <div class="s-about__me">
         <h2>THIS IS ME</h2>
         <p>
-          Hey, I’m Christophe — a front-end developer based near Liège, Belgium.
+          Hey, I'm Christophe — a front-end developer based near Liège, Belgium.
           <br /><br />
           I design and build responsive websites, clean UI and reusable components with just enough personality to stand out, but never too much to annoy the user.
           <br /><br />
@@ -143,30 +98,9 @@ useSEO({
 </template>
 
 <style scoped lang="scss">
-.cursor-invert {
-  position: fixed;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  top: 0;
-  left: 0;
-  background: white;
-  mix-blend-mode: difference;
-  transition: transform 0.1s ease-out;
-  transform: translate(-50%, -50%);
-
-  &.enlarged {
-    transform: translate(-50%, -50%) scale(2.5);
-    transition: transform 0.3s ease-out;
-  }
-}
-
 .s-hi {
   position: relative;
   padding: 40px 20px 200px;
-
   background-color: transparent;
   z-index: 2;
   overflow: hidden;
