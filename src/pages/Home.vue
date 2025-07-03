@@ -59,7 +59,7 @@ useSEO({
       <div class="s-about__me">
         <h2>THIS IS ME</h2>
         <p>
-          Hey, I'm Christophe — a front-end developer based near Liège, Belgium.
+          I'm Christophe, a front-end developer based near Liège — Belgium.
           <br /><br />
           I design and build responsive websites, clean UI and reusable components with just enough personality to stand out, but never too much to annoy the user.
           <br /><br />
@@ -175,8 +175,7 @@ useSEO({
     line-height: 1;
     background-color: var(--text-primary);
     color: var(--text-secondary);
-    padding: 20px 15px;
-    border-radius: 10px;
+    padding: 1.5vw;
     z-index: 2;
     animation: translateFromMouth 0.5s forwards 2.5s;
     @apply text-neg-5-16 md:text-neg-5-24;
@@ -213,12 +212,25 @@ useSEO({
 }
 
 .s-hello {
+  position: relative;
   display: flex;
   background-color: var(--bg-primary);
-  padding-top: 60px;
   width: 100%;
   aspect-ratio: 16/10;
-  @apply md:pt-100;
+  overflow: hidden;
+
+  &::before {
+    position: absolute;
+    content: "";
+    top: -30%;
+    width: 150%;
+    height: 70%;
+    background: radial-gradient(ellipse at 60% 10%, #7c7c7c, #e8e8e882 10%, transparent 50%);
+    transform: scaleX(1.7) scaleY(1.2) rotate(-10deg);
+    filter: blur(15px);
+    animation: pulse 8s forwards infinite;
+    animation-delay: 3s;
+  }
 
   &__me {
     position: absolute;
@@ -328,14 +340,14 @@ useSEO({
     top: 37%;
     left: 38%;
     transform: scale(0);
-    animation: fadeInSpiral-sm 0.2s ease forwards, spinAndPulse-sm 4s infinite linear;
-    animation-delay: 2s, 2.2s;
+    animation: fadeInSpiral-sm 0.5s ease forwards, spinAndPulse-sm 4s infinite linear;
+    animation-delay: 2s, 2.5s;
 
     @media (min-width: 768px) {
       top: 39%;
       left: 39%;
-      animation: fadeInSpiral-md 0.2s ease forwards, spinAndPulse-md 4s infinite linear;
-      animation-delay: 2s, 2.2s;
+      animation: fadeInSpiral-md 0.5s ease forwards, spinAndPulse-md 4s infinite linear;
+      animation-delay: 2s, 2.5s;
     }
   }
 
@@ -343,14 +355,14 @@ useSEO({
     top: 37%;
     left: 56%;
     transform: scale(0);
-    animation: fadeInSpiral-sm 0.2s ease forwards, spinAndPulse-sm 4s infinite linear reverse;
-    animation-delay: 2s, 2.2s;
+    animation: fadeInSpiral-sm 0.5s ease forwards, spinAndPulse-sm 4s infinite linear reverse;
+    animation-delay: 2s, 2.5s;
 
     @media (min-width: 768px) {
       top: 39%;
       left: 57%;
-      animation: fadeInSpiral-md 0.2s ease forwards, spinAndPulse-md 4s infinite linear reverse;
-      animation-delay: 2s, 2.2s;
+      animation: fadeInSpiral-md 0.5s ease forwards, spinAndPulse-md 4s infinite linear reverse;
+      animation-delay: 2s, 2.5s;
     }
   }
 }

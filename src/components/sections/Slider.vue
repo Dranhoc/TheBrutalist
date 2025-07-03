@@ -54,7 +54,7 @@ const slides = [
     id: 6,
     title: "IMMOVISION",
     image: slider6,
-    text: "2024 \n ImmoVision \n Design: Fanny",
+    text: "2024 \n ImmoVision \n Design: Fanny \n Agency: Epekta",
     link: "#",
   },
   {
@@ -158,7 +158,7 @@ const handleTouchEnd = () => {
   <section class="s-slider full-w">
     <div class="mb-40 sm:mb-60 md:mb-80 lg:mb-100">
       <h2>WORK AND WONDERS</h2>
-      <div class="text-pos-5-18 lg:text-pos-5-20 font-normal">A FEW THINGS I MADE HAPPEN</div>
+      <div class="text-pos-5-18 lg:text-pos-5-20 font-normal">A SELECTION OF A FEW THINGS I MADE HAPPEN</div>
     </div>
     <div class="s-slider__buttons">
       <button class="btn-primary" v-for="(slide, index) in slides" :key="slide.id" :class="{ active: index === currentSlideIndex }" @click="goToSlide(index)">
