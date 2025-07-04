@@ -1,23 +1,11 @@
 <template>
   <section class="s-softskills" ref="sectionRef">
+    <video class="bg-video" autoplay muted loop playsinline preload="auto" src="/rain-bg.mp4" poster="/bg-wall-h.png" aria-hidden="true"></video>
+
     <div class="title" ref="titleRef" :style="{ transform: `translateX(${titleOffset}px)` }">
-      <video class="bg-video" autoplay muted loop playsinline preload="auto" src="/rain-bg.mp4" poster="/bg-wall-h.png" aria-hidden="true"></video>
-      <span class="title-2">SOFT&nbsp;SKILLS</span>
-      <span class="title-2">SOFT&nbsp;SKILLS</span>
-      <span class="title-2">SOFT&nbsp;SKILLS</span>
-      <span class="title-2">SOFT&nbsp;SKILLS</span>
-      <span class="title-2">SOFT&nbsp;SKILLS</span>
-      <span class="title-2">SOFT&nbsp;SKILLS</span>
-      <span class="title-2">SOFT&nbsp;SKILLS</span>
-      <span class="title-2">SOFT&nbsp;SKILLS</span>
-      <span class="title-2">SOFT&nbsp;SKILLS</span>
-      <span class="title-2">SOFT&nbsp;SKILLS</span>
-      <span class="title-2">SOFT&nbsp;SKILLS</span>
-      <span class="title-2">SOFT&nbsp;SKILLS</span>
-      <span class="title-2">SOFT&nbsp;SKILLS</span>
-      <span class="title-2">SOFT&nbsp;SKILLS</span>
-      <span class="title-2">SOFT&nbsp;SKILLS</span>
+      <span class="title-2" v-for="n in 15" :key="n">SOFT&nbsp;SKILLS</span>
     </div>
+
     <div class="text" ref="textRef" :style="{ transform: `translateX(${textOffset}px)` }">
       HOVER STATE ENTHOUSIAST. DARK MODE DEFENDER. PIXEL PERFECTIONIST. UI MOOD READER. DEBUGGING DETECTIVE. RESPONSIVE MINDSET. TYPESCRIPT THERAPIST. DEADLINE SURFER. CSS WHISPERER. GIT CONFLICT NEGOTIATOR. COMPONENT RECYCLER. FONT SNOB (IN A GOOD
       WAY). LOADING SPEED FREAK. BUTTON ALIGNMENT NINJA. COLOR CONTRAST ADVOCATE. MARGIN TWEAKER. FIGMA TRANSLATOR. LOADING SPINNER PHILOSOPHER. CURIOSITY OVERDRIVE. "IT WORKS ON MY MACHINE" DIPLOMAT. EMPATHY-DRIVEN DESIGN. NAMING THING PHILOSOPHER.
@@ -39,7 +27,6 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
-// import bg from "@/assets/img/bg-wall.png?w=150;200&format=webp&as=srcset";
 
 const sectionRef = ref<HTMLElement | null>(null);
 const titleRef = ref<HTMLElement | null>(null);
@@ -47,7 +34,6 @@ const textRef = ref<HTMLElement | null>(null);
 
 const titleOffset = ref(-600);
 const textOffset = ref(0);
-
 let ticking = false;
 
 onMounted(() => {
@@ -79,7 +65,6 @@ function updateParallax() {
 
   const sectionTop = sectionRect.top;
   const sectionBottom = sectionRect.bottom;
-
   const triggerOffset = 100;
   const adjustedSectionTop = sectionTop + triggerOffset;
 
@@ -88,9 +73,8 @@ function updateParallax() {
   if (isVisible) {
     const progress = Math.max(0, Math.min(1, (windowHeight - adjustedSectionTop) / (windowHeight + sectionHeight)));
 
-    const maxTitleOffset = 320; // 400 * 0.8 = 320
-    const maxTextOffset = -480; // 600 * 0.8 = 480
-
+    const maxTitleOffset = 320;
+    const maxTextOffset = -480;
     const baseTitleOffset = -400;
 
     const titleProgress = easeOutCubic(progress);
@@ -118,17 +102,18 @@ function easeInOutCubic(t: number): number {
 <style scoped lang="scss">
 .s-softskills {
   position: relative;
-  height: 500px;
   overflow: hidden;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  // margin-top: 240px;
   z-index: 2;
-  margin-top: 40px;
 
   video.bg-video {
     position: absolute;
     top: -40px;
     left: 0;
     width: 100%;
-    height: calc(100% + 80px);
+    height: calc(180px);
     object-fit: cover;
     z-index: 1;
     pointer-events: none;
@@ -136,53 +121,37 @@ function easeInOutCubic(t: number): number {
   }
 
   .title {
-    position: absolute;
+    position: relative;
     display: flex;
     gap: 100px;
-    top: 40px;
-    left: 20px;
     will-change: transform;
     transition: transform 0.2s ease;
     z-index: 3;
-    background-repeat: repeat;
     @apply w-[300vw] md:w-[200vw] lg:w-[180vw];
+    margin-bottom: 80px;
 
     span {
       display: block;
-      padding: 20px !important;
-
+      padding: 20px;
       white-space: nowrap;
+      pointer-events: none;
       @apply text-neg-5-45 btn-primary;
-
       &::before {
-        border-top: 2px solid var(--text-primary);
-      }
-      &:hover::before {
-        background-color: var(--text-primary);
+        border-top: 2px solid var(--bg-primary);
       }
     }
   }
 
   .text {
-    position: absolute;
+    position: relative;
     display: flex;
-    top: 140px;
-    left: 20px;
+    will-change: transform;
+    transition: transform 0.3s ease;
+    z-index: 3;
     width: 300vw;
     height: 260px;
     overflow-y: hidden;
-    z-index: 1; // au-dessus de la vidéo
-    will-change: transform;
-    transition: transform 0.3s ease;
-
     @apply text-neg-5-26 mt-40 pb-40;
-  }
-
-  .decor {
-    display: block;
-    height: 40px;
-    width: 100%;
-    background-color: white;
   }
 }
 </style>

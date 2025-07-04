@@ -5,6 +5,7 @@ import VueSVG from "@/components/VueSVG.vue";
 import SuccessMessage from "@/components/SuccessMessage.vue";
 import { useContactForm, type ContactFormData } from "@/composables/useContactForm";
 import { useComponentTranslation } from "@/i18n";
+import bgUnicorn from "@/assets/img/bg-unicorn.png?w=200;350;500;700;900;1200&format=webp&as=srcset";
 
 const t = useComponentTranslation("contact");
 
@@ -49,249 +50,214 @@ onMounted(() => {
 
 <template>
   <section id="contact" class="s-contact">
-    <div class="hr-full"></div>
     <h6 ref="titleRef" class="s-contact__title">DON'T HESITATE CONTACT ME RIGHT NOW!</h6>
 
-    <div class="s-contact__content">
-      <div class="s-contact__text">
-        <p class="reset">LET'S TALK ABOUT YOUR PROJECT, FEEL FREE TO SEND ME AN EMAIL OR USE THE CONTACT FORM RIGHT HERE</p>
-        <a href="mailto:info@rboss.eu">
-          <figure class="text-text-primary">
-            <VueSVG src="/svg/big-arrow.svg" />
-          </figure>
-          chler.dev@gmail.com
-        </a>
-      </div>
-
+    <form @submit="handleSubmit">
       <div class="s-contact__form">
-        <form @submit="handleSubmit">
-          <div class="form-row form-row--half" ref="formRowRef">
-            <label for="name" class="sr-only">{{ t("form.name") }}</label>
-            <input
-              type="text"
-              :placeholder="t('form.name') + '*'"
-              id="name"
-              name="name"
-              :value="formData.name"
-              @input="(e) => handleChange('name', (e.target as HTMLInputElement).value)"
-              @invalid="(e) => handleInvalid(e, 'name')"
-              :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
-              :disabled="isSubmitting"
-              required
-              minlength="2"
-            />
-          </div>
-          <div class="form-row form-row--half" ref="formRowRef">
-            <label for="name" class="sr-only">{{ t("form.company") }}</label>
-            <input
-              type="text"
-              :placeholder="t('form.company') + '*'"
-              id="company"
-              name="company"
-              :value="formData.company"
-              @input="(e) => handleChange('company', (e.target as HTMLInputElement).value)"
-              @invalid="(e) => handleInvalid(e, 'company')"
-              :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
-              :disabled="isSubmitting"
-              required
-              minlength="2"
-            />
-          </div>
+        <img :srcset="bgUnicorn" alt="" role="presentation" />
+        <span class="s-contact__subtitle">LET'S TALK ABOUT YOUR PROJECT{{ "\n" }}OR FEEL FREE TO LEAVE ME A MESSAGE</span>
+        <div ref="formRowRef">
+          <label for="name" class="sr-only">NAME</label>
+          <input
+            type="text"
+            placeholder="Name"
+            id="name"
+            name="name"
+            :value="formData.name"
+            @input="(e) => handleChange('name', (e.target as HTMLInputElement).value)"
+            @invalid="(e) => handleInvalid(e, 'name')"
+            :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
+            :disabled="isSubmitting"
+            required
+            minlength="2"
+          />
+        </div>
+        <div ref="formRowRef">
+          <label for="name" class="sr-only">Company</label>
+          <input
+            type="text"
+            placeholder="Company"
+            id="company"
+            name="company"
+            :value="formData.company"
+            @input="(e) => handleChange('company', (e.target as HTMLInputElement).value)"
+            @invalid="(e) => handleInvalid(e, 'company')"
+            :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
+            :disabled="isSubmitting"
+            required
+            minlength="2"
+          />
+        </div>
 
-          <div class="form-row">
-            <label for="email" class="sr-only">{{ t("form.email") }}</label>
-            <input
-              type="email"
-              :placeholder="t('form.email') + '*'"
-              id="email"
-              name="email"
-              :value="formData.email"
-              @input="(e) => handleChange('email', (e.target as HTMLInputElement).value)"
-              @invalid="(e) => handleInvalid(e, 'email')"
-              :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
-              :disabled="isSubmitting"
-              required
-            />
-          </div>
-          <div class="form-row">
-            <label for="subject" class="sr-only">{{ t("form.subject") }}</label>
-            <input
-              type="subject"
-              :placeholder="t('form.subject') + '*'"
-              id="subject"
-              name="subject"
-              :value="formData.subject"
-              @input="(e) => handleChange('subject', (e.target as HTMLInputElement).value)"
-              @invalid="(e) => handleInvalid(e, 'subject')"
-              :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
-              :disabled="isSubmitting"
-              required
-            />
-          </div>
+        <div>
+          <label for="email" class="sr-only">Email"</label>
+          <input
+            type="email"
+            placeholder="Email"
+            id="email"
+            name="email"
+            :value="formData.email"
+            @input="(e) => handleChange('email', (e.target as HTMLInputElement).value)"
+            @invalid="(e) => handleInvalid(e, 'email')"
+            :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
+            :disabled="isSubmitting"
+            required
+          />
+        </div>
+        <div>
+          <label for="subject" class="sr-only">Subject</label>
+          <input
+            type="subject"
+            placeholder="Subject"
+            id="subject"
+            name="subject"
+            :value="formData.subject"
+            @input="(e) => handleChange('subject', (e.target as HTMLInputElement).value)"
+            @invalid="(e) => handleInvalid(e, 'subject')"
+            :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
+            :disabled="isSubmitting"
+            required
+          />
+        </div>
 
-          <label for="message" class="sr-only">{{ t("form.message") }}</label>
-          <textarea
-            :class="{ 'animate-from-bottom--px': isVisible2, 'opacity-0': !isVisible2 }"
-            name="message"
-            id="message"
-            :placeholder="t('form.message') + '*'"
-            ref="textareaRef"
-            :value="formData.message"
-            @input="(e) => {
+        <label for="message" class="sr-only">Message</label>
+        <textarea
+          :class="{ 'animate-from-bottom--px': isVisible2, 'opacity-0': !isVisible2 }"
+          name="message"
+          id="message"
+          placeholder="Message"
+          ref="textareaRef"
+          :value="formData.message"
+          @input="(e) => {
               handleChange('message', (e.target as HTMLTextAreaElement).value);
               handleTextareaInput(e);
             }"
-            @invalid="(e) => handleInvalid(e, 'message')"
-            rows="1"
-            :disabled="isSubmitting"
-            required
-            minlength="10"
-          />
+          @invalid="(e) => handleInvalid(e, 'message')"
+          rows="1"
+          :disabled="isSubmitting"
+          required
+          minlength="10"
+        />
 
-          <div class="relative flex gap-10 items-center mb-4">
-            <SuccessMessage :show="isSuccess" />
-            <div v-if="serverError" class="animate-from-bottom absolute -bottom-30 right-0 ml-auto max-w-[270px] text-14 z-[3] bg-[#b2291189] backdrop-blur-sm p-15 rounded-[10px]">
-              {{ serverError }}
-            </div>
+        <div class="relative flex gap-10 items-center mb-4">
+          <SuccessMessage :show="isSuccess" />
+          <div v-if="serverError" class="animate-from-bottom absolute -bottom-30 right-0 ml-auto max-w-[270px] text-14 z-[3] bg-[#b2291189] backdrop-blur-sm p-15 rounded-[10px]">
+            {{ serverError }}
           </div>
+        </div>
 
-          <button type="submit" class="btn-primary ml-auto" :disabled="isSubmitting">
-            <span>{{ isSubmitting ? t("form.sending") : t("form.submit") }}</span>
-            <VueSVG src="/svg/plane.svg" />
-          </button>
-        </form>
+        <!-- <button type="submit" class="btn-submit" :disabled="isSubmitting">
+          <span>{{ isSubmitting ? "Sending..." : "Submit" }}</span>
+        </button> -->
       </div>
-    </div>
+    </form>
   </section>
 </template>
 
 <style lang="scss">
 .s-contact {
   background-color: var(--bg-secondary);
-  padding-bottom: 80px;
+  padding: 80px 20px;
   z-index: 3;
-  &__content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 70px;
-    @media (max-width: 1024px) {
-      grid-template-columns: 1fr;
-    }
+  width: 100%;
+
+  &__subtitle {
+    margin-bottom: 30px;
+    white-space: pre-line;
+    color: var(--text-secondary);
+    text-shadow: rgba(251, 0, 255, 0.96) 0px 0px 46px;
+    text-align: center;
+    @apply text-pos-5-18 md:text-pos-5-20 lg:text-pos-5-20;
   }
 
-  &__text {
-    p {
-      max-width: 600px;
-      @apply lg:text-neg-5-20 text-neg-5-16 font-light;
-    }
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
 
-    a {
-      transition: color 0.2s ease;
-      @apply flex items-center gap-20 mt-40 mb-30 text-neg-5-18 lg:text-neg-5-24 font-light;
-
-      svg {
-        animation: bounceLeftToRight 2.5s infinite;
-        @apply w-[50px] lg:w-70;
-      }
-
-      &:hover {
-        color: var(--blue-color);
-      }
-    }
-
-    li {
-      @apply text-16 lg:text-[24px];
-    }
+  div {
+    width: 100%;
   }
 
   &__form {
     position: relative;
-
-    .form-row {
-      display: flex;
-      width: 100%;
-      gap: 35px;
-      @apply mb-50 md:mb-80;
-      &--half {
-        @apply lg:max-w-[50%];
-      }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    overflow: hidden;
+    border-radius: 30px;
+    width: 100%;
+    max-width: 750px;
+    background-color: transparent;
+    & > * {
+      z-index: 4;
     }
+    box-shadow: rgba(255, 94, 250, 0.25) 0px 50px 100px -20px, rgba(255, 8, 239, 0.3) 0px 30px 60px -30px, rgba(210, 31, 255, 0.35) 0px -2px 6px 0px inset;
+    @apply px-20 py-40 sm:px-40 sm:py-50 md:p-60 lg:px-60 lg:pt-70 lg:pb-80;
 
-    .policy-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 15px;
-      @apply mb-40 sm:mb-60 lg:mb-80;
-
-      .policy-label {
-        @apply text-12 sm:text-14 lg:text-16;
-
-        .link {
-          text-decoration: underline;
-          transition: color 0.2s ease;
-          &:hover {
-            color: var(--blue-color);
-          }
-        }
-      }
+    &::after {
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 100%;
+      inset: 0;
+      border-radius: 30px;
+      z-index: 2;
+      box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.1), inset 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+    img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      inset: 0;
+      object-fit: cover;
+      border-radius: 30px;
+      z-index: 1;
     }
 
     input,
     textarea {
+      display: flex;
       width: 100%;
-      padding-bottom: 15px;
+      max-width: 500px;
       background-color: transparent;
-      color: var(--text-primary);
-      border-bottom: 1px solid var(--text-primary);
+      border: 3px solid rgba(255, 255, 255, 0.222);
+      backdrop-filter: blur(30px);
+      background-color: rgba(95, 95, 95, 0.055);
+      text-indent: 24px;
+
+      color: var(--text-secondary);
+      text-shadow: rgba(0, 255, 255, 0.96) 0px 0px 20px;
       outline: none;
+      padding-block: 12px;
+      padding-right: 24px;
+      margin-inline: auto;
       &:focus {
         outline: none;
       }
       &::placeholder {
-        color: var(--text-primary);
+        color: var(--text-secondary);
+        // text-shadow: rgba(251, 0, 255, 0.96) 0px 0px 20px;
+        // padding-left: 20px;
+        // z-index: 10;
       }
-      @apply text-neg-5-14 lg:text-neg-5-16 font-light;
+      @apply text-pos-5-14 lg:text-pos-5-16 font-bold;
     }
-
-    #policy {
-      appearance: none;
-      -webkit-appearance: none;
-      position: relative;
-      width: 30px;
-      height: 30px;
-      background-color: transparent;
-      border: 2px solid var(--text-primary);
-      cursor: pointer;
-      @apply w-20 h-20 sm:w-30 sm:h-30 rounded-[5px] sm:rounded-[8px];
-
-      &::after {
-        position: absolute;
-        content: "";
-        background-color: var(--blue-color);
-        opacity: 0;
-        scale: 0;
-        transition: opacity 0.2s ease, scale 0.2s ease;
-        @apply sm:w-[calc(100%-12px)] sm:h-[calc(100%-12px)] w-[calc(100%-8px)] h-[calc(100%-8px)] top-4 sm:top-6 left-4 sm:left-6 rounded-[2px] sm:rounded-[5px];
-      }
-
-      &:checked::after {
-        opacity: 1;
-        scale: 1;
-      }
+    input {
+      border-radius: 999px;
     }
 
     textarea {
       display: flex;
       overflow: hidden;
       resize: none;
-      @apply mb-40 sm:mb-60 lg:mb-80;
-    }
-
-    .link {
-      transition: color 0.2s ease;
-      &:hover {
-        color: var(--blue-color);
-      }
+      min-height: 200px;
+      border-radius: 20px;
+      @apply mb-40;
     }
   }
 }

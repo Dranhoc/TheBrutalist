@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import { useI18n as useVueI18n } from "vue-i18n";
 import { usePageTranslation } from "@/i18n";
 import VueSVG from "@/components/VueSVG.vue";
-import me from "@/assets/img/me.png?w=100;150;300;450&format=webp&as=srcset";
 import meBottom from "@/assets/img/me-bottom.png?w=100;150;300;450&format=webp&as=srcset";
 import meTop from "@/assets/img/me-top.png?w=100;150;300;450&format=webp&as=srcset";
-import me2 from "@/assets/img/me.png?w=350;500;700;1000;1300;1600;2000&format=webp&as=srcset";
 import Footer from "@/components/sections/Footer.vue";
 import MagnifierCanvasSquare from "@/components/MagnifierCanvasSquare.vue";
 import SoftSkillsParallax from "@/components/sections/SoftSkillsParallax.vue";
@@ -65,7 +62,7 @@ useSEO({
     </section>
     <section class="s-about">
       <div class="s-about__me">
-        <h2>THIS IS ME</h2>
+        <h2><GlitchAnimation text="THIS IS ME" /></h2>
         <p>
           I'm Christophe, a front-end developer based near Liège — Belgium.
           <br /><br />

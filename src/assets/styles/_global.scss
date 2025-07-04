@@ -16,6 +16,7 @@
     background-color: var(--bg-body);
     color: var(--text-primary);
     height: 100vh;
+    max-width: 100vw;
   }
 }
 
@@ -28,14 +29,18 @@
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
-  max-width: 2050px;
+  max-width: 100vw;
   header,
   section,
   footer {
     &:not(.reset) {
       position: relative;
       width: 100%;
+      max-width: 100vw;
       margin-inline: auto;
+      @screen md {
+        max-width: calc(100vw - 180px);
+      }
     }
   }
   main {
