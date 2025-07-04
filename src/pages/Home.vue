@@ -16,6 +16,14 @@ import GlitchAnimation from "@/components/GlitchAnimation.vue";
 import ScrollAnimation from "@/components/ScrollAnimation.vue";
 import Slider from "@/components/sections/Slider.vue";
 import Contact from "@/components/sections/Contact.vue";
+import { onMounted } from "vue";
+
+onMounted(() => {
+  const video = document.querySelector<HTMLVideoElement>(".s-hello__video");
+  if (video) {
+    video.playbackRate = 0.4;
+  }
+});
 
 const t = usePageTranslation();
 
@@ -82,6 +90,9 @@ useSEO({
     <Slider />
 
     <section class="s-hello">
+      <video class="s-hello__video" autoplay loop muted playsinline aria-hidden="true">
+        <source src="/storm.mp4" type="video/mp4" />
+      </video>
       <figure class="s-hello__me">
         <ScrollAnimation animation-class="left-spiral" :delay="0" :threshold="0" :once="true">
           <div><VueSVG src="/public/svg/spiral-left.svg" /></div>
@@ -218,6 +229,18 @@ useSEO({
   width: 100%;
   aspect-ratio: 16/10;
   overflow: hidden;
+
+  &__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(20px);
+    opacity: 1;
+    z-index: 1;
+  }
 
   &::before {
     position: absolute;
@@ -360,7 +383,7 @@ useSEO({
 
     @media (min-width: 768px) {
       top: 39%;
-      left: 57%;
+      left: 58%;
       animation: fadeInSpiral-md 0.5s ease forwards, spinAndPulse-md 4s infinite linear reverse;
       animation-delay: 2s, 2.5s;
     }
