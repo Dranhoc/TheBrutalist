@@ -50,18 +50,16 @@ onMounted(() => {
 <template>
   <section id="contact" class="s-contact">
     <div class="hr-full"></div>
-    <h3 ref="titleRef" class="s-contact__title">{{ t("discuss") }}</h3>
+    <h6 ref="titleRef" class="s-contact__title">DON'T HESITATE CONTACT ME RIGHT NOW!</h6>
 
     <div class="s-contact__content">
       <div class="s-contact__text">
-        <p class="reset">
-          {{ t("question") }}
-        </p>
+        <p class="reset">LET'S TALK ABOUT YOUR PROJECT, FEEL FREE TO SEND ME AN EMAIL OR USE THE CONTACT FORM RIGHT HERE</p>
         <a href="mailto:info@rboss.eu">
           <figure class="text-text-primary">
             <VueSVG src="/svg/big-arrow.svg" />
           </figure>
-          info@rboss.eu
+          chler.dev@gmail.com
         </a>
       </div>
 

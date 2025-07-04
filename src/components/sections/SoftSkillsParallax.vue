@@ -1,7 +1,7 @@
 <template>
   <section class="s-softskills" ref="sectionRef">
     <div class="title" ref="titleRef" :style="{ transform: `translateX(${titleOffset}px)` }">
-      <!-- <img :srcset="bg" alt="" role="prensentation" /> -->
+      <video class="bg-video" autoplay muted loop playsinline preload="auto" src="/rain-bg.mp4" poster="/bg-wall-h.png" aria-hidden="true"></video>
       <span class="title-2">SOFT&nbsp;SKILLS</span>
       <span class="title-2">SOFT&nbsp;SKILLS</span>
       <span class="title-2">SOFT&nbsp;SKILLS</span>
@@ -117,31 +117,40 @@ function easeInOutCubic(t: number): number {
 
 <style scoped lang="scss">
 .s-softskills {
-  height: 500px;
   position: relative;
+  height: 500px;
   overflow: hidden;
-  z-index: 1;
+  z-index: 2;
+  margin-top: 40px;
 
-  // box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-  box-shadow: rgba(47, 50, 53, 0.33) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+  video.bg-video {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 80px);
+    object-fit: cover;
+    z-index: 1;
+    pointer-events: none;
+    filter: grayscale(100%) brightness(200%) contrast(150%);
+  }
 
   .title {
     position: absolute;
     display: flex;
     gap: 100px;
-    // top: 40px;
+    top: 40px;
     left: 20px;
-    width: 300vw;
     will-change: transform;
     transition: transform 0.2s ease;
-    // background-color: #e6e6e6;
-    background-image: url("/public/bg-wall-h.png");
+    z-index: 3;
     background-repeat: repeat;
-    @apply py-40;
+    @apply w-[300vw] md:w-[200vw] lg:w-[180vw];
 
     span {
       display: block;
-      padding-inline: 20px !important;
+      padding: 20px !important;
+
       white-space: nowrap;
       @apply text-neg-5-45 btn-primary;
 
@@ -162,7 +171,7 @@ function easeInOutCubic(t: number): number {
     width: 300vw;
     height: 260px;
     overflow-y: hidden;
-    z-index: -1;
+    z-index: 1; // au-dessus de la vidéo
     will-change: transform;
     transition: transform 0.3s ease;
 
