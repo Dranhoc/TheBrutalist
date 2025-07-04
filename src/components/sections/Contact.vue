@@ -50,7 +50,7 @@ onMounted(() => {
 
 <template>
   <section id="contact" class="s-contact">
-    <h6 ref="titleRef" class="s-contact__title">DON'T HESITATE CONTACT ME RIGHT NOW!</h6>
+    <h4 ref="titleRef" class="s-contact__title reset">DON'T HESITATE CONTACT ME RIGHT NOW!</h4>
 
     <form @submit="handleSubmit">
       <div class="s-contact__form">
@@ -125,7 +125,7 @@ onMounted(() => {
           :class="{ 'animate-from-bottom--px': isVisible2, 'opacity-0': !isVisible2 }"
           name="message"
           id="message"
-          placeholder="Message"
+          placeholder="Leave a message here"
           ref="textareaRef"
           :value="formData.message"
           @input="(e) => {
@@ -146,9 +146,9 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- <button type="submit" class="btn-submit" :disabled="isSubmitting">
-          <span>{{ isSubmitting ? "Sending..." : "Submit" }}</span>
-        </button> -->
+        <button type="submit" class="btn-submit" :disabled="isSubmitting">
+          <span>{{ isSubmitting ? "SENDING..." : "SUBMIT" }}</span>
+        </button>
       </div>
     </form>
   </section>
@@ -226,38 +226,56 @@ onMounted(() => {
       max-width: 500px;
       background-color: transparent;
       border: 3px solid rgba(255, 255, 255, 0.222);
-      backdrop-filter: blur(30px);
-      background-color: rgba(95, 95, 95, 0.055);
-      text-indent: 24px;
-
-      color: var(--text-secondary);
-      text-shadow: rgba(0, 255, 255, 0.96) 0px 0px 20px;
+      backdrop-filter: blur(35px);
+      // background-color: rgba(82, 82, 82, 0.055);
+      background-image: radial-gradient(ellipse at center center, rgba(173, 173, 173, 0.197), rgba(79, 79, 79, 0.148));
+      box-shadow: rgba(96, 109, 110, 0.25) 0px 50px 100px -20px, rgba(255, 255, 255, 0.3) 0px 30px 60px -30px, rgba(76, 82, 82, 0.35) 0px -2px 6px 0px inset;
+      color: rgba(219, 255, 255, 0.96);
+      // text-shadow: rgba(0, 255, 255, 0.507) 0px 0px 4px;
       outline: none;
       padding-block: 12px;
       padding-right: 24px;
       margin-inline: auto;
+      padding-inline: 24px;
+
       &:focus {
         outline: none;
       }
       &::placeholder {
-        color: var(--text-secondary);
+        color: rgba(219, 255, 255, 0.96);
+        // text-shadow: rgba(0, 145, 255, 0.507) 0px 0px 4px;
         // text-shadow: rgba(251, 0, 255, 0.96) 0px 0px 20px;
         // padding-left: 20px;
         // z-index: 10;
       }
-      @apply text-pos-5-14 lg:text-pos-5-16 font-bold;
+      @apply text-pos-5-16 lg:text-pos-5-18 font-light;
     }
     input {
       border-radius: 999px;
     }
 
     textarea {
-      display: flex;
       overflow: hidden;
       resize: none;
       min-height: 200px;
       border-radius: 20px;
-      @apply mb-40;
+    }
+  }
+  .btn-submit {
+    color: var(--text-secondary);
+    text-shadow: rgba(251, 0, 255, 0.96) 0px 0px 46px;
+    text-align: center;
+    background-color: rgba(251, 0, 255, 0.247);
+    border-radius: 999px;
+    width: 100%;
+    max-width: 200px;
+    box-shadow: rgba(255, 94, 250, 0.25) 0px 50px 100px -20px, rgba(255, 8, 239, 0.3) 0px 30px 60px -30px, rgba(210, 31, 255, 0.35) 0px -2px 6px 0px inset;
+    transition: letter-spacing 0.5s ease, max-width 0.5s ease;
+    @apply text-pos-5-18 md:text-pos-5-20 lg:text-pos-5-20 px-24 py-10 font-semibold;
+    &:hover {
+      width: 100%;
+      max-width: 500px;
+      @apply text-pos-40-18 md:text-pos-40-20 lg:text-pos-40-20 px-24 py-10 font-semibold;
     }
   }
 }
