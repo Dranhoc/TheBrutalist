@@ -2,7 +2,7 @@
 
 <template>
   <footer>
-    <div class="flex w-full justify-center px-40"><span class="title-3">BEAUTIFUL FOOTER IN PROGRESS</span></div>
+    <div class="flex w-full justify-center px-40 uppercase"><span class="title-3">Did you find the Slenderman?</span></div>
   </footer>
 </template>
 

@@ -220,7 +220,7 @@ const handleTouchEnd = () => {
     transition: all 0.3s ease;
     z-index: 10;
     margin-inline: auto;
-    @apply lg:bottom-80;
+    @apply lg:bottom-100 2xl:bottom-130;
 
     &:hover {
       background-color: transparent;
@@ -240,7 +240,7 @@ const handleTouchEnd = () => {
   &__content {
     position: relative;
     width: 100%;
-    margin-top: 50px;
+    margin-top: 20px;
     overflow: hidden;
   }
 
