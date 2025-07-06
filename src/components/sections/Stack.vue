@@ -69,8 +69,9 @@ onBeforeUnmount(() => {
   display: flex;
   flex-direction: column;
   border-bottom: 2px solid var(--text-primary);
+  background-color: var(--bg-primary);
 
-  @apply md:flex-row mb-60 sm:pb-80 md:pb-100 lg:pb-120;
+  @apply md:flex-row mb-60 sm:pb-80 md:pb-100 lg:pb-160 pt-40;
 
   &__illustration {
     @apply md:w-[50%];

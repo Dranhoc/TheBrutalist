@@ -6,6 +6,7 @@ import GlitchAnimation from "@/components/GlitchAnimation.vue";
 import bg from "@/assets/img/bg-wall.png?w=150;200&format=webp&as=srcset";
 
 const { sidebarAnimated } = useScrollTrigger();
+const isContactVisible = ref(false);
 
 const nav: Ref<HTMLElement | null> = ref(null);
 const sidebarVideo: Ref<HTMLVideoElement | null> = ref(null);
@@ -39,27 +40,20 @@ const updateScrollVelocity = () => {
   if (nav.value) {
     const links = nav.value.querySelectorAll("a");
 
-    // Si on est dans la section contact, forcer progressivement vers l'état normal
     if (sidebarAnimated.value) {
-      // Réduire progressivement smoothedVelocity pour revenir à l'état normal
-      smoothedVelocity = smoothedVelocity * 0.85; // Réduction plus rapide
-
-      // Forcer le gap vers 40px
+      smoothedVelocity = smoothedVelocity * 0.85;
       const currentGap = parseFloat(nav.value.style.gap) || 40;
       const targetGap = 40;
-      const newGap = currentGap + (targetGap - currentGap) * 0.2; // Interpolation douce
+      const newGap = currentGap + (targetGap - currentGap) * 0.2;
       nav.value.style.gap = `${newGap}px`;
 
-      // Forcer les rotations vers 0
       links.forEach((link) => {
         const currentTransform = (link as HTMLElement).style.transform;
         if (currentTransform && currentTransform !== "rotate(0deg) translateY(0px)") {
-          // Extraction des valeurs actuelles et interpolation vers 0
           (link as HTMLElement).style.transform = "rotate(0deg) translateY(0px)";
         }
       });
     } else {
-      // Animation normale de scroll
       const velocityRatio = Math.min(smoothedVelocity / 100, 1);
 
       if (scrollDirection === "down") {
@@ -110,15 +104,12 @@ const handleScroll = () => {
   }
 };
 
-// Watcher pour contrôler la vidéo quand on entre/sort de la section contact
 watch(sidebarAnimated, (newValue) => {
   if (sidebarVideo.value) {
     if (newValue) {
-      // On entre dans la section contact : relancer la vidéo depuis le début
       sidebarVideo.value.currentTime = 0;
       sidebarVideo.value.play();
     } else {
-      // On sort de la section contact : pause la vidéo
       sidebarVideo.value.pause();
     }
   }
@@ -127,7 +118,6 @@ watch(sidebarAnimated, (newValue) => {
 onMounted(() => {
   window.addEventListener("scroll", handleScroll, { passive: true });
 
-  // Configurer la vidéo
   if (sidebarVideo.value) {
     sidebarVideo.value.playbackRate = 0.8;
   }
@@ -163,19 +153,28 @@ aside {
   top: 0;
   left: 0;
   width: 180px;
-  background-color: var(--bg-body);
+  background-color: var(--bg-primary);
   flex-shrink: 0;
-  // overflow: hidden;
+  transition: background-color 0.3s ease;
+  &.animate-sidebar {
+    background-color: var(--bg-body);
+  }
+
   @apply py-40 hidden lg:flex justify-center;
 
   img {
     position: fixed;
-    width: 180px;
-    top: -40px;
-    min-height: calc(100vh + 40px);
+    width: 160px;
+    top: 10px;
+    left: 10px;
+    min-height: calc(100vh - 20px);
     opacity: 0.6;
     transition: opacity 1s ease;
     z-index: 1;
+    border-radius: 10px;
+    @screen 4xl {
+      left: calc((100vw - 2050px) / 2 + 10px);
+    }
   }
 
   .sidebar-video {
@@ -187,7 +186,6 @@ aside {
     border-radius: 20px;
     opacity: 0;
     object-fit: cover;
-    // transform: rotate(90deg);
     transform-origin: center;
     transition: opacity 1s ease;
     z-index: 1;
@@ -200,16 +198,15 @@ aside {
 
 nav {
   position: fixed;
-  left: -10px;
   display: flex;
   flex-direction: column;
   gap: 40px;
   transition: gap 0.5s ease-out;
   z-index: 1;
-  @apply px-20 text-neg-5-32;
+  @apply px-20 text-neg-5-30;
 
   @screen 4xl {
-    left: calc((100vw - 2050px) / 2 - 10px);
+    left: calc((100vw - 2050px) / 2);
   }
 
   .btn-theme {
@@ -223,7 +220,6 @@ nav {
     margin-left: auto;
     line-height: 1;
     z-index: 1;
-
     transition: margin 0.3s ease, padding 0.3s ease, font-size 0.3s ease, transform 0.5s ease-out;
 
     &::before {
@@ -237,7 +233,6 @@ nav {
       z-index: -1;
       clip-path: polygon(4% 0, 99% 0, 95% 100%, 0% 100%);
       border-top: 2px solid white;
-
       transition: background-color 0.3s ease, border-radius 0.3s ease, clip-path 0.3s ease;
     }
 

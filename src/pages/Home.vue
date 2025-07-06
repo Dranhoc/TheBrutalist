@@ -82,8 +82,8 @@ onBeforeUnmount(() => {
     <CursorFilter
       :size="50"
       :enlarge-rules="[
-        { selector: '.s-about', size: 125 },
-        { selector: '.s-work-with', size: 125 },
+        { selector: '.s-about', size: 90 },
+        { selector: '.s-work-with', size: 90 },
         { selector: '.s-slider', size: 20 },
         { selector: '.s-contact', size: 15 },
       ]"
@@ -98,12 +98,12 @@ onBeforeUnmount(() => {
           <GlitchAnimation text="FRONT-END" />
           DEVELOPER.
         </h1>
+        <figure class="s-hi__me">
+          <div class="s-hi__text whitespace-pre-line">JUST IN TIME. {{ "\n" }}I WAS WAITING{{ "\n" }}FOR YOU!</div>
+          <img class="w-full h-full object-cover me-top" :srcset="meTop" alt="my photo" />
+          <img class="w-full h-full object-cover me-bottom" :srcset="meBottom" alt="my photo" />
+        </figure>
       </div>
-      <figure class="s-hi__me">
-        <div class="s-hi__text whitespace-pre-line">JUST IN TIME. {{ "\n" }}I WAS WAITING{{ "\n" }}FOR YOU!</div>
-        <img class="w-full h-full object-cover me-top" :srcset="meTop" alt="my photo" />
-        <img class="w-full h-full object-cover me-bottom" :srcset="meBottom" alt="my photo" />
-      </figure>
     </section>
     <section class="s-about">
       <div class="s-about__me">
@@ -152,13 +152,6 @@ onBeforeUnmount(() => {
       </figure>
     </section>
 
-    <section class="s-contact-title">
-      <div class="s-contact-content">
-        <h2 class="reset">LET'S WORK TOGETHER</h2>
-        <div class="subtitle">Type fast before this cute moment melts into the void.</div>
-      </div>
-    </section>
-
     <Contact />
 
     <Footer />
@@ -168,13 +161,34 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 .s-hi {
   position: relative;
-  padding: 40px 20px;
-  background-color: transparent;
-  z-index: 2;
+
+  background-color: var(--bg-body);
+  // color: var(--text-secondary);
   overflow: hidden;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  z-index: 2;
+  &::before {
+    position: absolute;
+    content: "";
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-primary);
+    z-index: 1;
+  }
+  &__content {
+    margin-top: 10px;
+    margin-left: 10px;
+    z-index: 3;
+    width: calc(100% - 20px);
+    height: calc(100vh - 20px);
+    padding: 40px 20px;
+    background-color: var(--bg-body);
+    border-radius: 20px;
+    @apply lg:ml-0 lg:w-[calc(100%-10px)];
+  }
 
   .me-top {
     animation: openMouth 1s forwards 2.5s;
@@ -185,18 +199,18 @@ onBeforeUnmount(() => {
     position: absolute;
     display: flex;
     flex-direction: column;
-    z-index: 2;
+    z-index: 1;
     opacity: 0;
     animation: translateFromBottom 0.5s forwards 1.5s;
-    left: 0;
-    bottom: 0;
-    @apply w-[50%] sm:w-[30%] md:w-[25%] lg:w-[20%];
+    left: 10px;
+    bottom: 9px;
+    @apply w-[50%] sm:w-[30%] md:w-[25%] lg:w-[20%] lg:left-0;
 
     img {
       height: 100%;
       width: auto;
       object-fit: cover;
-      z-index: 2;
+      z-index: -1;
     }
   }
 
@@ -220,8 +234,10 @@ onBeforeUnmount(() => {
   display: flex;
   flex-direction: column;
   margin-inline: 0 !important;
+  background-color: var(--bg-primary);
+  gap: 20px;
 
-  @apply md:flex-row;
+  @apply md:flex-row pt-120 pb-60;
 
   &__me {
     padding: 60px 20px 100px;
@@ -229,7 +245,7 @@ onBeforeUnmount(() => {
     background-color: var(--bg-primary);
     flex-shrink: 0;
 
-    @apply md:w-[50%];
+    @apply md:w-[calc(50%)];
     p {
       padding-top: 20px;
       @apply md:pt-40;
@@ -265,19 +281,9 @@ onBeforeUnmount(() => {
     filter: blur(20px);
     opacity: 1;
     z-index: 1;
-  }
-
-  &::before {
-    position: absolute;
-    content: "";
-    top: -30%;
-    width: 150%;
-    height: 70%;
-    background: radial-gradient(ellipse at 60% 10%, #7c7c7c, #e8e8e882 10%, transparent 50%);
-    transform: scaleX(1.7) scaleY(1.2) rotate(-10deg);
-    filter: blur(15px);
-    animation: pulse 8s forwards infinite;
-    animation-delay: 3s;
+    @screen md {
+      padding-inline: 10px;
+    }
   }
 
   &__me {
@@ -345,30 +351,6 @@ onBeforeUnmount(() => {
       animation: fadeInSpiral-md 0.5s ease forwards, spinAndPulse-md 4s infinite linear reverse;
       animation-delay: 2s, 2.5s;
     }
-  }
-}
-.s-contact-title {
-  margin-top: 100px;
-  padding-top: 20px;
-  border-top: 2px solid #ff00aa6b;
-  // box-shadow: rgba(251, 0, 255, 0.36) 0px 0px 10px;
-  @apply px-20 md:mt-150 lg:mt-200;
-
-  h2 {
-    color: var(--text-secondary);
-    text-shadow: rgba(251, 0, 255, 0.36) 0px 0px 10px;
-    -webkit-text-stroke: 1px #ff00aa6b; /* Contour rose flashy */
-    text-stroke: 1px #ff00aa6b;
-    line-height: 1.2;
-    @apply text-pos-5-32 lg:text-pos-5-60 3xl:text-pos-5-70;
-  }
-  .subtitle {
-    color: #ff00aa6b;
-    @apply uppercase text-pos-5-18 lg:text-pos-5-20 font-normal pb-60 md:pb-80 lg:pb-120;
-  }
-
-  &__content {
-    @apply sm:mt-120 md:mt-140 lg:mt-160;
   }
 }
 </style>

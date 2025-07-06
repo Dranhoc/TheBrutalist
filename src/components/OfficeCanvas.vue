@@ -226,6 +226,11 @@ onBeforeUnmount(() => {
   position: relative;
   overflow: hidden;
   cursor: none;
+  box-shadow: rgba(181, 181, 181, 0.35) -5px 0px 20px;
+  @screen md {
+    border-radius: 20px;
+    width: calc(100% - 20px);
+  }
 }
 
 .secret-text {

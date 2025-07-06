@@ -158,29 +158,29 @@ const handleTouchEnd = () => {
 
 <template>
   <section class="s-slider full-w">
-    <div class="mb-40 sm:mb-60 md:mb-80 lg:mb-100">
-      <h2><GlitchAnimation text="WORK AND WONDERS" /></h2>
-      <div class="text-pos-5-18 lg:text-pos-5-20 font-normal">A SELECTION OF A FEW THINGS I MADE HAPPEN</div>
-    </div>
-    <div class="s-slider__buttons">
-      <button class="btn-primary" v-for="(slide, index) in slides" :key="slide.id" :class="{ active: index === currentSlideIndex }" @click="goToSlide(index)">
-        <GlitchAnimation :text="slide.title" trigger="hover" />
-      </button>
-    </div>
-    <div class="s-slider__content" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd">
-      <div class="slides-container">
-        <div v-for="slideData in orderedSlides" :key="slideData.id" :class="['slide', slideData.slideClass]" @click="handleSlideClick(slideData)">
-          <div :class="['bg', `bg--${slideData.id}`]">
-            <img :srcset="slideData.image" alt="" role="presentation" />
+    <div class="s-slider__content">
+      <div class="mb-40 sm:mb-60 md:mb-80 lg:mb-100">
+        <h2><GlitchAnimation text="WORK AND WONDERS" /></h2>
+        <div class="text-pos-5-18 lg:text-pos-5-20 font-normal">A SELECTION OF A FEW THINGS I MADE HAPPEN</div>
+      </div>
+      <div class="s-slider__buttons">
+        <button class="btn-primary" v-for="(slide, index) in slides" :key="slide.id" :class="{ active: index === currentSlideIndex }" @click="goToSlide(index)">
+          <GlitchAnimation :text="slide.title" trigger="hover" />
+        </button>
+      </div>
+      <div class="s-slider__content" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd">
+        <div class="slides-container">
+          <div v-for="slideData in orderedSlides" :key="slideData.id" :class="['slide', slideData.slideClass]" @click="handleSlideClick(slideData)">
+            <div :class="['bg', `bg--${slideData.id}`]">
+              <img :srcset="slideData.image" alt="" role="presentation" />
+            </div>
+            <p class="reset" :class="{ active: slideData.originalIndex === currentSlideIndex }">
+              {{ slideData.text }}
+            </p>
           </div>
-          <p class="reset" :class="{ active: slideData.originalIndex === currentSlideIndex }">
-            {{ slideData.text }}
-          </p>
         </div>
       </div>
-    </div>
 
-    <div class="s-slider__button">
       <a :href="slides[currentSlideIndex].link" target="_blank" rel="noopener noreferrer" class="btn-site"> Visit website </a>
     </div>
   </section>
@@ -190,30 +190,43 @@ const handleTouchEnd = () => {
 .s-slider {
   position: relative;
   width: 100%;
-  background-color: var(--bg-secondary);
-  @apply px-20  -mt-20;
+  background-color: var(--bg-primary);
+  z-index: 1;
+  @apply sm:px-10 lg:pr-10 lg:pl-0 -mt-60;
 
-  &__button {
+  &__content {
+    background-color: var(--bg-body);
+    padding: 20px;
+    z-index: 2;
+    @screen sm {
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      width: calc(100% - 10px);
+    }
+  }
+
+  .btn-site {
+    position: relative;
+    bottom: 40px;
+    left: calc(50% - 88px);
+    display: inline-block;
+    padding: 12px 24px;
+    text-decoration: none;
     text-align: center;
-    margin-top: 30px;
+    font-family: "JetBrains Mono", serif;
+    font-size: 16px;
+    font-weight: 500;
+    border: 2px solid var(--text-primary);
+    transition: all 0.3s ease;
+    z-index: 10;
+    margin-inline: auto;
+    @apply lg:bottom-80;
 
-    .btn-site {
-      display: inline-block;
-      padding: 12px 24px;
-      text-decoration: none;
-      font-family: "JetBrains Mono", serif;
-      font-size: 16px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      border: 2px solid var(--text-primary);
-      transform: translateY(-200%);
-
-      &:hover {
-        background-color: transparent;
-        border-color: var(--bg-primary);
-        color: var(--bg-primary);
-        box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
-      }
+    &:hover {
+      background-color: transparent;
+      border-color: var(--bg-primary);
+      color: var(--bg-primary);
+      box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
     }
   }
 
@@ -248,7 +261,7 @@ const handleTouchEnd = () => {
 
   .slide {
     position: absolute;
-    top: 40px;
+    top: 20px;
     left: 0;
     width: 100%;
     aspect-ratio: 280/150;

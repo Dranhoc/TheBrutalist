@@ -319,6 +319,24 @@
   }
 }
 
+@keyframes vampiricFlash {
+  0% {
+    filter: grayscale(100%) brightness(200%) contrast(150%) sepia(0%) hue-rotate(0deg) saturate(100%);
+  }
+  1.67% {
+    filter: grayscale(100%) brightness(0.6) contrast(1.5) sepia(100%) hue-rotate(310deg) saturate(300%);
+  }
+  3.5% {
+    filter: grayscale(100%) brightness(0.6) contrast(1.5) sepia(100%) hue-rotate(310deg) saturate(300%);
+  }
+  8% {
+    filter: grayscale(100%) brightness(200%) contrast(150%) sepia(0%) hue-rotate(0deg) saturate(100%);
+  }
+  100% {
+    filter: grayscale(100%) brightness(200%) contrast(150%) sepia(0%) hue-rotate(0deg) saturate(100%);
+  }
+}
+
 //animate classes
 
 .animate-sticker {
@@ -346,7 +364,7 @@
 .animate-cascade-opacity--1,
 .animate-cascade-opacity--2,
 .animate-cascade-opacity--3 {
-  display: inline-block;
+  // display: inline-block;
   opacity: 0;
   animation: translateLeftToRight 0.5s ease forwards;
 }
@@ -373,6 +391,9 @@
 
 .fade-in {
   animation: fadeIn 0.3s forwards;
+}
+.fadeInFast {
+  animation: fadeIn 0.05s forwards;
 }
 
 .fade-out {

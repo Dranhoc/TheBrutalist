@@ -8,8 +8,11 @@ import { useScrollTrigger } from "@/composables/useScrollTrigger";
 
 const { setSidebarAnimation } = useScrollTrigger();
 
+const isTitleAnimated = ref(false);
+
 const handleContactIntersection = (isIntersecting: boolean) => {
   setSidebarAnimation(isIntersecting);
+  isTitleAnimated.value = isIntersecting;
 };
 
 const textareaRef = ref<HTMLTextAreaElement>();
@@ -47,6 +50,13 @@ onMounted(() => {
 </script>
 
 <template>
+  <section class="s-contact-title" :class="{ animated: isTitleAnimated }">
+    <div class="s-contact-content">
+      <h2 class="reset">LET'S WORK TOGETHER</h2>
+      <div class="subtitle">Type fast before this cute moment melts into the void.</div>
+    </div>
+  </section>
+
   <ScrollAnimation animation-class="fade-in" :delay="0" :threshold="0.1" :once="false" :emit-intersection="true" @intersection="handleContactIntersection">
     <section id="contact" class="s-contact">
       <form @submit.prevent="handleSubmit">
@@ -279,6 +289,40 @@ onMounted(() => {
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+}
+
+.s-contact-title {
+  margin-top: 100px;
+  padding-top: 20px;
+  border-top: 2px solid var(--bg-primary);
+  @apply px-20 md:mt-150 lg:mt-200;
+
+  h2 {
+    line-height: 1.2;
+    transition: all 0.5s ease;
+    @apply text-neg-5-36 lg:text-neg-5-50 3xl:text-neg-5-70;
+  }
+  .subtitle {
+    transition: color 0.5s ease;
+    @apply uppercase text-pos-5-18 lg:text-pos-5-20 font-normal pb-60 md:pb-80 lg:pb-120;
+  }
+  &.animated {
+    border-top: 2px solid #ff00aa6b;
+    h2 {
+      color: var(--text-secondary);
+      text-shadow: rgba(251, 0, 255, 0.36) 0px 0px 10px;
+      -webkit-text-stroke: 1px #ff00aa6b; /* Contour rose flashy */
+      text-stroke: 1px #ff00aa6b;
+      @apply text-pos-5-32 lg:text-pos-5-60 3xl:text-pos-5-70;
+    }
+    .subtitle {
+      color: #ff00aa6b;
+    }
+
+    &__content {
+      @apply sm:mt-120 md:mt-140 lg:mt-160;
     }
   }
 }
