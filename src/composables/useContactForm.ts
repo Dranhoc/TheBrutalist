@@ -3,6 +3,7 @@ import { ref, reactive, readonly, type Ref } from "vue";
 export interface ContactFormData {
   name: string;
   email: string;
+  company: string;
   message: string;
   policy: boolean;
 }
@@ -19,10 +20,7 @@ export interface UseContactFormReturn {
   isSubmitting: Readonly<Ref<boolean>>;
   isSuccess: Readonly<Ref<boolean>>;
   serverError: Readonly<Ref<string | null>>;
-  handleChange: (field: keyof ContactFormData, value: string | boolean) => void;
-  handleSubmit: (e: Event) => Promise<void>;
-  handleInvalid: (e: Event, fieldName: string) => void;
-  handleInput: (e: Event) => void;
+  handleSubmit: () => Promise<void>;
   resetForm: () => void;
 }
 
@@ -30,6 +28,7 @@ export const useContactForm = (config: UseContactFormConfig = {}): UseContactFor
   const formData = reactive<ContactFormData>({
     name: "",
     email: "",
+    company: "",
     message: "",
     policy: false,
   });
@@ -49,6 +48,7 @@ export const useContactForm = (config: UseContactFormConfig = {}): UseContactFor
     Object.assign(formData, {
       name: "",
       email: "",
+      company: "",
       message: "",
       policy: false,
     });
@@ -56,45 +56,20 @@ export const useContactForm = (config: UseContactFormConfig = {}): UseContactFor
     isSuccess.value = false;
   };
 
-  const handleInvalid = (e: Event, fieldName: string) => {
-    e.preventDefault();
-    const target = e.target as HTMLInputElement | HTMLTextAreaElement;
-
-    switch (fieldName) {
-      case "name":
-        if (target.validity.valueMissing) {
-          target.setCustomValidity("Please enter your name");
-        } else if (target.validity.tooShort) {
-          target.setCustomValidity("Name must be at least 2 characters long");
-        }
-        break;
-      case "email":
-        if (target.validity.valueMissing) {
-          target.setCustomValidity("Please enter your email");
-        } else if (target.validity.typeMismatch) {
-          target.setCustomValidity("Please enter a valid email address");
-        }
-        break;
-      case "message":
-        if (target.validity.valueMissing) {
-          target.setCustomValidity("Please enter your message");
-        } else if (target.validity.tooShort) {
-          target.setCustomValidity("Message must be at least 10 characters long");
-        }
-        break;
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.email || !formData.company || !formData.message) {
+      serverError.value = "Please fill in all required fields";
+      return;
     }
-  };
 
-  const handleInput = (e: Event) => {
-    const target = e.target as HTMLInputElement | HTMLTextAreaElement;
-    target.setCustomValidity("");
-  };
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(formData.email)) {
+      serverError.value = "Please enter a valid email address (e.g. user@example.com)";
+      return;
+    }
 
-  const handleSubmit = async (e: Event) => {
-    e.preventDefault();
-
-    if (!formData.policy) {
-      serverError.value = "Please accept the privacy policy";
+    if (formData.message.length < 10) {
+      serverError.value = "Message must be at least 10 characters long";
       return;
     }
 
@@ -148,10 +123,7 @@ export const useContactForm = (config: UseContactFormConfig = {}): UseContactFor
     isSubmitting: readonly(isSubmitting),
     isSuccess: readonly(isSuccess),
     serverError: readonly(serverError),
-    handleChange,
     handleSubmit,
-    handleInvalid,
-    handleInput,
     resetForm,
   };
 };

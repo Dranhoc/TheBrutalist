@@ -5,12 +5,12 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-  message: "Thank you, your message has been sent successfully. We will get back to you within 48 hours. See you soon.",
+  message: "Thank you, your message has been sent successfully. I'll get back to you within 48 hours. See you soon.",
 });
 </script>
 
 <template>
-  <div v-if="show" class="animate-from-bottom absolute -bottom-30 right-0 ml-auto max-w-[270px] text-14 z-[3] bg-[#5774148a] backdrop-blur-sm p-15 rounded-[10px]">
+  <div v-if="show" class="animate-from-bottom absolute -bottom-0 left-[calc(50%-135px)] max-w-[270px] text-16 uppercase z-[3] bg-emerald-400/30 backdrop-blur-sm p-20 rounded-[20px] text-slate-500">
     {{ message }}
   </div>
 </template>
