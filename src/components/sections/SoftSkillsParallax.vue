@@ -113,7 +113,7 @@ function easeInOutCubic(t: number): number {
     top: -40px;
     left: 0;
     width: 100%;
-    height: calc(180px);
+    height: 180px;
     object-fit: cover;
     z-index: 1;
     pointer-events: none;
@@ -127,7 +127,7 @@ function easeInOutCubic(t: number): number {
     will-change: transform;
     transition: transform 0.2s ease;
     z-index: 3;
-    @apply w-[300vw] md:w-[200vw] lg:w-[180vw];
+    @apply w-[300vw] md:w-[200vw] lg:w-[180vw] 4xl:w-[3000px];
     margin-bottom: 80px;
 
     span {
@@ -148,10 +148,10 @@ function easeInOutCubic(t: number): number {
     will-change: transform;
     transition: transform 0.3s ease;
     z-index: 3;
-    width: 300vw;
+    width: 250vw;
     height: 260px;
     overflow-y: hidden;
-    @apply text-neg-5-26 mt-40 pb-40;
+    @apply text-neg-5-26 mt-40 pb-40 4xl:w-[3000px];
   }
 }
 </style>

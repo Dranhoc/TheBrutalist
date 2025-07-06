@@ -131,33 +131,6 @@ useSEO({
   display: flex;
   flex-direction: column;
 
-  &__content {
-    h1 {
-      line-height: 1;
-      @apply text-neg-5-[17vw];
-
-      @screen sm {
-        @apply text-neg-5-[14vw];
-      }
-
-      @screen md {
-        @apply text-neg-5-[12vw];
-      }
-
-      @screen lg {
-        @apply text-neg-5-[10vw];
-        text-align: right;
-      }
-
-      @screen 2xl {
-        @apply text-neg-5-[10vw];
-      }
-      @screen 3xl {
-        @apply text-neg-5-[12vw];
-      }
-    }
-  }
-
   .me-top {
     animation: openMouth 1s forwards 2.5s;
     position: relative;
@@ -172,7 +145,7 @@ useSEO({
     animation: translateFromBottom 0.5s forwards 1.5s;
     left: 0;
     bottom: 0;
-    @apply w-[50vw] sm:w-[30vw] md:w-[25vw] lg:w-[20vw];
+    @apply w-[50%] sm:w-[30%] md:w-[25%] lg:w-[20%];
 
     img {
       height: 100%;
@@ -193,7 +166,7 @@ useSEO({
     padding: 1.5vw;
     z-index: 2;
     animation: translateFromMouth 0.5s forwards 2.5s;
-    @apply text-neg-5-16 md:text-neg-5-24;
+    @apply text-neg-5-16 md:text-neg-5-24 4xl:p-30;
   }
 }
 
@@ -269,7 +242,7 @@ useSEO({
     z-index: 2;
     left: 0;
     bottom: 0;
-    @apply w-[50vw] md:w-[40vw];
+    @apply w-[50%] md:w-[40%];
 
     img {
       height: 100%;
@@ -289,7 +262,7 @@ useSEO({
     padding-inline: 1.5vw;
     padding-block: 2vw;
     z-index: 2;
-    @apply text-neg-5-20 md:text-neg-5-36 md:left-[calc(40vw-40px)];
+    @apply text-neg-5-20 md:text-neg-5-36 md:left-[calc(100%-40px)] 4xl:p-40;
   }
   .left-spiral,
   .right-spiral {
@@ -342,7 +315,7 @@ useSEO({
     -webkit-text-stroke: 1px #ff00aa6b; /* Contour rose flashy */
     text-stroke: 1px #ff00aa6b;
     line-height: 1.2;
-    @apply text-pos-5-36 lg:text-pos-5-[3.5vw];
+    @apply text-pos-5-36 lg:text-pos-5-[3.5vw] 3xl:text-pos-5-[90px];
   }
   .subtitle {
     color: #ff00aa6b;

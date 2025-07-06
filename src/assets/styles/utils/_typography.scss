@@ -38,7 +38,28 @@
     .title-1 {
       &:not(.reset) {
         line-height: 1;
-        // @apply text-neg-5-[18vw] md:text-neg-5-[11vw];
+        line-height: 1;
+        @apply text-neg-5-[17vw];
+
+        @screen sm {
+          @apply text-neg-5-[14vw];
+        }
+
+        @screen md {
+          @apply text-neg-5-[12vw];
+        }
+
+        @screen lg {
+          @apply text-neg-5-[10vw];
+          text-align: right;
+        }
+
+        @screen 2xl {
+          @apply text-neg-5-[10vw];
+        }
+        @screen 3xl {
+          @apply text-neg-5-[230px];
+        }
       }
     }
 
@@ -47,7 +68,7 @@
       &:not(.reset) {
         line-height: 1.2;
 
-        @apply text-neg-5-36 lg:text-neg-5-[3.5vw];
+        @apply text-neg-5-36 lg:text-neg-5-[3.5vw] 3xl:text-neg-5-[90px];
       }
     }
 

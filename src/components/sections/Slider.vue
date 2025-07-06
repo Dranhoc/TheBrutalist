@@ -239,6 +239,9 @@ const handleTouchEnd = () => {
       margin: 0 auto;
       min-height: calc(65vw / (280 / 150) + 80px);
     }
+    @screen 4xl {
+      min-height: calc((2050px * 0.65) / (280 / 150) + 80px);
+    }
   }
 
   .slide {
