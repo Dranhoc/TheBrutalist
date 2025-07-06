@@ -203,7 +203,7 @@ nav {
   gap: 40px;
   transition: gap 0.5s ease-out;
   z-index: 1;
-  @apply px-20 text-neg-5-30;
+  @apply text-neg-5-30;
 
   @screen 4xl {
     left: calc((100vw - 2050px) / 2);

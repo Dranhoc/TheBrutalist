@@ -184,6 +184,7 @@ const handleTouchEnd = () => {
       <a :href="slides[currentSlideIndex].link" target="_blank" rel="noopener noreferrer" class="btn-site"> Visit website </a>
     </div>
   </section>
+  <div class="decor"></div>
 </template>
 
 <style scoped lang="scss">
@@ -357,6 +358,26 @@ const handleTouchEnd = () => {
       margin-top: 30px;
       touch-action: pan-y;
     }
+  }
+}
+
+.decor {
+  position: relative;
+  width: 100%;
+  @apply h-60 lg:h-80 2xl:h-100;
+  background-color: var(--bg-primary);
+  &::before {
+    position: absolute;
+    content: "";
+    bottom: 0;
+    left: 0;
+    width: 150%;
+    height: 100%;
+    background: radial-gradient(ellipse at 60% 10%, #333333, #54545482 10%, transparent 50%);
+    transform: scaleX(1.7) scaleY(1.2) translateY(20%) rotate(180deg);
+    filter: blur(20px);
+    animation: pulse 8s forwards infinite;
+    animation-delay: 3s;
   }
 }
 </style>

@@ -295,9 +295,23 @@ onMounted(() => {
 }
 
 .decor {
+  position: relative;
   width: 100%;
-  @apply h-40 md:h-60 lg:h-80 2xl:h-100;
+  @apply h-60 lg:h-80 2xl:h-100;
   background-color: var(--bg-primary);
+  &::before {
+    position: absolute;
+    content: "";
+    top: -20px;
+    left: -50%;
+    width: 150%;
+    height: 100%;
+    background: radial-gradient(ellipse at 60% 10%, #333333, #54545482 10%, transparent 50%);
+    transform: scaleX(1.7) scaleY(1.2);
+    filter: blur(15px);
+    animation: pulse 8s forwards infinite;
+    animation-delay: 3s;
+  }
 }
 
 .s-contact-title {
