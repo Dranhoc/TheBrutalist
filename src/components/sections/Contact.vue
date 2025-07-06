@@ -50,6 +50,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <div class="decor"></div>
   <section class="s-contact-title" :class="{ animated: isTitleAnimated }">
     <div class="s-contact-content">
       <h2 class="reset">LET'S WORK TOGETHER</h2>
@@ -293,11 +294,16 @@ onMounted(() => {
   }
 }
 
+.decor {
+  width: 100%;
+  @apply h-40 md:h-60 lg:h-80 2xl:h-100;
+  background-color: var(--bg-primary);
+}
+
 .s-contact-title {
-  margin-top: 100px;
   padding-top: 20px;
   border-top: 2px solid var(--bg-primary);
-  @apply px-20 md:mt-150 lg:mt-200;
+  @apply px-20 mt-40 md:mt-60 lg:mt-80;
 
   h2 {
     line-height: 1.2;
