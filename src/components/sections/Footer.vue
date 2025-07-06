@@ -8,8 +8,9 @@
 
 <style scoped lang="scss">
 footer {
-  margin-top: auto;
+  margin-top: 100px;
   padding-block: 20px;
   text-align: center;
+  border-top: 2px solid var(--text-primary);
 }
 </style>

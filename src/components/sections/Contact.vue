@@ -61,7 +61,7 @@ onMounted(() => {
       <form @submit="handleSubmit">
         <div class="s-contact__form">
           <img :srcset="bgUnicorn" alt="" role="presentation" />
-          <span class="s-contact__subtitle">LET'S TALK ABOUT YOUR PROJECT{{ "\n" }}OR FEEL FREE TO LEAVE A MESSAGE</span>
+          <span class="s-contact__subtitle">TELL ME ABOUT YOUR PROJECT{{ "\n" }}OR SIMPLY DROP A SWEET MESSAGE</span>
           <div ref="formRowRef">
             <label for="name" class="sr-only">NAME</label>
             <input
@@ -110,21 +110,6 @@ onMounted(() => {
               required
             />
           </div>
-          <!-- <div>
-            <label for="subject" class="sr-only">Subject</label>
-            <input
-              type="text"
-              placeholder="Subject"
-              id="subject"
-              name="subject"
-              :value="formData.subject"
-              @input="(e) => handleChange('subject', (e.target as HTMLInputElement).value)"
-              @invalid="(e) => handleInvalid(e, 'subject')"
-              :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
-              :disabled="isSubmitting"
-              required
-            />
-          </div> -->
 
           <label for="message" class="sr-only">Message</label>
           <textarea

@@ -165,7 +165,7 @@ aside {
   width: 180px;
   background-color: var(--bg-body);
   flex-shrink: 0;
-  overflow: hidden;
+  // overflow: hidden;
   @apply py-40 hidden lg:flex justify-center;
 
   img {
@@ -182,7 +182,7 @@ aside {
     position: fixed;
     top: 10px;
     left: 10px;
-    width: 170px;
+    width: 160px;
     height: calc(100% - 20px);
     border-radius: 20px;
     opacity: 0;
@@ -192,6 +192,9 @@ aside {
     transition: opacity 1s ease;
     z-index: 1;
     overflow: hidden;
+    @screen 4xl {
+      left: calc((100vw - 2050px) / 2 + 10px);
+    }
   }
 }
 
@@ -204,6 +207,10 @@ nav {
   transition: gap 0.5s ease-out;
   z-index: 1;
   @apply px-20 text-neg-5-32;
+
+  @screen 4xl {
+    left: calc((100vw - 2050px) / 2 - 10px);
+  }
 
   .btn-theme {
     position: relative;

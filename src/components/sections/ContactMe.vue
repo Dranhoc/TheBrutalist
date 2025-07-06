@@ -33,6 +33,10 @@ import GlitchAnimation from "@/components/GlitchAnimation.vue";
 
   @apply md:flex-row mb-60 sm:pb-80 md:pb-100 lg:pb-120;
 
+  &__illustration {
+    @apply md:w-[50%];
+  }
+
   &__stack {
     display: flex;
     flex-direction: column;
@@ -50,7 +54,7 @@ import GlitchAnimation from "@/components/GlitchAnimation.vue";
         font-family: "JetBrains Mono", serif;
         font-size: 16px;
         padding-left: 10px;
-        @apply lg:text-[1.5vw];
+        @apply lg:text-24;
       }
     }
   }

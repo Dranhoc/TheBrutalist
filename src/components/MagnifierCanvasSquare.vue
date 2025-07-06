@@ -315,8 +315,8 @@ onBeforeUnmount(() => {
   height: 100% !important;
 
   object-fit: cover;
-  @screen 3xl {
+  /* @screen 3xl {
     object-fit: fill;
-  }
+  } */
 }
 </style>

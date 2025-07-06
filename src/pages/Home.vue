@@ -217,6 +217,9 @@ useSEO({
       @apply md:pt-40;
     }
   }
+  &__illustration {
+    @apply md:w-[50%];
+  }
 }
 
 .s-office {
