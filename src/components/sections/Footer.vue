@@ -2,7 +2,7 @@
 
 <template>
   <footer>
-    <div class="flex w-full justify-center px-40"><span class="text-neg-5-[3vw]">BEAUTIFUL FOOTER IN PROGRESS</span></div>
+    <div class="flex w-full justify-center px-40"><span class="title-3">BEAUTIFUL FOOTER IN PROGRESS</span></div>
   </footer>
 </template>
 

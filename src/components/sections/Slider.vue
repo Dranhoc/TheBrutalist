@@ -42,7 +42,7 @@ const slides = [
     title: "INCEPTION",
     image: slider8,
     text: "2025 \n Inception \n Design: Me",
-    link: "#",
+    link: "https://www.youtube.com/watch?v=xm3YgoEiEDc&list=RDxm3YgoEiEDc&start_radio=1&t=2s&autoplay=1",
   },
   // {
   //   id: 4,

@@ -360,7 +360,7 @@ onBeforeUnmount(() => {
     -webkit-text-stroke: 1px #ff00aa6b; /* Contour rose flashy */
     text-stroke: 1px #ff00aa6b;
     line-height: 1.2;
-    @apply text-pos-5-36 lg:text-pos-5-[3.5vw] 3xl:text-pos-5-[90px];
+    @apply text-pos-5-32 lg:text-pos-5-60 3xl:text-pos-5-70;
   }
   .subtitle {
     color: #ff00aa6b;

@@ -49,7 +49,7 @@ onBeforeUnmount(() => {
       <CabinCanvas :key="magnifierKey" />
     </div>
     <div class="s-work-with__stack">
-      <h3 class="title-2"><GlitchAnimation text="THINGS I ARGUE WITH DAILY" /></h3>
+      <h3><GlitchAnimation text="THINGS I ARGUE WITH DAILY" /></h3>
       <ul>
         <li>Vue3</li>
         <li>React</li>
@@ -93,7 +93,7 @@ onBeforeUnmount(() => {
         font-family: "JetBrains Mono", serif;
         font-size: 16px;
         padding-left: 10px;
-        @apply lg:text-24;
+        @apply lg:text-16 2xl:text-24;
       }
     }
   }

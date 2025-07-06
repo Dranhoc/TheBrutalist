@@ -222,8 +222,6 @@ onBeforeUnmount(() => {
   position: relative;
   overflow: hidden;
   cursor: none;
-
-  @apply lg:min-h-[600px];
 }
 
 .secret-text {
@@ -244,6 +242,9 @@ onBeforeUnmount(() => {
   display: block;
   width: 100% !important;
   height: 100% !important;
+  max-height: 400px;
   object-fit: cover;
+  object-position: center bottom;
+  @apply md:max-h-full;
 }
 </style>
