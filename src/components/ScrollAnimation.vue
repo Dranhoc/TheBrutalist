@@ -86,7 +86,6 @@ onUnmounted(() => {
   }
 });
 
-// Recréer l'observer quand le threshold change
 watch(
   () => props.threshold,
   () => {
@@ -94,7 +93,6 @@ watch(
   }
 );
 
-// Reset l'animation si once change de true à false
 watch(
   () => props.once,
   (newOnce) => {

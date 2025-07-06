@@ -9,6 +9,7 @@ import slider4 from "@/assets/img/Portfolio/studio-1.png?w=150;350;700;900;1200;
 import slider5 from "@/assets/img/Portfolio/alpsy-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 import slider6 from "@/assets/img/Portfolio/immovision-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 import slider7 from "@/assets/img/Portfolio/weshre-app-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
+import slider8 from "@/assets/img/Portfolio/inception-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 
 const currentSlideIndex = ref(0);
 const previousSlideIndex = ref(0);
@@ -38,11 +39,18 @@ const slides = [
   },
   {
     id: 4,
-    title: "WS STUDIO",
-    image: slider4,
-    text: "2025 \n WeShre Studio \n Design: Hugo \n Agency : WeShre Studio",
+    title: "INCEPTION",
+    image: slider8,
+    text: "2025 \n Inception \n Design: Me",
     link: "#",
   },
+  // {
+  //   id: 4,
+  //   title: "WS STUDIO",
+  //   image: slider4,
+  //   text: "2025 \n WeShre Studio \n Design: Hugo \n Agency : WeShre Studio",
+  //   link: "#",
+  // },
   {
     id: 5,
     title: "ALPSY",
@@ -73,7 +81,6 @@ const goToSlide = (index: number) => {
   previousSlideIndex.value = currentSlideIndex.value;
   currentSlideIndex.value = index;
 
-  // Débloquer l'animation après la transition
   setTimeout(() => {
     isAnimating.value = false;
   }, 400);
@@ -113,7 +120,6 @@ const handleSlideClick = (slideData: any) => {
   }
 };
 
-// Gestion tactile
 const touchStartX = ref(0);
 const touchStartY = ref(0);
 const touchEndX = ref(0);
@@ -135,18 +141,14 @@ const handleTouchEnd = () => {
   const deltaX = touchStartX.value - touchEndX.value;
   const deltaY = touchStartY.value - touchEndY.value;
 
-  // Vérifier que le swipe horizontal est plus important que vertical
   if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
     if (deltaX > 0) {
-      // Swipe vers la gauche = slide suivant
       goToNextSlide();
     } else {
-      // Swipe vers la droite = slide précédent
       goToPrevSlide();
     }
   }
 
-  // Reset
   touchStartX.value = 0;
   touchStartY.value = 0;
   touchEndX.value = 0;
@@ -260,7 +262,7 @@ const handleTouchEnd = () => {
       color: var(--text-secondary);
       padding: 30px;
       margin-top: auto;
-      max-width: 650px;
+      width: 100%;
       z-index: 7;
       pointer-events: none;
       line-height: 1.5;
@@ -270,7 +272,7 @@ const handleTouchEnd = () => {
       &::before {
         position: absolute;
         content: "";
-        width: 600%;
+        width: 100%;
         height: calc(100% + 20px);
         top: -20px;
         left: 0px;
@@ -285,7 +287,6 @@ const handleTouchEnd = () => {
       }
     }
 
-    // Slide actuellement visible
     &--current {
       z-index: 5;
       transform: translateX(0) scale(1);
@@ -299,7 +300,6 @@ const handleTouchEnd = () => {
       }
     }
 
-    // Slide qui sort (va vers la gauche)
     &--leaving {
       z-index: 4;
       transform: translateX(-100%) scale(0.5);
@@ -312,7 +312,6 @@ const handleTouchEnd = () => {
       }
     }
 
-    // Slides cachées (en attente à droite)
     &--hidden {
       z-index: 1;
       transform: translateX(100%) scale(0.5);
@@ -339,12 +338,11 @@ const handleTouchEnd = () => {
   }
 }
 
-// Media queries pour le responsive mobile
 @media (max-width: 768px) {
   .s-slider {
     &__content {
       margin-top: 30px;
-      touch-action: pan-y; // Permet le scroll vertical mais gère les swipes horizontaux
+      touch-action: pan-y;
     }
   }
 }

@@ -85,6 +85,7 @@ onBeforeUnmount(() => {
         { selector: '.s-about', size: 125 },
         { selector: '.s-work-with', size: 125 },
         { selector: '.s-slider', size: 20 },
+        { selector: '.s-contact', size: 15 },
       ]"
       color="white"
       blend-mode="difference"
@@ -154,7 +155,7 @@ onBeforeUnmount(() => {
     <section class="s-contact-title">
       <div class="s-contact-content">
         <h2 class="reset">LET'S WORK TOGETHER</h2>
-        <div class="subtitle">Type fast, before this cute moment melts into the void.</div>
+        <div class="subtitle">Type fast before this cute moment melts into the void.</div>
       </div>
     </section>
 
