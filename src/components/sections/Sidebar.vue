@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { useLanguageSwitcher } from "@/composables/useLanguageSwitcher";
-import { ref, onMounted, onUnmounted } from "vue";
+import { useScrollTrigger } from "@/composables/useScrollTrigger";
+import { ref, onMounted, onUnmounted, watch } from "vue";
 import type { Ref } from "vue";
 import GlitchAnimation from "@/components/GlitchAnimation.vue";
 import bg from "@/assets/img/bg-wall.png?w=150;200&format=webp&as=srcset";
 
-const { setLanguage, currentLanguage } = useLanguageSwitcher();
-const toggleLanguage = () => {
-  setLanguage(currentLanguage.value === "en" ? "fr" : "en");
-};
+const { sidebarAnimated } = useScrollTrigger();
 
 const nav: Ref<HTMLElement | null> = ref(null);
+const sidebarVideo: Ref<HTMLVideoElement | null> = ref(null);
 let lastScrollY = 0;
 let scrollVelocity = 0;
 let smoothedVelocity = 0;
@@ -40,33 +38,56 @@ const updateScrollVelocity = () => {
 
   if (nav.value) {
     const links = nav.value.querySelectorAll("a");
-    const velocityRatio = Math.min(smoothedVelocity / 100, 1);
 
-    if (scrollDirection === "down") {
-      const maxGap = 40;
-      const newGap = maxGap * (1 - velocityRatio);
+    // Si on est dans la section contact, forcer progressivement vers l'état normal
+    if (sidebarAnimated.value) {
+      // Réduire progressivement smoothedVelocity pour revenir à l'état normal
+      smoothedVelocity = smoothedVelocity * 0.85; // Réduction plus rapide
+
+      // Forcer le gap vers 40px
+      const currentGap = parseFloat(nav.value.style.gap) || 40;
+      const targetGap = 40;
+      const newGap = currentGap + (targetGap - currentGap) * 0.2; // Interpolation douce
       nav.value.style.gap = `${newGap}px`;
 
-      links.forEach((link, index) => {
-        const isFirst = index === 0;
-        const rotation = isFirst ? 0 : velocityRatio * (index % 2 === 0 ? -6 : 6);
-        (link as HTMLElement).style.transform = `rotate(${rotation}deg)`;
-      });
-    } else {
-      nav.value.style.gap = "40px";
-
-      links.forEach((link, index) => {
-        const isLast = index === links.length - 1;
-
-        if (isLast) {
-          (link as HTMLElement).style.transform = "rotate(0deg)";
-        } else {
-          const rotation = velocityRatio * (index % 2 === 0 ? -6 : 6);
-          const adjustedVelocity = Math.pow(velocityRatio, 0.5);
-          const moveDistance = adjustedVelocity * 40 * (links.length - 1 - index);
-          (link as HTMLElement).style.transform = `rotate(${rotation}deg) translateY(${moveDistance}px)`;
+      // Forcer les rotations vers 0
+      links.forEach((link) => {
+        const currentTransform = (link as HTMLElement).style.transform;
+        if (currentTransform && currentTransform !== "rotate(0deg) translateY(0px)") {
+          // Extraction des valeurs actuelles et interpolation vers 0
+          (link as HTMLElement).style.transform = "rotate(0deg) translateY(0px)";
         }
       });
+    } else {
+      // Animation normale de scroll
+      const velocityRatio = Math.min(smoothedVelocity / 100, 1);
+
+      if (scrollDirection === "down") {
+        const maxGap = 40;
+        const newGap = maxGap * (1 - velocityRatio);
+        nav.value.style.gap = `${newGap}px`;
+
+        links.forEach((link, index) => {
+          const isFirst = index === 0;
+          const rotation = isFirst ? 0 : velocityRatio * (index % 2 === 0 ? -6 : 6);
+          (link as HTMLElement).style.transform = `rotate(${rotation}deg)`;
+        });
+      } else {
+        nav.value.style.gap = "40px";
+
+        links.forEach((link, index) => {
+          const isLast = index === links.length - 1;
+
+          if (isLast) {
+            (link as HTMLElement).style.transform = "rotate(0deg)";
+          } else {
+            const rotation = velocityRatio * (index % 2 === 0 ? -6 : 6);
+            const adjustedVelocity = Math.pow(velocityRatio, 0.5);
+            const moveDistance = adjustedVelocity * 40 * (links.length - 1 - index);
+            (link as HTMLElement).style.transform = `rotate(${rotation}deg) translateY(${moveDistance}px)`;
+          }
+        });
+      }
     }
   }
 
@@ -89,8 +110,27 @@ const handleScroll = () => {
   }
 };
 
+// Watcher pour contrôler la vidéo quand on entre/sort de la section contact
+watch(sidebarAnimated, (newValue) => {
+  if (sidebarVideo.value) {
+    if (newValue) {
+      // On entre dans la section contact : relancer la vidéo depuis le début
+      sidebarVideo.value.currentTime = 0;
+      sidebarVideo.value.play();
+    } else {
+      // On sort de la section contact : pause la vidéo
+      sidebarVideo.value.pause();
+    }
+  }
+});
+
 onMounted(() => {
   window.addEventListener("scroll", handleScroll, { passive: true });
+
+  // Configurer la vidéo
+  if (sidebarVideo.value) {
+    sidebarVideo.value.playbackRate = 0.8;
+  }
 });
 
 onUnmounted(() => {
@@ -102,13 +142,16 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <aside>
+  <aside :class="{ 'animate-sidebar': sidebarAnimated }">
     <img :srcset="bg" alt="" role="presentation" />
+    <video ref="sidebarVideo" class="sidebar-video" muted playsinline aria-hidden="true" preload="auto">
+      <source src="/cloudy-bg.mp4" type="video/mp4" />
+    </video>
     <nav ref="nav">
-      <router-link to="/"><GlitchAnimation text="HOME" trigger="hover" /></router-link>
-      <router-link to="/typography"><GlitchAnimation text="ABOUT" trigger="hover" /></router-link>
-      <router-link to="/admin"><GlitchAnimation text="WORK" trigger="hover" /></router-link>
-      <router-link to="/admin"><GlitchAnimation text="CONTACT" trigger="hover" /></router-link>
+      <router-link class="btn-theme" to="/"><GlitchAnimation text="HOME" trigger="hover" /></router-link>
+      <router-link class="btn-theme" to="/typography"><GlitchAnimation text="ABOUT" trigger="hover" /></router-link>
+      <router-link class="btn-theme" to="/admin"><GlitchAnimation text="WORK" trigger="hover" /></router-link>
+      <router-link class="btn-theme" to="/admin"><GlitchAnimation text="CONTACT" trigger="hover" /></router-link>
     </nav>
   </aside>
 </template>
@@ -116,21 +159,39 @@ onUnmounted(() => {
 <style scoped lang="scss">
 aside {
   position: relative;
-  // border-right: 3px solid var(--text-primary);
-  // box-shadow: rgba(0, 0, 0, 0.2) 4px 4px 4px;
   z-index: 1;
   top: 0;
   left: 0;
   width: 180px;
   background-color: var(--bg-body);
   flex-shrink: 0;
+  overflow: hidden;
   @apply py-40 hidden lg:flex justify-center;
+
   img {
     position: fixed;
     width: 180px;
     top: -40px;
     min-height: calc(100vh + 40px);
     opacity: 0.6;
+    transition: opacity 1s ease;
+    z-index: 1;
+  }
+
+  .sidebar-video {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: 170px;
+    height: calc(100% - 20px);
+    border-radius: 20px;
+    opacity: 0;
+    object-fit: cover;
+    // transform: rotate(90deg);
+    transform-origin: center;
+    transition: opacity 1s ease;
+    z-index: 1;
+    overflow: hidden;
   }
 }
 
@@ -141,9 +202,10 @@ nav {
   flex-direction: column;
   gap: 40px;
   transition: gap 0.5s ease-out;
+  z-index: 1;
   @apply px-20 text-neg-5-32;
 
-  & > * {
+  .btn-theme {
     position: relative;
     display: flex;
     justify-content: center;
@@ -154,7 +216,8 @@ nav {
     margin-left: auto;
     line-height: 1;
     z-index: 1;
-    transition: transform 0.5s ease-out;
+
+    transition: margin 0.3s ease, padding 0.3s ease, font-size 0.3s ease, transform 0.5s ease-out;
 
     &::before {
       position: absolute;
@@ -166,12 +229,30 @@ nav {
       background-color: var(--bg-primary);
       z-index: -1;
       clip-path: polygon(4% 0, 99% 0, 95% 100%, 0% 100%);
-      transition: background-color 0.15s ease;
       border-top: 2px solid white;
+
+      transition: background-color 0.3s ease, border-radius 0.3s ease, clip-path 0.3s ease;
     }
 
     &:hover::before {
       background-color: var(--pink-color);
+    }
+  }
+}
+
+aside.animate-sidebar {
+  img {
+    opacity: 0 !important;
+  }
+
+  .sidebar-video {
+    opacity: 1 !important;
+  }
+
+  .btn-theme {
+    @apply animate-btn-theme;
+    &::before {
+      @apply animate-btn-bg-theme;
     }
   }
 }

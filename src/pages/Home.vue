@@ -92,10 +92,10 @@ useSEO({
       </video>
       <figure class="s-hello__me">
         <ScrollAnimation animation-class="left-spiral" :delay="0" :threshold="0" :once="true">
-          <div><VueSVG src="/public/svg/spiral-left.svg" /></div>
+          <div><VueSVG src="/svg/spiral-left.svg" /></div>
         </ScrollAnimation>
         <ScrollAnimation animation-class="right-spiral" :delay="0" :threshold="0" :once="true">
-          <div><VueSVG src="/public/svg/spiral.svg" /></div>
+          <div><VueSVG src="/svg/spiral.svg" /></div>
         </ScrollAnimation>
         <ScrollAnimation animation-class="fade-in" :delay="0" :threshold="0.3" :once="true">
           <div class="s-hello__text whitespace-pre-line">TRUST&nbsp;ME,{{ "\n" }}CONTACT&nbsp;ME,{{ "\n" }}YOU&nbsp;WON'T{{ "\n" }}REGRET&nbsp;IT!</div>
@@ -105,6 +105,13 @@ useSEO({
           <img class="w-full h-full object-cover me-bottom" :srcset="meBottom" alt="my photo" />
         </ScrollAnimation>
       </figure>
+    </section>
+
+    <section class="s-contact-title">
+      <div class="s-contact-content">
+        <h2 class="reset">LET'S WORK TOGETHER</h2>
+        <div class="subtitle">Type fast, before this cute moment melts into the void.</div>
+      </div>
     </section>
 
     <Contact />
@@ -288,73 +295,6 @@ useSEO({
 
     transform-origin: center;
   }
-  @keyframes spinAndPulse-sm {
-    0% {
-      transform: scale(4) rotate(0deg);
-      opacity: 0.7;
-    }
-    20% {
-      transform: scale(4) rotate(360deg);
-    }
-    40% {
-      transform: scale(4) rotate(720deg);
-    }
-    60% {
-      transform: scale(4) rotate(1080deg);
-    }
-    80% {
-      transform: scale(4) rotate(1540deg);
-    }
-    100% {
-      transform: scale(4) rotate(1800deg);
-      opacity: 0.7;
-    }
-  }
-
-  @keyframes spinAndPulse-md {
-    0% {
-      transform: scale(6) rotate(0deg);
-      opacity: 0.7;
-    }
-    20% {
-      transform: scale(6) rotate(360deg);
-    }
-    40% {
-      transform: scale(6) rotate(720deg);
-    }
-    60% {
-      transform: scale(6) rotate(1080deg);
-    }
-    80% {
-      transform: scale(6) rotate(1540deg);
-    }
-    100% {
-      transform: scale(6) rotate(1800deg);
-      opacity: 0.7;
-    }
-  }
-
-  @keyframes fadeInSpiral-sm {
-    0% {
-      transform: scale(0);
-      opacity: 0;
-    }
-    100% {
-      transform: scale(4);
-      opacity: 0.7;
-    }
-  }
-
-  @keyframes fadeInSpiral-md {
-    0% {
-      transform: scale(0);
-      opacity: 0;
-    }
-    100% {
-      transform: scale(6);
-      opacity: 0.7;
-    }
-  }
 
   .left-spiral {
     top: 37%;
@@ -384,6 +324,30 @@ useSEO({
       animation: fadeInSpiral-md 0.5s ease forwards, spinAndPulse-md 4s infinite linear reverse;
       animation-delay: 2s, 2.5s;
     }
+  }
+}
+.s-contact-title {
+  margin-top: 100px;
+  padding-top: 20px;
+  border-top: 2px solid #ff00aa6b;
+  // box-shadow: rgba(251, 0, 255, 0.36) 0px 0px 10px;
+  @apply px-20 md:mt-150 lg:mt-200;
+
+  h2 {
+    color: var(--text-secondary);
+    text-shadow: rgba(251, 0, 255, 0.36) 0px 0px 10px;
+    -webkit-text-stroke: 1px #ff00aa6b; /* Contour rose flashy */
+    text-stroke: 1px #ff00aa6b;
+    line-height: 1.2;
+    @apply text-pos-5-36 lg:text-pos-5-[3.5vw];
+  }
+  .subtitle {
+    color: #ff00aa6b;
+    @apply uppercase text-pos-5-18 lg:text-pos-5-20 font-normal pb-60 md:pb-80 lg:pb-120;
+  }
+
+  &__content {
+    @apply sm:mt-120 md:mt-140 lg:mt-160;
   }
 }
 </style>

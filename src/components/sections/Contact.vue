@@ -1,4 +1,3 @@
-div
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import VueSVG from "@/components/VueSVG.vue";
@@ -6,6 +5,14 @@ import SuccessMessage from "@/components/SuccessMessage.vue";
 import { useContactForm, type ContactFormData } from "@/composables/useContactForm";
 import { useComponentTranslation } from "@/i18n";
 import bgUnicorn from "@/assets/img/bg-unicorn.png?w=200;350;500;700;900;1200&format=webp&as=srcset";
+import ScrollAnimation from "@/components/ScrollAnimation.vue";
+import { useScrollTrigger } from "@/composables/useScrollTrigger";
+
+const { setSidebarAnimation } = useScrollTrigger();
+
+const handleContactIntersection = (isIntersecting: boolean) => {
+  setSidebarAnimation(isIntersecting);
+};
 
 const t = useComponentTranslation("contact");
 
@@ -49,113 +56,114 @@ onMounted(() => {
 </script>
 
 <template>
-  <section id="contact" class="s-contact">
-    <h4 ref="titleRef" class="s-contact__title reset">DON'T HESITATE CONTACT ME RIGHT NOW!</h4>
-
-    <form @submit="handleSubmit">
-      <div class="s-contact__form">
-        <img :srcset="bgUnicorn" alt="" role="presentation" />
-        <span class="s-contact__subtitle">LET'S TALK ABOUT YOUR PROJECT{{ "\n" }}OR FEEL FREE TO LEAVE ME A MESSAGE</span>
-        <div ref="formRowRef">
-          <label for="name" class="sr-only">NAME</label>
-          <input
-            type="text"
-            placeholder="Name"
-            id="name"
-            name="name"
-            :value="formData.name"
-            @input="(e) => handleChange('name', (e.target as HTMLInputElement).value)"
-            @invalid="(e) => handleInvalid(e, 'name')"
-            :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
-            :disabled="isSubmitting"
-            required
-            minlength="2"
-          />
-        </div>
-        <div ref="formRowRef">
-          <label for="name" class="sr-only">Company</label>
-          <input
-            type="text"
-            placeholder="Company"
-            id="company"
-            name="company"
-            :value="formData.company"
-            @input="(e) => handleChange('company', (e.target as HTMLInputElement).value)"
-            @invalid="(e) => handleInvalid(e, 'company')"
-            :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
-            :disabled="isSubmitting"
-            required
-            minlength="2"
-          />
-        </div>
-
-        <div>
-          <label for="email" class="sr-only">Email"</label>
-          <input
-            type="email"
-            placeholder="Email"
-            id="email"
-            name="email"
-            :value="formData.email"
-            @input="(e) => handleChange('email', (e.target as HTMLInputElement).value)"
-            @invalid="(e) => handleInvalid(e, 'email')"
-            :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
-            :disabled="isSubmitting"
-            required
-          />
-        </div>
-        <div>
-          <label for="subject" class="sr-only">Subject</label>
-          <input
-            type="subject"
-            placeholder="Subject"
-            id="subject"
-            name="subject"
-            :value="formData.subject"
-            @input="(e) => handleChange('subject', (e.target as HTMLInputElement).value)"
-            @invalid="(e) => handleInvalid(e, 'subject')"
-            :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
-            :disabled="isSubmitting"
-            required
-          />
-        </div>
-
-        <label for="message" class="sr-only">Message</label>
-        <textarea
-          :class="{ 'animate-from-bottom--px': isVisible2, 'opacity-0': !isVisible2 }"
-          name="message"
-          id="message"
-          placeholder="Leave a message here"
-          ref="textareaRef"
-          :value="formData.message"
-          @input="(e) => {
-              handleChange('message', (e.target as HTMLTextAreaElement).value);
-              handleTextareaInput(e);
-            }"
-          @invalid="(e) => handleInvalid(e, 'message')"
-          rows="1"
-          :disabled="isSubmitting"
-          required
-          minlength="10"
-        />
-
-        <div class="relative flex gap-10 items-center mb-4">
-          <SuccessMessage :show="isSuccess" />
-          <div v-if="serverError" class="animate-from-bottom absolute -bottom-30 right-0 ml-auto max-w-[270px] text-14 z-[3] bg-[#b2291189] backdrop-blur-sm p-15 rounded-[10px]">
-            {{ serverError }}
+  <ScrollAnimation animation-class="fade-in" :delay="0" :threshold="0.1" :once="false" :emit-intersection="true" @intersection="handleContactIntersection">
+    <section id="contact" class="s-contact">
+      <form @submit="handleSubmit">
+        <div class="s-contact__form">
+          <img :srcset="bgUnicorn" alt="" role="presentation" />
+          <span class="s-contact__subtitle">LET'S TALK ABOUT YOUR PROJECT{{ "\n" }}OR FEEL FREE TO LEAVE A MESSAGE</span>
+          <div ref="formRowRef">
+            <label for="name" class="sr-only">NAME</label>
+            <input
+              type="text"
+              placeholder="Name"
+              id="name"
+              name="name"
+              :value="formData.name"
+              @input="(e) => handleChange('name', (e.target as HTMLInputElement).value)"
+              @invalid="(e) => handleInvalid(e, 'name')"
+              :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
+              :disabled="isSubmitting"
+              required
+              minlength="2"
+            />
           </div>
-        </div>
+          <div ref="formRowRef">
+            <label for="company" class="sr-only">Company</label>
+            <input
+              type="text"
+              placeholder="Company"
+              id="company"
+              name="company"
+              :value="formData.company"
+              @input="(e) => handleChange('company', (e.target as HTMLInputElement).value)"
+              @invalid="(e) => handleInvalid(e, 'company')"
+              :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
+              :disabled="isSubmitting"
+              required
+              minlength="2"
+            />
+          </div>
 
-        <button type="submit" class="btn-submit" :disabled="isSubmitting">
-          <span>{{ isSubmitting ? "SENDING..." : "SUBMIT" }}</span>
-        </button>
-      </div>
-    </form>
-  </section>
+          <div>
+            <label for="email" class="sr-only">Email</label>
+            <input
+              type="email"
+              placeholder="Email"
+              id="email"
+              name="email"
+              :value="formData.email"
+              @input="(e) => handleChange('email', (e.target as HTMLInputElement).value)"
+              @invalid="(e) => handleInvalid(e, 'email')"
+              :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
+              :disabled="isSubmitting"
+              required
+            />
+          </div>
+          <!-- <div>
+            <label for="subject" class="sr-only">Subject</label>
+            <input
+              type="text"
+              placeholder="Subject"
+              id="subject"
+              name="subject"
+              :value="formData.subject"
+              @input="(e) => handleChange('subject', (e.target as HTMLInputElement).value)"
+              @invalid="(e) => handleInvalid(e, 'subject')"
+              :class="{ 'animate-from-bottom': isVisible2, 'opacity-0': !isVisible2 }"
+              :disabled="isSubmitting"
+              required
+            />
+          </div> -->
+
+          <label for="message" class="sr-only">Message</label>
+          <textarea
+            :class="{ 'animate-from-bottom--px': isVisible2, 'opacity-0': !isVisible2 }"
+            name="message"
+            id="message"
+            placeholder="Leave a message here"
+            ref="textareaRef"
+            :value="formData.message"
+            @input="(e) => {
+                handleChange('message', (e.target as HTMLTextAreaElement).value);
+                handleTextareaInput(e);
+              }"
+            @invalid="(e) => handleInvalid(e, 'message')"
+            rows="1"
+            :disabled="isSubmitting"
+            required
+            minlength="10"
+          />
+
+          <div class="relative flex gap-10 items-center mb-4">
+            <SuccessMessage :show="isSuccess" />
+            <div v-if="serverError" class="animate-from-bottom absolute -bottom-30 right-0 ml-auto max-w-[270px] text-14 z-[3] bg-[#b2291189] backdrop-blur-sm p-15 rounded-[10px]">
+              {{ serverError }}
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit" :disabled="isSubmitting">
+            <span>{{ isSubmitting ? "SENDING..." : "SUBMIT" }}</span>
+          </button>
+        </div>
+      </form>
+    </section>
+  </ScrollAnimation>
 </template>
 
 <style lang="scss">
 .s-contact {
+  position: relative;
   background-color: var(--bg-secondary);
   padding: 80px 20px;
   z-index: 3;
@@ -193,11 +201,11 @@ onMounted(() => {
     width: 100%;
     max-width: 750px;
     background-color: transparent;
+    box-shadow: rgba(255, 94, 250, 0.25) 0px 50px 100px -20px, rgba(255, 8, 239, 0.3) 0px 30px 60px -30px, rgba(210, 31, 255, 0.35) 0px -2px 6px 0px inset;
+    @apply px-20 py-40 sm:px-40 sm:py-50 md:p-60 lg:px-60 lg:pt-70 lg:pb-80;
     & > * {
       z-index: 4;
     }
-    box-shadow: rgba(255, 94, 250, 0.25) 0px 50px 100px -20px, rgba(255, 8, 239, 0.3) 0px 30px 60px -30px, rgba(210, 31, 255, 0.35) 0px -2px 6px 0px inset;
-    @apply px-20 py-40 sm:px-40 sm:py-50 md:p-60 lg:px-60 lg:pt-70 lg:pb-80;
 
     &::after {
       position: absolute;
@@ -227,11 +235,9 @@ onMounted(() => {
       background-color: transparent;
       border: 3px solid rgba(255, 255, 255, 0.222);
       backdrop-filter: blur(35px);
-      // background-color: rgba(82, 82, 82, 0.055);
       background-image: radial-gradient(ellipse at center center, rgba(173, 173, 173, 0.197), rgba(79, 79, 79, 0.148));
       box-shadow: rgba(96, 109, 110, 0.25) 0px 50px 100px -20px, rgba(255, 255, 255, 0.3) 0px 30px 60px -30px, rgba(76, 82, 82, 0.35) 0px -2px 6px 0px inset;
       color: rgba(219, 255, 255, 0.96);
-      // text-shadow: rgba(0, 255, 255, 0.507) 0px 0px 4px;
       outline: none;
       padding-block: 12px;
       padding-right: 24px;
@@ -243,10 +249,6 @@ onMounted(() => {
       }
       &::placeholder {
         color: rgba(219, 255, 255, 0.96);
-        // text-shadow: rgba(0, 145, 255, 0.507) 0px 0px 4px;
-        // text-shadow: rgba(251, 0, 255, 0.96) 0px 0px 20px;
-        // padding-left: 20px;
-        // z-index: 10;
       }
       @apply text-pos-5-16 lg:text-pos-5-18 font-light;
     }
@@ -271,11 +273,11 @@ onMounted(() => {
     max-width: 200px;
     box-shadow: rgba(255, 94, 250, 0.25) 0px 50px 100px -20px, rgba(255, 8, 239, 0.3) 0px 30px 60px -30px, rgba(210, 31, 255, 0.35) 0px -2px 6px 0px inset;
     transition: letter-spacing 0.5s ease, max-width 0.5s ease;
-    @apply text-pos-5-18 md:text-pos-5-20 lg:text-pos-5-20 px-24 py-10 font-semibold;
+    @apply text-pos-5-18 md:text-pos-5-20 lg:text-pos-5-20 px-24 pb-10 pt-12 font-semibold;
     &:hover {
       width: 100%;
       max-width: 500px;
-      @apply text-pos-40-18 md:text-pos-40-20 lg:text-pos-40-20 px-24 py-10 font-semibold;
+      @apply text-pos-40-18 md:text-pos-40-20 lg:text-pos-40-20 px-24 font-semibold;
     }
   }
 }

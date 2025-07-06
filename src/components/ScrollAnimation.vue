@@ -12,12 +12,14 @@ interface Props {
   delay?: number;
   threshold?: number;
   once?: boolean;
+  emitIntersection?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   delay: 0,
   threshold: 0.1,
   once: true,
+  emitIntersection: false,
 });
 
 const elementRef = ref<HTMLElement | null>(null);
@@ -26,8 +28,16 @@ const hasBeenTriggered = ref(false);
 let observer: IntersectionObserver | null = null;
 let timeoutId: number | null = null;
 
+const emit = defineEmits<{
+  intersection: [isIntersecting: boolean];
+}>();
+
 const handleIntersection = (entries: IntersectionObserverEntry[]) => {
   const entry = entries[0];
+
+  if (props.emitIntersection) {
+    emit("intersection", entry.isIntersecting);
+  }
 
   if (entry.isIntersecting) {
     if (props.once && hasBeenTriggered.value) return;

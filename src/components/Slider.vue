@@ -203,7 +203,7 @@ const handleSlideClick = (slideData: any) => {
     width: 100%;
     height: 100%;
     margin-top: 50px;
-    touch-action: pan-y; // Permet le scroll vertical mais capture les gestes horizontaux
+    touch-action: pan-y;
   }
 
   .slide {
@@ -215,9 +215,7 @@ const handleSlideClick = (slideData: any) => {
     left: 50%;
     overflow: hidden;
     transition: all 0.5s ease;
-    cursor: pointer; // Indique que l'élément est cliquable
-
-    // Améliorer l'interaction tactile
+    cursor: pointer;
     -webkit-tap-highlight-color: transparent;
 
     p {
@@ -228,7 +226,7 @@ const handleSlideClick = (slideData: any) => {
       margin-top: auto;
       max-width: 70%;
       z-index: 7;
-      pointer-events: none; // Empêche les clics sur le texte pour éviter les conflits
+      pointer-events: none;
 
       &::before {
         position: absolute;
@@ -253,7 +251,7 @@ const handleSlideClick = (slideData: any) => {
       z-index: 5;
       transform: translateX(-50%);
       @apply shadow-2xl;
-      cursor: default; // Le slide central n'a pas besoin d'indiquer qu'il est cliquable
+      cursor: default;
       p {
         opacity: 1;
         transition: opacity 0.3s ease 0.5s;
@@ -342,7 +340,6 @@ const handleSlideClick = (slideData: any) => {
   }
 }
 
-// Media queries pour le responsive mobile
 @media (max-width: 768px) {
   .s-slider {
     &__content {
