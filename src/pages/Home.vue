@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { usePageTranslation } from "@/i18n";
 import VueSVG from "@/components/VueSVG.vue";
 import meBottom from "@/assets/img/me-bottom.png?w=100;150;300;450&format=webp&as=srcset";
@@ -13,7 +14,6 @@ import GlitchAnimation from "@/components/GlitchAnimation.vue";
 import ScrollAnimation from "@/components/ScrollAnimation.vue";
 import Slider from "@/components/sections/Slider.vue";
 import Contact from "@/components/sections/Contact.vue";
-import { onMounted } from "vue";
 
 onMounted(() => {
   const video = document.querySelector<HTMLVideoElement>(".s-hello__video");
@@ -30,6 +30,50 @@ useSEO({
   keywords: ["studio", "weshre", "web agency"],
   url: "https://template-studio.weshre.com/",
   image: "/images/og-home.png",
+});
+
+const magnifierKey = ref(0);
+let resizeObserver: ResizeObserver;
+
+onMounted(() => {
+  const video = document.querySelector<HTMLVideoElement>(".s-hello__video");
+  if (video) {
+    video.playbackRate = 0.4;
+  }
+
+  // AJOUTER ÇA :
+  setTimeout(() => {
+    const illustrationElement = document.querySelector(".s-about__illustration") as HTMLElement;
+    if (illustrationElement) {
+      let oldWidth = illustrationElement.getBoundingClientRect().width;
+      let oldHeight = illustrationElement.getBoundingClientRect().height;
+
+      resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const { width, height } = entry.contentRect;
+          if (width > 0 && height > 0) {
+            const widthChange = Math.abs(width - oldWidth) / oldWidth;
+            const heightChange = Math.abs(height - oldHeight) / oldHeight;
+
+            if (widthChange > 0.15 || heightChange > 0.15) {
+              console.log("🔄 Remounting MagnifierCanvas");
+              magnifierKey.value++;
+              oldWidth = width;
+              oldHeight = height;
+            }
+          }
+        }
+      });
+      resizeObserver.observe(illustrationElement);
+    }
+  }, 500);
+});
+
+// AJOUTER ÇA :
+onBeforeUnmount(() => {
+  if (resizeObserver) {
+    resizeObserver.disconnect();
+  }
 });
 </script>
 
@@ -76,7 +120,7 @@ useSEO({
         </p>
       </div>
       <div class="s-about__illustration">
-        <MagnifierCanvasSquare />
+        <MagnifierCanvasSquare :key="magnifierKey" />
       </div>
     </section>
 

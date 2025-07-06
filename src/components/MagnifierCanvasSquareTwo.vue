@@ -17,14 +17,34 @@ let scene: THREE.Scene;
 let camera: THREE.OrthographicCamera;
 let uniforms: any;
 let animationFrameId: number;
+let resizeTimeout: number;
 
 onMounted(() => {
   if (!containerRef.value) return;
 
   setTimeout(() => {
     initCanvas();
+    setupResizeListeners();
   }, 100);
 });
+
+function setupResizeListeners() {
+  if (!containerRef.value) return;
+
+  const debouncedResize = () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      handleResize();
+    }, 150);
+  };
+
+  window.addEventListener("resize", debouncedResize);
+  window.addEventListener("orientationchange", () => {
+    setTimeout(() => {
+      handleResize();
+    }, 300);
+  });
+}
 
 function initCanvas() {
   if (!containerRef.value) return;
@@ -42,6 +62,10 @@ function initCanvas() {
 }
 
 function initCanvasWithDimensions(width: number, height: number) {
+  // Forcer des dimensions entières dès le départ
+  const intWidth = Math.floor(width);
+  const intHeight = Math.floor(height);
+
   scene = new THREE.Scene();
   camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
@@ -51,13 +75,18 @@ function initCanvasWithDimensions(width: number, height: number) {
     preserveDrawingBuffer: true,
   });
 
-  renderer.setSize(width, height, false);
+  renderer.setSize(intWidth, intHeight, false);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.domElement.style.width = "100%";
   renderer.domElement.style.height = "100%";
   renderer.domElement.style.display = "block";
 
   containerRef.value!.appendChild(renderer.domElement);
+
+  // Définir le viewport APRÈS que le canvas soit dans le DOM
+  setTimeout(() => {
+    renderer.setViewport(0, 0, intWidth, intHeight);
+  }, 10);
 
   const loader = new THREE.TextureLoader();
 
@@ -71,7 +100,7 @@ function initCanvasWithDimensions(width: number, height: number) {
       texture.magFilter = THREE.LinearFilter;
       texture.flipY = true;
 
-      createMaterial(texture, width, height);
+      createMaterial(texture, intWidth, intHeight);
     },
     (progress) => {
       console.log("📥 Loading progress:", progress);
@@ -79,7 +108,7 @@ function initCanvasWithDimensions(width: number, height: number) {
     (error) => {
       console.error("❌ Error loading image: /cabin-mobile.png", error);
       const fallbackTexture = createFallbackTexture();
-      createMaterial(fallbackTexture, width, height);
+      createMaterial(fallbackTexture, intWidth, intHeight);
     }
   );
 }
@@ -186,22 +215,35 @@ function createMaterial(texture: THREE.Texture, width: number, height: number) {
 
   containerRef.value!.addEventListener("mousemove", updateMouse);
   containerRef.value!.addEventListener("mouseleave", hideMouse);
+}
 
-  const handleResize = () => {
-    if (!containerRef.value || !renderer) return;
+// 🔧 FONCTION HANDLERESIZE CORRIGÉE
+function handleResize() {
+  if (!containerRef.value || !renderer || !uniforms) return;
 
-    const rect = containerRef.value.getBoundingClientRect();
-    const newWidth = rect.width || 800;
-    const newHeight = rect.height || 600;
+  setTimeout(() => {
+    const rect = containerRef.value!.getBoundingClientRect();
+    const newWidth = Math.floor(rect.width) || 800;
+    const newHeight = Math.floor(rect.height) || 600;
 
+    if (newWidth <= 0 || newHeight <= 0) return;
+
+    // Mise à jour complète
     renderer.setSize(newWidth, newHeight, false);
+    renderer.setViewport(0, 0, newWidth, newHeight); // 🔧 AJOUT CRUCIAL
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    if (uniforms) {
-      uniforms.uResolution.value.set(newWidth, newHeight);
-    }
-  };
+    // Styles CSS
+    renderer.domElement.style.width = "100%";
+    renderer.domElement.style.height = "100%";
+    renderer.domElement.style.display = "block";
 
-  window.addEventListener("resize", handleResize);
+    // Uniforms
+    uniforms.uResolution.value.set(newWidth, newHeight);
+
+    // Force re-render
+    renderer.render(scene, camera);
+  }, 50);
 }
 
 function checkTextReveal(mouseX: number, mouseY: number) {
@@ -264,6 +306,10 @@ onBeforeUnmount(() => {
     cancelAnimationFrame(animationFrameId);
   }
 
+  if (resizeTimeout) {
+    clearTimeout(resizeTimeout);
+  }
+
   if (renderer) {
     renderer.dispose();
     if (containerRef.value && renderer.domElement) {
@@ -272,6 +318,7 @@ onBeforeUnmount(() => {
   }
 
   window.removeEventListener("resize", () => {});
+  window.removeEventListener("orientationchange", () => {});
 });
 </script>
 

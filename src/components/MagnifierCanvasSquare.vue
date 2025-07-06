@@ -19,9 +19,64 @@ let camera: THREE.OrthographicCamera;
 let uniforms: any;
 let animationFrameId: number;
 
+// Shaders
+const VERTEX_SHADER = `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = vec4(position, 1.0);
+  }
+`;
+
+const FRAGMENT_SHADER = `
+  uniform sampler2D uTex;
+  uniform vec2 uMouse;
+  uniform float uZoom;
+  uniform float uRadius;
+  uniform float uTime;
+  uniform vec2 uResolution;
+  varying vec2 vUv;
+  
+  void main() {
+    vec2 uv = vUv;
+    vec4 color = texture2D(uTex, uv);
+    
+    vec2 aspectRatio = vec2(uResolution.x / uResolution.y, 1.0);
+    vec2 normalizedMouse = uMouse;
+    vec2 normalizedUv = uv;
+    
+    normalizedMouse.x *= aspectRatio.x;
+    normalizedUv.x *= aspectRatio.x;
+    
+    float dist = distance(normalizedUv, normalizedMouse);
+    
+    if (dist < uRadius && uMouse.x >= 0.0 && uMouse.y >= 0.0) {
+      vec2 offset = uv - uMouse;
+      float strength = 1.0 - smoothstep(0.0, uRadius, dist);
+      
+      float angle = atan(offset.y, offset.x);
+      float radius = length(offset);
+      
+      float wave = sin(dist * 40.0 + uTime * 3.0) * 0.005 * strength;
+      radius += wave;
+      
+      radius /= (1.0 + uZoom * strength);
+      
+      vec2 magnifiedUv = uMouse + vec2(cos(angle), sin(angle)) * radius;
+      magnifiedUv = clamp(magnifiedUv, 0.0, 1.0);
+      
+      color = texture2D(uTex, magnifiedUv);
+      
+      float glow = (1.0 - dist / uRadius) * 0.1;
+      color.rgb += glow;
+    }
+    
+    gl_FragColor = color;
+  }
+`;
+
 onMounted(() => {
   if (!containerRef.value) return;
-
   setTimeout(() => {
     initCanvas();
   }, 100);
@@ -31,18 +86,9 @@ function initCanvas() {
   if (!containerRef.value) return;
 
   const rect = containerRef.value.getBoundingClientRect();
-  const width = rect.width || 800;
-  const height = rect.height || 600;
+  const width = Math.floor(rect.width) || 800;
+  const height = Math.floor(rect.height) || 600;
 
-  if (width === 0 || height === 0) {
-    initCanvasWithDimensions(800, 600);
-    return;
-  }
-
-  initCanvasWithDimensions(width, height);
-}
-
-function initCanvasWithDimensions(width: number, height: number) {
   scene = new THREE.Scene();
   camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
@@ -58,31 +104,18 @@ function initCanvasWithDimensions(width: number, height: number) {
   renderer.domElement.style.height = "100%";
   renderer.domElement.style.display = "block";
 
-  containerRef.value!.appendChild(renderer.domElement);
+  containerRef.value.appendChild(renderer.domElement);
 
   const loader = new THREE.TextureLoader();
+  loader.load("/office-mobile.png", (texture) => {
+    texture.wrapS = THREE.ClampToEdgeWrapping;
+    texture.wrapT = THREE.ClampToEdgeWrapping;
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.flipY = true;
 
-  loader.load(
-    "/office-mobile.png",
-    (texture) => {
-      console.log("✅ Image loaded successfully: /office-mobile.png");
-      texture.wrapS = THREE.ClampToEdgeWrapping;
-      texture.wrapT = THREE.ClampToEdgeWrapping;
-      texture.minFilter = THREE.LinearFilter;
-      texture.magFilter = THREE.LinearFilter;
-      texture.flipY = true;
-
-      createMaterial(texture, width, height);
-    },
-    (progress) => {
-      console.log("📥 Loading progress:", progress);
-    },
-    (error) => {
-      console.error("❌ Error loading image: /office-mobile.png", error);
-      const fallbackTexture = createFallbackTexture();
-      createMaterial(fallbackTexture, width, height);
-    }
-  );
+    createMaterial(texture, width, height);
+  });
 }
 
 function createMaterial(texture: THREE.Texture, width: number, height: number) {
@@ -97,59 +130,8 @@ function createMaterial(texture: THREE.Texture, width: number, height: number) {
 
   const material = new THREE.ShaderMaterial({
     uniforms,
-    vertexShader: `
-      varying vec2 vUv;
-      void main() {
-        vUv = uv;
-        gl_Position = vec4(position, 1.0);
-      }
-    `,
-    fragmentShader: `
-      uniform sampler2D uTex;
-      uniform vec2 uMouse;
-      uniform float uZoom;
-      uniform float uRadius;
-      uniform float uTime;
-      uniform vec2 uResolution;
-      varying vec2 vUv;
-      
-      void main() {
-        vec2 uv = vUv;
-        vec4 color = texture2D(uTex, uv);
-        
-        vec2 aspectRatio = vec2(uResolution.x / uResolution.y, 1.0);
-        vec2 normalizedMouse = uMouse;
-        vec2 normalizedUv = uv;
-        
-        normalizedMouse.x *= aspectRatio.x;
-        normalizedUv.x *= aspectRatio.x;
-        
-        float dist = distance(normalizedUv, normalizedMouse);
-        
-        if (dist < uRadius && uMouse.x >= 0.0 && uMouse.y >= 0.0) {
-          vec2 offset = uv - uMouse;
-          float strength = 1.0 - smoothstep(0.0, uRadius, dist);
-          
-          float angle = atan(offset.y, offset.x);
-          float radius = length(offset);
-          
-          float wave = sin(dist * 40.0 + uTime * 3.0) * 0.005 * strength;
-          radius += wave;
-          
-          radius /= (1.0 + uZoom * strength);
-          
-          vec2 magnifiedUv = uMouse + vec2(cos(angle), sin(angle)) * radius;
-          magnifiedUv = clamp(magnifiedUv, 0.0, 1.0);
-          
-          color = texture2D(uTex, magnifiedUv);
-          
-          float glow = (1.0 - dist / uRadius) * 0.1;
-          color.rgb += glow;
-        }
-        
-        gl_FragColor = color;
-      }
-    `,
+    vertexShader: VERTEX_SHADER,
+    fragmentShader: FRAGMENT_SHADER,
   });
 
   const geometry = new THREE.PlaneGeometry(2, 2);
@@ -174,7 +156,6 @@ function createMaterial(texture: THREE.Texture, width: number, height: number) {
     const y = 1 - (e.clientY - bounds.top) / bounds.height;
 
     uniforms.uMouse.value.set(x, y);
-
     checkTextReveal(e.clientX, e.clientY);
   };
 
@@ -185,25 +166,11 @@ function createMaterial(texture: THREE.Texture, width: number, height: number) {
     hideText();
   };
 
-  containerRef.value!.addEventListener("mousemove", updateMouse);
-  containerRef.value!.addEventListener("mouseleave", hideMouse);
-
-  const handleResize = () => {
-    if (!containerRef.value || !renderer) return;
-
-    const rect = containerRef.value.getBoundingClientRect();
-    const newWidth = rect.width || 800;
-    const newHeight = rect.height || 600;
-
-    renderer.setSize(newWidth, newHeight, false);
-
-    if (uniforms) {
-      uniforms.uResolution.value.set(newWidth, newHeight);
-    }
-  };
-
-  window.addEventListener("resize", handleResize);
+  containerRef.value.addEventListener("mousemove", updateMouse);
+  containerRef.value.addEventListener("mouseleave", hideMouse);
 }
+
+// Cette fonction n'est plus nécessaire car le parent gère le remontage
 
 function checkTextReveal(mouseX: number, mouseY: number) {
   if (!secretTextRef.value || !containerRef.value) return;
@@ -237,29 +204,6 @@ function hideText() {
   }
 }
 
-function createFallbackTexture(): THREE.Texture {
-  const canvas = document.createElement("canvas");
-  canvas.width = 512;
-  canvas.height = 512;
-  const ctx = canvas.getContext("2d")!;
-
-  ctx.fillStyle = "#606060";
-  ctx.fillRect(0, 0, 512, 512);
-
-  ctx.fillStyle = "#808080";
-  for (let i = 0; i < 512; i += 32) {
-    ctx.fillRect(i, 0, 2, 512);
-    ctx.fillRect(0, i, 512, 2);
-  }
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.wrapS = THREE.ClampToEdgeWrapping;
-  texture.wrapT = THREE.ClampToEdgeWrapping;
-  texture.flipY = true;
-
-  return texture;
-}
-
 onBeforeUnmount(() => {
   if (animationFrameId) {
     cancelAnimationFrame(animationFrameId);
@@ -271,8 +215,6 @@ onBeforeUnmount(() => {
       containerRef.value.removeChild(renderer.domElement);
     }
   }
-
-  window.removeEventListener("resize", () => {});
 });
 </script>
 
@@ -313,10 +255,5 @@ onBeforeUnmount(() => {
   display: block;
   width: 100% !important;
   height: 100% !important;
-
-  object-fit: cover;
-  /* @screen 3xl {
-    object-fit: fill;
-  } */
 }
 </style>

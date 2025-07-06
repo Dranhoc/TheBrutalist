@@ -1,13 +1,52 @@
 <script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import VueSVG from "@/components/VueSVG.vue";
 import MagnifierCanvasSquare from "@/components/MagnifierCanvasSquareTwo.vue";
 import GlitchAnimation from "@/components/GlitchAnimation.vue";
+
+// Système de remontage du composant
+const magnifierKey = ref(0);
+let resizeObserver: ResizeObserver;
+
+onMounted(() => {
+  setTimeout(() => {
+    const illustrationElement = document.querySelector(".s-work-with__illustration") as HTMLElement;
+    if (illustrationElement) {
+      let oldWidth = illustrationElement.getBoundingClientRect().width;
+      let oldHeight = illustrationElement.getBoundingClientRect().height;
+
+      resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const { width, height } = entry.contentRect;
+          if (width > 0 && height > 0) {
+            const widthChange = Math.abs(width - oldWidth) / oldWidth;
+            const heightChange = Math.abs(height - oldHeight) / oldHeight;
+
+            if (widthChange > 0.15 || heightChange > 0.15) {
+              console.log("🔄 Remounting MagnifierCanvasTwo");
+              magnifierKey.value++;
+              oldWidth = width;
+              oldHeight = height;
+            }
+          }
+        }
+      });
+      resizeObserver.observe(illustrationElement);
+    }
+  }, 500);
+});
+
+onBeforeUnmount(() => {
+  if (resizeObserver) {
+    resizeObserver.disconnect();
+  }
+});
 </script>
 
 <template>
   <section class="s-work-with">
     <div class="s-work-with__illustration">
-      <MagnifierCanvasSquare />
+      <MagnifierCanvasSquare :key="magnifierKey" />
     </div>
     <div class="s-work-with__stack">
       <h3 class="title-2"><GlitchAnimation text="THINGS I ARGUE WITH DAILY" /></h3>
