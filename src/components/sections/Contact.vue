@@ -30,8 +30,8 @@ const contactFormConfig = {
   onError: (error: Error) => {
     console.error("Form submission error:", error);
   },
-  // Optionnel : ajouter votre clé API Web3Forms
-  // accessKey: 'your-web3forms-access-key'
+
+  accessKey: "583c4c93-d95e-4ae0-8b50-61bfd0171571",
 };
 
 const { formData, isSubmitting, isSuccess, serverError, handleChange, handleSubmit, handleInvalid, handleInput } = useContactForm(contactFormConfig);

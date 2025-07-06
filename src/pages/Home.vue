@@ -5,9 +5,9 @@ import VueSVG from "@/components/VueSVG.vue";
 import meBottom from "@/assets/img/me-bottom.png?w=100;150;300;450&format=webp&as=srcset";
 import meTop from "@/assets/img/me-top.png?w=100;150;300;450&format=webp&as=srcset";
 import Footer from "@/components/sections/Footer.vue";
-import MagnifierCanvasSquare from "@/components/MagnifierCanvasSquare.vue";
+import OfficeCanvas from "@/components/OfficeCanvas.vue";
 import SoftSkillsParallax from "@/components/sections/SoftSkillsParallax.vue";
-import ContactMe from "@/components/sections/ContactMe.vue";
+import Stack from "@/components/sections/Stack.vue";
 import CursorFilter from "@/components/CursorFilter.vue";
 import { useSEO } from "@/composables/useSEO";
 import GlitchAnimation from "@/components/GlitchAnimation.vue";
@@ -120,13 +120,13 @@ onBeforeUnmount(() => {
         </p>
       </div>
       <div class="s-about__illustration">
-        <MagnifierCanvasSquare :key="magnifierKey" />
+        <OfficeCanvas :key="magnifierKey" />
       </div>
     </section>
 
     <SoftSkillsParallax />
 
-    <ContactMe />
+    <Stack />
 
     <Slider />
 

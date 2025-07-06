@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import VueSVG from "@/components/VueSVG.vue";
-import MagnifierCanvasSquare from "@/components/MagnifierCanvasSquareTwo.vue";
+import CabinCanvas from "@/components/CabinCanvas.vue";
 import GlitchAnimation from "@/components/GlitchAnimation.vue";
 
 // Système de remontage du composant
@@ -46,7 +46,7 @@ onBeforeUnmount(() => {
 <template>
   <section class="s-work-with">
     <div class="s-work-with__illustration">
-      <MagnifierCanvasSquare :key="magnifierKey" />
+      <CabinCanvas :key="magnifierKey" />
     </div>
     <div class="s-work-with__stack">
       <h3 class="title-2"><GlitchAnimation text="THINGS I ARGUE WITH DAILY" /></h3>
