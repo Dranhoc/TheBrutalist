@@ -218,18 +218,19 @@ onBeforeUnmount(() => {
 <style scoped>
 .magnifier-canvas {
   width: 100%;
-  height: 100%;
   position: relative;
   overflow: hidden;
   cursor: none;
   box-shadow: rgba(181, 181, 181, 0.35) 5px 0px 20px;
 }
 
-@media (min-width: 768px) {
+@screen md {
   .magnifier-canvas {
     border-radius: 20px;
     margin-left: 10px;
     width: calc(100% - 20px);
+    max-height: 700px;
+    aspect-ratio: 1/1;
   }
 }
 
@@ -243,7 +244,7 @@ onBeforeUnmount(() => {
   clip-path: circle(0px at -1000px -1000px);
 }
 
-@media (min-width: 768px) {
+@screen md {
   .secret-text {
     width: 2vw;
   }
@@ -252,15 +253,8 @@ onBeforeUnmount(() => {
 :deep(canvas) {
   display: block;
   width: 100% !important;
-  height: 100% !important;
-  max-height: 400px;
+  /* height: 100% !important; */
   object-fit: cover;
   object-position: center bottom;
-}
-
-@media (min-width: 768px) {
-  :deep(canvas) {
-    max-height: none;
-  }
 }
 </style>

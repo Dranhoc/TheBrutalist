@@ -198,6 +198,7 @@ onBeforeUnmount(() => {
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-inline: 0 !important;
   background-color: var(--bg-primary);
   gap: 20px;
