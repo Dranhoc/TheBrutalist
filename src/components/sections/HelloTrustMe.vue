@@ -101,6 +101,7 @@ onMounted(() => {
       filter: blur(8px);
       animation: vaporZoom 5s infinite;
       animation-timing-function: ease-in-out;
+      user-select: none;
 
       &:nth-child(1) {
         animation-delay: 0.4s;

@@ -247,10 +247,7 @@ onBeforeUnmount(() => {
   z-index: 10;
   transform: rotate(10deg);
   animation: pulse 3s ease-in-out infinite;
-}
-
-@media (min-width: 768px) {
-  .secret-text {
+  @screen md {
     animation: unset;
     font-size: 2vw;
     transition: opacity 0.1s ease, clip-path 0.05s ease-out;
@@ -258,10 +255,13 @@ onBeforeUnmount(() => {
     clip-path: circle(0px at -1000px -1000px);
     font-size: 1.2vw;
   }
+  @apply 2xl:text-18;
 }
 
 :deep(canvas) {
   display: block;
   width: 100% !important;
+  height: 100% !important;
+  min-height: 500px;
 }
 </style>

@@ -17,11 +17,11 @@ interface SEOOptions {
 
 export const useSEO = (options: SEOOptions = {}) => {
   const defaultSEO = {
-    siteName: "Template Studio",
-    locale: "fr_FR",
+    siteName: "SlenderDev",
+    locale: "en_EN",
     type: "website" as const,
-    image: "/images/og-default.jpg",
-    url: "https://changethewebsitedomain.com",
+    image: "/images/og-home.jpg",
+    url: "https://slenderdev.be",
   };
 
   const seoData = computed(() => ({

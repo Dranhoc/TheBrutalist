@@ -18,14 +18,13 @@ useSEO({
   description: "SlenderDev - Front-end developer from Liège (Belgium). Strange but friendly web experiences by Christophe Leroy ",
   keywords: ["Front-end developer", "Web portfolio", "Creative developer", "Web Agency", "Vue.js", "Belgium", "Liège", "Slenderman", "Freelance developer"],
   url: "https://www.slenderdev.be/",
-  image: "/images/og-home.png",
+  image: "og-home.jpg",
 });
 
 const magnifierKey = ref(0);
 let resizeObserver: ResizeObserver;
 
 onMounted(() => {
-  // AJOUTER ÇA :
   setTimeout(() => {
     const illustrationElement = document.querySelector(".s-about__illustration") as HTMLElement;
     if (illustrationElement) {
@@ -53,7 +52,6 @@ onMounted(() => {
   }, 500);
 });
 
-// AJOUTER ÇA :
 onBeforeUnmount(() => {
   if (resizeObserver) {
     resizeObserver.disconnect();
@@ -93,11 +91,11 @@ onBeforeUnmount(() => {
       <div class="s-about__me">
         <h2><GlitchAnimation text="THIS IS ME" /></h2>
         <p>
-          I'm Christophe, a front-end developer based near Liège — Belgium.
+          I'm Christophe, a front-end developer based near Liège (Belgium).
           <br /><br />
           I design and build responsive websites, clean UI and reusable components with just enough personality to stand out, but never too much to annoy the user.
           <br /><br />
-          I like things that work well, look right, and behave the way users expect — no surprises, no drama.
+          I like things that work well, look right, and behave the way users expect. No surprises, no drama.
           <br /><br />
           I care about the details that make interfaces feel effortless, and I believe personality belongs in the experience, not in the way of it.
           <br /><br />

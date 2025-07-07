@@ -1,7 +1,7 @@
 <template>
   <div ref="containerRef" class="magnifier-canvas">
-    <div class="secret-text" ref="secretTextRef">
-      <img src="/slenderman.png" alt="" />
+    <div class="slenderman" ref="slendermanRef">
+      <img src="/slenderman.png" alt="" role="presentation" />
     </div>
   </div>
 </template>
@@ -11,7 +11,7 @@ import { onMounted, onBeforeUnmount, ref } from "vue";
 import * as THREE from "three";
 
 const containerRef = ref(null);
-const secretTextRef = ref(null);
+const slendermanRef = ref(null);
 let renderer;
 let scene;
 let camera;
@@ -170,10 +170,10 @@ function createMaterial(texture, width, height) {
 }
 
 function checkTextReveal(mouseX, mouseY) {
-  if (!secretTextRef.value || !containerRef.value) return;
+  if (!slendermanRef.value || !containerRef.value) return;
 
   const containerBounds = containerRef.value.getBoundingClientRect();
-  const textBounds = secretTextRef.value.getBoundingClientRect();
+  const textBounds = slendermanRef.value.getBoundingClientRect();
 
   const textRelativeX = mouseX - textBounds.left;
   const textRelativeY = mouseY - textBounds.top;
@@ -187,17 +187,17 @@ function checkTextReveal(mouseX, mouseY) {
 
   if (distance < loupeRadius * 2) {
     const clipPath = `circle(${loupeRadius}px at ${textRelativeX}px ${textRelativeY}px)`;
-    secretTextRef.value.style.clipPath = clipPath;
-    secretTextRef.value.style.opacity = "1";
+    slendermanRef.value.style.clipPath = clipPath;
+    slendermanRef.value.style.opacity = "1";
   } else {
     hideText();
   }
 }
 
 function hideText() {
-  if (secretTextRef.value) {
-    secretTextRef.value.style.clipPath = "circle(0px at -1000px -1000px)";
-    secretTextRef.value.style.opacity = "0";
+  if (slendermanRef.value) {
+    slendermanRef.value.style.clipPath = "circle(0px at -1000px -1000px)";
+    slendermanRef.value.style.opacity = "0";
   }
 }
 
@@ -217,11 +217,11 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .magnifier-canvas {
-  width: 100%;
   position: relative;
   overflow: hidden;
   cursor: none;
   box-shadow: rgba(181, 181, 181, 0.35) 5px 0px 20px;
+  aspect-ratio: 1/1;
 }
 
 @screen md {
@@ -230,30 +230,24 @@ onBeforeUnmount(() => {
     margin-left: 10px;
     width: calc(100% - 20px);
     max-height: 700px;
-    aspect-ratio: 1/1;
   }
 }
 
-.secret-text {
+.slenderman {
   position: absolute;
   bottom: 20%;
   right: 20%;
-  width: 5vw;
+  width: 20px;
   transition: opacity 0.1s ease, clip-path 0.05s ease-out;
   opacity: 0;
   clip-path: circle(0px at -1000px -1000px);
-}
-
-@screen md {
-  .secret-text {
-    width: 2vw;
-  }
+  @apply sm:w-30 md:w-20 xl:w-30 4xl:w-40;
 }
 
 :deep(canvas) {
   display: block;
   width: 100% !important;
-  /* height: 100% !important; */
+  height: 100% !important;
   object-fit: cover;
   object-position: center bottom;
 }
