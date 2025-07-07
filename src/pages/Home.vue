@@ -17,10 +17,10 @@ import HelloTrustMe from "@/components/sections/HelloTrustMe.vue";
 const t = usePageTranslation();
 
 useSEO({
-  title: "Home",
-  description: "Your trusted partner for aviation support solutions",
-  keywords: ["studio", "weshre", "web agency"],
-  url: "https://template-studio.weshre.com/",
+  title: "SlenderDev - Front-end Developer Portfolio",
+  description: "SlenderDev - Front-end developer from Liège (Belgium). Strange but friendly web experiences by Christophe Leroy ",
+  keywords: ["Front-end developer", "Web portfolio", "Creative developer", "Web Agency", "Vue.js", "Belgium", "Liège", "Slenderman", "Freelance developer"],
+  url: "https://www.slenderdev.be/",
   image: "/images/og-home.png",
 });
 

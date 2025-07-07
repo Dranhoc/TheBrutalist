@@ -158,6 +158,11 @@ aside {
   transition: background-color 0.3s ease;
   &.animate-sidebar {
     background-color: var(--bg-body);
+    nav {
+      @screen 4xl {
+        left: calc((100vw - 2050px) / 2 + 10px);
+      }
+    }
   }
 
   @apply py-40 hidden lg:flex justify-center;
@@ -203,10 +208,10 @@ nav {
   gap: 40px;
   transition: gap 0.5s ease-out;
   z-index: 1;
-  @apply text-neg-5-30;
+  @apply px-20 text-neg-5-30;
 
   @screen 4xl {
-    left: calc((100vw - 2050px) / 2);
+    left: calc((100vw - 2050px) / 2 + 5px);
   }
 
   .btn-theme {

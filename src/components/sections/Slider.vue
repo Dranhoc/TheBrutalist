@@ -200,8 +200,9 @@ const handleTouchEnd = () => {
     padding: 20px;
     z-index: 2;
     @screen sm {
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
+      // border-top-left-radius: 20px;
+      // border-top-right-radius: 20px;
+      border-radius: 20px;
       width: calc(100% - 10px);
     }
   }
