@@ -157,7 +157,7 @@ const handleTouchEnd = () => {
 </script>
 
 <template>
-  <section class="s-slider full-w">
+  <section class="s-slider full-w" id="work">
     <div class="s-slider__content">
       <div class="mb-40 sm:mb-60 md:mb-80 lg:mb-100">
         <h2><GlitchAnimation text="WORK AND WONDERS" /></h2>

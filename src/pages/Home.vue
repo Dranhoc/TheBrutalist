@@ -75,7 +75,7 @@ onBeforeUnmount(() => {
       blend-mode="difference"
     />
 
-    <section class="s-hi">
+    <section class="s-hi" id="home">
       <div class="s-hi__content">
         <h1>
           HI. I'M A CREATIVE
@@ -89,7 +89,7 @@ onBeforeUnmount(() => {
         </figure>
       </div>
     </section>
-    <section class="s-about">
+    <section class="s-about" id="about">
       <div class="s-about__me">
         <h2><GlitchAnimation text="THIS IS ME" /></h2>
         <p>

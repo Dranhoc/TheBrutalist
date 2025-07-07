@@ -137,10 +137,10 @@ onUnmounted(() => {
       <source src="/cloudy-bg.mp4" type="video/mp4" />
     </video>
     <nav ref="nav">
-      <router-link class="btn-theme" to="/"><GlitchAnimation text="HOME" trigger="hover" /></router-link>
-      <router-link class="btn-theme" to="/typography"><GlitchAnimation text="ABOUT" trigger="hover" /></router-link>
-      <router-link class="btn-theme" to="/admin"><GlitchAnimation text="WORK" trigger="hover" /></router-link>
-      <router-link class="btn-theme" to="/admin"><GlitchAnimation text="CONTACT" trigger="hover" /></router-link>
+      <a class="btn-theme" href="#home"><GlitchAnimation text="HOME" trigger="hover" /></a>
+      <a class="btn-theme" href="#about"><GlitchAnimation text="ABOUT" trigger="hover" /></a>
+      <a class="btn-theme" href="#work"><GlitchAnimation text="WORK" trigger="hover" /></a>
+      <a class="btn-theme" href="#contact"><GlitchAnimation text="CONTACT" trigger="hover" /></a>
     </nav>
   </aside>
 </template>
