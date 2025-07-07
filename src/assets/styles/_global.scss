@@ -24,6 +24,9 @@
     height: 100vh;
     max-width: 100vw;
     transition: background-color 0.3s ease;
+    &.is-contact {
+      background-color: var(--bg-body);
+    }
   }
 }
 

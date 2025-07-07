@@ -21,7 +21,6 @@ onMounted(() => {
             const heightChange = Math.abs(height - oldHeight) / oldHeight;
 
             if (widthChange > 0.15 || heightChange > 0.15) {
-              console.log("🔄 Remounting MagnifierCanvasTwo");
               magnifierKey.value++;
               oldWidth = width;
               oldHeight = height;

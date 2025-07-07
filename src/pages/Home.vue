@@ -39,7 +39,6 @@ onMounted(() => {
             const heightChange = Math.abs(height - oldHeight) / oldHeight;
 
             if (widthChange > 0.15 || heightChange > 0.15) {
-              console.log("🔄 Remounting MagnifierCanvas");
               magnifierKey.value++;
               oldWidth = width;
               oldHeight = height;
@@ -62,15 +61,12 @@ onBeforeUnmount(() => {
 <template>
   <main>
     <CursorFilter
-      :size="50"
-      :enlarge-rules="[
+      :style-rules="[
         { selector: '.s-about', size: 90 },
         { selector: '.s-work-with', size: 90 },
-        { selector: '.s-slider', size: 20 },
-        { selector: '.s-contact', size: 15 },
+        { selector: '.s-slider', size: 20, shape: 'circle' },
+        { selector: '.s-contact', size: 30, shape: 'star', particles: true },
       ]"
-      color="white"
-      blend-mode="difference"
     />
 
     <section class="s-hi" id="home">
@@ -128,7 +124,8 @@ onBeforeUnmount(() => {
   background-color: var(--bg-body);
   // color: var(--text-secondary);
   overflow: hidden;
-  min-height: 100vh;
+  min-height: 600px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   z-index: 2;
@@ -146,6 +143,7 @@ onBeforeUnmount(() => {
     margin-left: 10px;
     z-index: 3;
     width: calc(100% - 20px);
+    min-height: 600px;
     height: calc(100vh - 20px);
     padding: 40px 20px;
     background-color: var(--bg-body);
