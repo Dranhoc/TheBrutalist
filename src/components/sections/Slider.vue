@@ -215,7 +215,7 @@ const handleTouchEnd = () => {
     padding: 12px 24px;
     text-decoration: none;
     text-align: center;
-    font-family: "JetBrains Mono", serif;
+    font-family: "Special Elite", system-ui;
     font-size: 16px;
     font-weight: 500;
     border: 2px solid var(--text-primary);
