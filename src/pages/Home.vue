@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from "vue";
-import { usePageTranslation } from "@/i18n";
 import meBottom from "@/assets/img/me-bottom.png?w=100;150;300;450&format=webp&as=srcset";
 import meTop from "@/assets/img/me-top.png?w=100;150;300;450&format=webp&as=srcset";
 import Footer from "@/components/sections/Footer.vue";
@@ -13,8 +12,6 @@ import GlitchAnimation from "@/components/GlitchAnimation.vue";
 import Slider from "@/components/sections/Slider.vue";
 import Contact from "@/components/sections/Contact.vue";
 import HelloTrustMe from "@/components/sections/HelloTrustMe.vue";
-
-const t = usePageTranslation();
 
 useSEO({
   title: "SlenderDev - Front-end Developer Portfolio",

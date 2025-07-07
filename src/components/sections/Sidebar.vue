@@ -6,7 +6,6 @@ import GlitchAnimation from "@/components/GlitchAnimation.vue";
 import bg from "@/assets/img/bg-wall.png?w=150;200&format=webp&as=srcset";
 
 const { sidebarAnimated } = useScrollTrigger();
-const isContactVisible = ref(false);
 
 const nav: Ref<HTMLElement | null> = ref(null);
 const sidebarVideo: Ref<HTMLVideoElement | null> = ref(null);

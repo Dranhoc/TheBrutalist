@@ -37,12 +37,12 @@ export const useContactForm = (config: UseContactFormConfig = {}): UseContactFor
   const isSuccess = ref(false);
   const serverError = ref<string | null>(null);
 
-  const handleChange = (field: keyof ContactFormData, value: string | boolean) => {
-    formData[field] = value as never;
-    if (serverError.value) {
-      serverError.value = null;
-    }
-  };
+  // const handleChange = (field: keyof ContactFormData, value: string | boolean) => {
+  //   formData[field] = value as never;
+  //   if (serverError.value) {
+  //     serverError.value = null;
+  //   }
+  // };
 
   const resetForm = () => {
     Object.assign(formData, {

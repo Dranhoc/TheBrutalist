@@ -7,17 +7,17 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { onMounted, onBeforeUnmount, ref } from "vue";
 import * as THREE from "three";
 
-const containerRef = ref<HTMLDivElement | null>(null);
-const secretTextRef = ref<HTMLDivElement | null>(null);
-let renderer: THREE.WebGLRenderer;
-let scene: THREE.Scene;
-let camera: THREE.OrthographicCamera;
-let uniforms: any;
-let animationFrameId: number;
+const containerRef = ref(null);
+const secretTextRef = ref(null);
+let renderer;
+let scene;
+let camera;
+let uniforms;
+let animationFrameId;
 
 // Shaders
 const VERTEX_SHADER = `
@@ -118,7 +118,7 @@ function initCanvas() {
   });
 }
 
-function createMaterial(texture: THREE.Texture, width: number, height: number) {
+function createMaterial(texture, width, height) {
   uniforms = {
     uTex: { value: texture },
     uMouse: { value: new THREE.Vector2(-1, -1) },
@@ -148,7 +148,7 @@ function createMaterial(texture: THREE.Texture, width: number, height: number) {
   animate();
 
   // Event listeners
-  const updateMouse = (e: MouseEvent) => {
+  const updateMouse = (e) => {
     if (!containerRef.value || !uniforms) return;
 
     const bounds = containerRef.value.getBoundingClientRect();
@@ -170,9 +170,7 @@ function createMaterial(texture: THREE.Texture, width: number, height: number) {
   containerRef.value.addEventListener("mouseleave", hideMouse);
 }
 
-// Cette fonction n'est plus nécessaire car le parent gère le remontage
-
-function checkTextReveal(mouseX: number, mouseY: number) {
+function checkTextReveal(mouseX, mouseY) {
   if (!secretTextRef.value || !containerRef.value) return;
 
   const containerBounds = containerRef.value.getBoundingClientRect();
@@ -227,7 +225,10 @@ onBeforeUnmount(() => {
   overflow: hidden;
   cursor: none;
   box-shadow: rgba(181, 181, 181, 0.35) -5px 0px 20px;
-  @screen md {
+}
+
+@media (min-width: 768px) {
+  .magnifier-canvas {
     border-radius: 20px;
     width: calc(100% - 20px);
   }
@@ -246,7 +247,10 @@ onBeforeUnmount(() => {
   z-index: 10;
   transform: rotate(10deg);
   animation: pulse 3s ease-in-out infinite;
-  @screen md {
+}
+
+@media (min-width: 768px) {
+  .secret-text {
     animation: unset;
     font-size: 2vw;
     transition: opacity 0.1s ease, clip-path 0.05s ease-out;

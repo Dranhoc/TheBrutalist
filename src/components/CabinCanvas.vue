@@ -6,19 +6,19 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { onMounted, onBeforeUnmount, ref } from "vue";
 import * as THREE from "three";
 
-const containerRef = ref<HTMLDivElement | null>(null);
-const secretTextRef = ref<HTMLDivElement | null>(null);
-let renderer: THREE.WebGLRenderer;
-let scene: THREE.Scene;
-let camera: THREE.OrthographicCamera;
-let uniforms: any;
-let animationFrameId: number;
+const containerRef = ref(null);
+const secretTextRef = ref(null);
+let renderer;
+let scene;
+let camera;
+let uniforms;
+let animationFrameId;
 
-// Shaders définis en dehors des fonctions
+// Shaders
 const VERTEX_SHADER = `
   varying vec2 vUv;
   void main() {
@@ -117,7 +117,7 @@ function initCanvas() {
   });
 }
 
-function createMaterial(texture: THREE.Texture, width: number, height: number) {
+function createMaterial(texture, width, height) {
   uniforms = {
     uTex: { value: texture },
     uMouse: { value: new THREE.Vector2(-1, -1) },
@@ -147,7 +147,7 @@ function createMaterial(texture: THREE.Texture, width: number, height: number) {
   animate();
 
   // Event listeners
-  const updateMouse = (e: MouseEvent) => {
+  const updateMouse = (e) => {
     if (!containerRef.value || !uniforms) return;
 
     const bounds = containerRef.value.getBoundingClientRect();
@@ -169,7 +169,7 @@ function createMaterial(texture: THREE.Texture, width: number, height: number) {
   containerRef.value.addEventListener("mouseleave", hideMouse);
 }
 
-function checkTextReveal(mouseX: number, mouseY: number) {
+function checkTextReveal(mouseX, mouseY) {
   if (!secretTextRef.value || !containerRef.value) return;
 
   const containerBounds = containerRef.value.getBoundingClientRect();
@@ -223,7 +223,10 @@ onBeforeUnmount(() => {
   overflow: hidden;
   cursor: none;
   box-shadow: rgba(181, 181, 181, 0.35) 5px 0px 20px;
-  @screen md {
+}
+
+@media (min-width: 768px) {
+  .magnifier-canvas {
     border-radius: 20px;
     margin-left: 10px;
     width: calc(100% - 20px);
@@ -235,11 +238,13 @@ onBeforeUnmount(() => {
   bottom: 20%;
   right: 20%;
   width: 5vw;
-
   transition: opacity 0.1s ease, clip-path 0.05s ease-out;
   opacity: 0;
   clip-path: circle(0px at -1000px -1000px);
-  @screen md {
+}
+
+@media (min-width: 768px) {
+  .secret-text {
     width: 2vw;
   }
 }
@@ -251,6 +256,11 @@ onBeforeUnmount(() => {
   max-height: 400px;
   object-fit: cover;
   object-position: center bottom;
-  @apply md:max-h-full;
+}
+
+@media (min-width: 768px) {
+  :deep(canvas) {
+    max-height: none;
+  }
 }
 </style>

@@ -31,7 +31,7 @@ const contactFormConfig = {
 
 const { formData, isSubmitting, isSuccess, serverError, handleSubmit } = useContactForm(contactFormConfig);
 
-const handleTextareaInput = (e: Event) => {
+const handleTextareaInput = () => {
   if (textareaRef.value) {
     textareaRef.value.style.height = "auto";
     textareaRef.value.style.height = textareaRef.value.scrollHeight + "px";

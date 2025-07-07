@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from "vue";
-import VueSVG from "@/components/VueSVG.vue";
 import CabinCanvas from "@/components/CabinCanvas.vue";
 import GlitchAnimation from "@/components/GlitchAnimation.vue";
 
-// Système de remontage du composant
 const magnifierKey = ref(0);
 let resizeObserver: ResizeObserver;
 
