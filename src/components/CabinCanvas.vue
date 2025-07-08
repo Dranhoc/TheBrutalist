@@ -227,9 +227,10 @@ onBeforeUnmount(() => {
 @screen md {
   .magnifier-canvas {
     border-radius: 20px;
-    margin-left: 10px;
+    margin-left: 0px;
     width: calc(100% - 20px);
     max-height: 700px;
+    z-index: 1;
   }
 }
 

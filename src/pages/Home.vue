@@ -120,9 +120,7 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 .s-hi {
   position: relative;
-
   background-color: var(--bg-body);
-  // color: var(--text-secondary);
   overflow: hidden;
   min-height: 600px;
   height: 100vh;
@@ -199,7 +197,7 @@ onBeforeUnmount(() => {
   background-color: var(--bg-primary);
   gap: 20px;
 
-  @apply md:flex-row pt-120 pb-60;
+  @apply md:flex-row pt-120;
 
   &__me {
     padding: 60px 20px 100px;
