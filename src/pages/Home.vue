@@ -154,6 +154,11 @@ onBeforeUnmount(() => {
     position: relative;
   }
 
+  .me-bottom {
+    border-bottom-left-radius: 20px;
+    // overflow: hidden;
+  }
+
   &__me {
     position: absolute;
     display: flex;
@@ -163,6 +168,7 @@ onBeforeUnmount(() => {
     animation: translateFromBottom 0.5s forwards 1.5s;
     left: 10px;
     bottom: 9px;
+
     @apply w-[50%] sm:w-[30%] md:w-[25%] lg:w-[20%] lg:left-0;
 
     img {
