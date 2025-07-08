@@ -171,8 +171,8 @@ aside {
     width: 160px;
     top: 10px;
     left: 10px;
-    min-height: calc(100vh - 20px);
-    opacity: 0.6;
+    height: calc(100vh - 20px);
+    opacity: 0.9;
     transition: opacity 1s ease;
     z-index: 1;
     border-radius: 20px;
