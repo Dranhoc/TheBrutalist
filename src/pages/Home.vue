@@ -124,6 +124,7 @@ onBeforeUnmount(() => {
   overflow: hidden;
   min-height: 600px;
   height: 100vh;
+  max-height: 2500px;
   display: flex;
   flex-direction: column;
   z-index: 2;
