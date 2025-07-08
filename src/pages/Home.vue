@@ -85,7 +85,7 @@ onBeforeUnmount(() => {
     </section>
     <section class="s-about" id="about">
       <div class="s-about__me">
-        <h2><GlitchAnimation text="THIS IS ME" /></h2>
+        <h2><GlitchAnimation text="THIS IS ME." /></h2>
         <p>
           I'm Christophe, a front-end developer based near Liège (Belgium).
           <br /><br />

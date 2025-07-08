@@ -46,7 +46,7 @@ onBeforeUnmount(() => {
       <CabinCanvas :key="magnifierKey" />
     </div>
     <div class="s-work-with__stack">
-      <h3><GlitchAnimation text="THINGS I ARGUE WITH DAILY" /></h3>
+      <h3><GlitchAnimation text="THINGS I ARGUE WITH DAILY." /></h3>
       <ul>
         <li>Vue3</li>
         <li>React</li>

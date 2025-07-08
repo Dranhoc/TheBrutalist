@@ -109,7 +109,6 @@ function easeInOutCubic(t: number): number {
   overflow: hidden;
   padding-top: 140px;
   padding-bottom: 100px;
-  // margin-top: 240px;
   z-index: 2;
   background-color: var(--bg-primary);
 
@@ -122,8 +121,6 @@ function easeInOutCubic(t: number): number {
     object-fit: cover;
     z-index: 1;
     pointer-events: none;
-
-    /* Filtre de base avec TOUTES les propriétés */
     filter: grayscale(100%) brightness(200%) contrast(150%) sepia(0%) hue-rotate(0deg) saturate(100%);
 
     animation: vampiricFlash 10s infinite;
@@ -163,7 +160,8 @@ function easeInOutCubic(t: number): number {
     height: 350px;
     overflow-y: hidden;
     line-height: 2;
-    @apply text-18 md:text-26 mt-40 pb-40 4xl:w-[3000px] md:h-260 font-semibold;
+    font-family: "Special Elite", system-ui;
+    @apply text-pos-5-18 md:text-pos-5-26 mt-40 pb-40 4xl:w-[3000px] md:h-260 font-normal;
     @screen md {
       line-height: 1.5;
     }

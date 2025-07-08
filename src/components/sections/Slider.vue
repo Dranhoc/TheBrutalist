@@ -2,6 +2,7 @@
 import { ref, computed } from "vue";
 
 import GlitchAnimation from "@/components/GlitchAnimation.vue";
+import VueSVG from "@/components/VueSVG.vue";
 import slider1 from "@/assets/img/Portfolio/weshre-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 import slider2 from "@/assets/img/Portfolio/sypra-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 import slider3 from "@/assets/img/Portfolio/magvice-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
@@ -159,6 +160,7 @@ const handleTouchEnd = () => {
 <template>
   <section class="s-slider full-w" id="work">
     <div class="s-slider__content">
+      <figure class="web"><VueSVG src="/svg/web.svg" /></figure>
       <div class="mb-40 sm:mb-60 md:mb-80 lg:mb-100">
         <h2><GlitchAnimation text="WORK AND WONDERS" /></h2>
         <div class="text-pos-5-18 lg:text-pos-5-20 font-normal">A SELECTION OF A FEW THINGS I MADE HAPPEN</div>
@@ -195,13 +197,41 @@ const handleTouchEnd = () => {
   z-index: 1;
   @apply sm:px-10 lg:pr-10 lg:pl-0 -mt-60;
 
+  .web {
+    position: absolute;
+    right: 0%;
+    top: 0%;
+    z-index: 10;
+    width: 25vw;
+    height: 25vw;
+    transform: translate(35%, -35%) rotate(20deg);
+    filter: blur(5px);
+    animation: blur 10s linear infinite;
+    @keyframes blur {
+      0% {
+        filter: blur(5px);
+      }
+      80% {
+        filter: blur(3px);
+      }
+      85% {
+        filter: blur(0px);
+      }
+      95% {
+        filter: blur(0px);
+      }
+
+      100% {
+        filter: blur(5px);
+      }
+    }
+  }
+
   &__content {
     background-color: var(--bg-body);
     padding: 20px;
     z-index: 2;
     @screen sm {
-      // border-top-left-radius: 20px;
-      // border-top-right-radius: 20px;
       border-radius: 20px;
       width: calc(100% - 10px);
     }

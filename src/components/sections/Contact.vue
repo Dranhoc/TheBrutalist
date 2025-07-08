@@ -13,6 +13,12 @@ const isTitleAnimated = ref(false);
 const handleContactIntersection = (isIntersecting: boolean) => {
   setSidebarAnimation(isIntersecting);
   isTitleAnimated.value = isIntersecting;
+
+  if (isIntersecting) {
+    document.body.classList.add("is-contact");
+  } else {
+    document.body.classList.remove("is-contact");
+  }
 };
 
 const textareaRef = ref<HTMLTextAreaElement>();

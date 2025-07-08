@@ -42,7 +42,7 @@ onMounted(() => {
       <img :srcset="slenderman" alt="" role="presentation" :class="{ 'slender-animate': isSlenderVisible }" />
     </div>
     <div class="footer__content" ref="footerContent">
-      <span class="title-4 px-10">Wait...<br />Did you find the Slenderman?</span>
+      <span class="title-4 px-10">Wait...<br />Did you find the SlenderDev&nbsp;?</span>
     </div>
   </footer>
 </template>

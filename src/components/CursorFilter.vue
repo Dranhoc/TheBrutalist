@@ -56,13 +56,6 @@ const cleanupEvents: (() => void)[] = [];
 const cursorX = ref(0);
 const cursorY = ref(0);
 
-const isContact = computed(() => props.section === "s-contact");
-
-watch(isContact, (contact) => {
-  document.body.classList.toggle("is-contact", contact);
-  console.log("contact is watching us");
-});
-
 const cursorClass = computed(() => ({
   "cursor-filter--square": cursorShape.value === "square",
   "cursor-filter--star": cursorShape.value === "star",
