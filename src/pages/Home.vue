@@ -142,7 +142,7 @@ onBeforeUnmount(() => {
     z-index: 3;
     width: calc(100% - 20px);
     min-height: 600px;
-    height: calc(100vh - 20px);
+    height: calc(100vh - 21px);
     padding: 40px 20px;
     background-color: var(--bg-body);
     border-radius: 20px;
@@ -156,7 +156,6 @@ onBeforeUnmount(() => {
 
   .me-bottom {
     border-bottom-left-radius: 20px;
-    // overflow: hidden;
   }
 
   &__me {
@@ -167,7 +166,7 @@ onBeforeUnmount(() => {
     opacity: 0;
     animation: translateFromBottom 0.5s forwards 1.5s;
     left: 10px;
-    bottom: 9px;
+    bottom: 11px;
 
     @apply w-[50%] sm:w-[30%] md:w-[25%] lg:w-[20%] lg:left-0;
 
