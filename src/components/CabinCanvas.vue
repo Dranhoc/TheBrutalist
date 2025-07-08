@@ -1,7 +1,7 @@
 <template>
   <div ref="containerRef" class="magnifier-canvas">
-    <div class="slenderman" ref="slendermanRef">
-      <img src="/slenderman.png" alt="" role="presentation" />
+    <div class="slenderdev" ref="slenderdevRef">
+      <img src="/slenderdev.png" alt="" role="presentation" />
     </div>
   </div>
 </template>
@@ -11,7 +11,7 @@ import { onMounted, onBeforeUnmount, ref } from "vue";
 import * as THREE from "three";
 
 const containerRef = ref(null);
-const slendermanRef = ref(null);
+const slenderdevRef = ref(null);
 let renderer;
 let scene;
 let camera;
@@ -170,10 +170,10 @@ function createMaterial(texture, width, height) {
 }
 
 function checkTextReveal(mouseX, mouseY) {
-  if (!slendermanRef.value || !containerRef.value) return;
+  if (!slenderdevRef.value || !containerRef.value) return;
 
   const containerBounds = containerRef.value.getBoundingClientRect();
-  const textBounds = slendermanRef.value.getBoundingClientRect();
+  const textBounds = slenderdevRef.value.getBoundingClientRect();
 
   const textRelativeX = mouseX - textBounds.left;
   const textRelativeY = mouseY - textBounds.top;
@@ -187,17 +187,17 @@ function checkTextReveal(mouseX, mouseY) {
 
   if (distance < loupeRadius * 2) {
     const clipPath = `circle(${loupeRadius}px at ${textRelativeX}px ${textRelativeY}px)`;
-    slendermanRef.value.style.clipPath = clipPath;
-    slendermanRef.value.style.opacity = "1";
+    slenderdevRef.value.style.clipPath = clipPath;
+    slenderdevRef.value.style.opacity = "1";
   } else {
     hideText();
   }
 }
 
 function hideText() {
-  if (slendermanRef.value) {
-    slendermanRef.value.style.clipPath = "circle(0px at -1000px -1000px)";
-    slendermanRef.value.style.opacity = "0";
+  if (slenderdevRef.value) {
+    slenderdevRef.value.style.clipPath = "circle(0px at -1000px -1000px)";
+    slenderdevRef.value.style.opacity = "0";
   }
 }
 
@@ -233,7 +233,7 @@ onBeforeUnmount(() => {
   }
 }
 
-.slenderman {
+.slenderdev {
   position: absolute;
   bottom: 20%;
   right: 20%;

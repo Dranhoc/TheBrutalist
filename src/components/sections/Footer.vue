@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
-import slenderman from "@/assets/img/slenderman.png?w=150;200;300;450&format=webp&as=srcset";
+import slenderdev from "@/assets/img/slenderdev.png?w=150;200;300;450&format=webp&as=srcset";
 
 const isSlenderVisible = ref(false);
 const footerContent = ref<HTMLElement | null>(null);
@@ -38,8 +38,8 @@ onMounted(() => {
 
 <template>
   <footer class="footer">
-    <div class="footer__slenderman">
-      <img :srcset="slenderman" alt="" role="presentation" :class="{ 'slender-animate': isSlenderVisible }" />
+    <div class="footer__slenderdev">
+      <img :srcset="slenderdev" alt="" role="presentation" :class="{ 'slender-animate': isSlenderVisible }" />
     </div>
     <div class="footer__content" ref="footerContent">
       <span class="title-4 px-10">Wait...<br />Did you find the SlenderDev&nbsp;?</span>
@@ -56,7 +56,7 @@ onMounted(() => {
   z-index: 1;
   overflow: hidden;
 
-  &__slenderman {
+  &__slenderdev {
     position: relative;
     display: flex;
     justify-content: center;

@@ -175,7 +175,7 @@ aside {
     opacity: 0.6;
     transition: opacity 1s ease;
     z-index: 1;
-    border-radius: 10px;
+    border-radius: 20px;
     @screen 4xl {
       left: calc((100vw - 2050px) / 2 + 10px);
     }

@@ -16,7 +16,7 @@ import HelloTrustMe from "@/components/sections/HelloTrustMe.vue";
 useSEO({
   title: "SlenderDev - Front-end Developer Portfolio",
   description: "SlenderDev - Front-end developer from Liège (Belgium). Strange but friendly web experiences by Christophe Leroy ",
-  keywords: ["Front-end developer", "Web portfolio", "Creative developer", "Web Agency", "Vue.js", "Belgium", "Liège", "Slenderman", "Freelance developer"],
+  keywords: ["Front-end developer", "Web portfolio", "Creative developer", "Web Agency", "Vue.js", "Belgium", "Liège", "slenderdev", "Freelance developer"],
   url: "https://www.slenderdev.be/",
   image: "og-home.jpg",
 });
