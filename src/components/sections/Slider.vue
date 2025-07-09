@@ -161,7 +161,7 @@ const handleTouchEnd = () => {
   <section class="s-slider full-w" id="work">
     <div class="s-slider__content">
       <figure class="web"><VueSVG src="/svg/web.svg" /></figure>
-      <div class="mb-40 sm:mb-60 md:mb-80 lg:mb-100">
+      <div class="s-slider__title">
         <h2><GlitchAnimation text="WORK AND WONDERS" /></h2>
         <div class="text-pos-5-18 lg:text-pos-5-20 font-normal">A SELECTION OF A FEW THINGS I MADE HAPPEN</div>
       </div>
@@ -170,7 +170,7 @@ const handleTouchEnd = () => {
           <GlitchAnimation :text="slide.title" trigger="hover" />
         </button>
       </div>
-      <div class="s-slider__content" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd">
+      <div class="s-slider__container" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd">
         <div class="slides-container">
           <div v-for="slideData in orderedSlides" :key="slideData.id" :class="['slide', slideData.slideClass]" @click="handleSlideClick(slideData)">
             <div :class="['bg', `bg--${slideData.id}`]">
@@ -239,13 +239,21 @@ const handleTouchEnd = () => {
   }
 
   &__content {
+    position: relative;
     background-color: var(--bg-body);
-    padding: 20px;
     z-index: 2;
+    width: 100%;
+    margin-top: 20px;
+    overflow: hidden;
+    @apply sm:px-20;
     @screen sm {
       border-radius: 20px;
       width: calc(100% - 10px);
     }
+  }
+
+  &__title {
+    @apply py-20 px-20 sm:px-0 sm:py-40 mb-20 sm:mb-40 md:mb-60 lg:mb-80;
   }
 
   .btn-site {
@@ -277,21 +285,18 @@ const handleTouchEnd = () => {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    @apply gap-10 lg:gap-20 sm:justify-center;
+    @apply px-20 sm:px-0 gap-10 lg:gap-20 sm:justify-center;
   }
 
-  &__content {
-    position: relative;
-    width: 100%;
-    margin-top: 20px;
-    overflow: hidden;
+  &__container {
+    padding: 20px 0;
   }
 
   .slides-container {
     position: relative;
     width: 100%;
     min-height: calc(100vw / (280 / 150) + 80px);
-    padding: 0;
+
     @screen lg {
       max-width: 65%;
       margin: 0 auto;
@@ -347,8 +352,10 @@ const handleTouchEnd = () => {
       z-index: 5;
       transform: translateX(0) scale(1);
       cursor: default;
-      box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
       opacity: 1;
+      @screen sm {
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+      }
 
       p {
         opacity: 1;

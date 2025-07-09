@@ -218,18 +218,15 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .magnifier-canvas {
-  width: 100%;
-  min-height: 500px;
+  /* width: 100%; */
+  /* min-height: 500px; */
   position: relative;
   overflow: hidden;
   cursor: none;
   box-shadow: rgba(181, 181, 181, 0.35) -5px 0px 20px;
-}
-
-@screen md {
-  .magnifier-canvas {
+  /* @apply lg:!w-[(calc(100%-50px))]; */
+  @screen md {
     border-radius: 20px;
-    width: calc(100% - 20px);
     aspect-ratio: 1/1;
   }
 }

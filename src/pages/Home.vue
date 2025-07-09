@@ -122,12 +122,12 @@ onBeforeUnmount(() => {
   position: relative;
   background-color: var(--bg-body);
   overflow: hidden;
-  min-height: 600px;
-  height: 100vh;
+  height: 90vh;
   max-height: 2500px;
   display: flex;
   flex-direction: column;
   z-index: 2;
+  @apply md:h-screen;
   &::before {
     position: absolute;
     content: "";
@@ -142,12 +142,11 @@ onBeforeUnmount(() => {
     margin-left: 10px;
     z-index: 3;
     width: calc(100% - 20px);
-    min-height: 600px;
-    height: calc(100vh - 21px);
+    height: calc(90vh - 21px);
     padding: 40px 20px;
     background-color: var(--bg-body);
     border-radius: 20px;
-    @apply lg:ml-0 lg:w-[calc(100%-10px)];
+    @apply lg:ml-0 lg:w-[calc(100%-10px)] md:min-h-[calc(100vh-21px)];
   }
 
   .me-top {
@@ -203,15 +202,14 @@ onBeforeUnmount(() => {
   background-color: var(--bg-primary);
   gap: 20px;
 
-  @apply md:flex-row md:pt-120;
+  @apply md:flex-row md:pt-120 md:px-10;
 
   &__me {
-    padding: 60px 20px 100px;
     color: var(--text-secondary);
     background-color: var(--bg-primary);
     flex-shrink: 0;
 
-    @apply md:w-[calc(50%)];
+    @apply md:w-[calc(50%)] px-20 py-60 2xl:py-0  md:px-0;
     p {
       padding-top: 20px;
       @apply md:pt-40;

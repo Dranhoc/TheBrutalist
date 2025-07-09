@@ -222,12 +222,13 @@ onBeforeUnmount(() => {
   cursor: none;
   box-shadow: rgba(181, 181, 181, 0.35) 5px 0px 20px;
   aspect-ratio: 1/1;
+  @apply lg:!ml-0;
 }
 
 @screen md {
   .magnifier-canvas {
     border-radius: 20px;
-    margin-left: 0px;
+    margin-left: 10px;
     width: calc(100% - 20px);
     max-height: 700px;
     z-index: 1;
