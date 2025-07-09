@@ -183,7 +183,13 @@ const handleTouchEnd = () => {
         </div>
       </div>
 
-      <a :href="slides[currentSlideIndex].link" target="_blank" rel="noopener noreferrer" class="btn-site"> Visit website </a>
+      <div class="btn-spider">
+        <a :href="slides[currentSlideIndex].link" target="_blank" rel="noopener noreferrer" class="btn-site">Visit website</a>
+        <figure class="spider-figure">
+          <div class="spider-thread"></div>
+          <VueSVG src="/svg/spider.svg" />
+        </figure>
+      </div>
     </div>
   </section>
   <div class="decor"></div>
@@ -239,11 +245,12 @@ const handleTouchEnd = () => {
 
   .btn-site {
     position: relative;
+    display: inline-block;
     bottom: 40px;
     left: calc(50% - 88px);
-    display: inline-block;
     padding: 12px 24px;
     text-decoration: none;
+    background-color: var(--bg-body);
     text-align: center;
     font-family: "Special Elite", system-ui;
     font-size: 16px;
@@ -255,7 +262,6 @@ const handleTouchEnd = () => {
     @apply lg:bottom-100 2xl:bottom-130;
 
     &:hover {
-      background-color: transparent;
       border-color: var(--bg-primary);
       color: var(--bg-primary);
       box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
@@ -409,6 +415,37 @@ const handleTouchEnd = () => {
     filter: blur(20px);
     animation: pulse 8s forwards infinite;
     animation-delay: 3s;
+  }
+}
+.btn-spider {
+  position: relative;
+
+  .spider-thread {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    width: 1px;
+    height: 30px;
+    background-color: var(--text-primary);
+    transition: height 2s ease;
+    z-index: 3;
+    pointer-events: none;
+    top: 0;
+  }
+
+  .spider-figure {
+    position: absolute;
+    left: calc(50% - 5px);
+    transform: translateX(-50%);
+    transition: transform 2s ease;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    @apply bottom-40 lg:bottom-100 2xl:bottom-130;
+  }
+
+  .btn-site:hover ~ .spider-figure {
+    transform: translateX(-50%) translateY(50px);
   }
 }
 </style>

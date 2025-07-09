@@ -102,6 +102,8 @@ onMounted(() => {
       animation: vaporZoom 5s infinite;
       animation-timing-function: ease-in-out;
       user-select: none;
+      perspective: 1000px;
+      transform-style: preserve-3d;
 
       &:nth-child(1) {
         animation-delay: 0.4s;

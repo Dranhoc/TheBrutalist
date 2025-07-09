@@ -112,7 +112,11 @@
 
     p {
       font-family: "Special Elite", system-ui;
-      @apply 2xl:text-20;
+      @apply text-pos-5-16 2xl:text-pos-5-20;
+    }
+    li {
+      font-family: "Special Elite", system-ui;
+      @apply text-pos-5-16 sm:text-pos-5-18 2xl:text-pos-5-24;
     }
   }
 }

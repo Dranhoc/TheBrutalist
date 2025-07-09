@@ -90,10 +90,7 @@ onBeforeUnmount(() => {
       padding-left: 30px;
       @apply md:mt-40;
       li {
-        font-family: "Special Elite", system-ui;
-        font-size: 16px;
         padding-left: 10px;
-        @apply lg:text-16 2xl:text-24;
       }
     }
   }
