@@ -194,6 +194,7 @@ aside {
     transition: opacity 1s ease;
     z-index: 1;
     overflow: hidden;
+    @apply hidden lg:block;
     @screen 4xl {
       left: calc((100vw - 2050px) / 2 + 10px);
     }

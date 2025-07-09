@@ -166,7 +166,7 @@ onMounted(() => {
     max-width: 750px;
     background-color: transparent;
     box-shadow: rgba(255, 94, 250, 0.25) 0px 50px 100px -20px, rgba(255, 8, 239, 0.3) 0px 30px 60px -30px, rgba(210, 31, 255, 0.35) 0px -2px 6px 0px inset;
-    @apply px-20 py-40 sm:px-40 sm:py-50 md:p-60 lg:px-60 lg:pt-70 lg:pb-80;
+    @apply px-20 py-40 sm:px-40 sm:py-50 md:p-60 lg:px-60 lg:pt-60 lg:pb-80;
 
     & > * {
       z-index: 4;
@@ -323,7 +323,8 @@ onMounted(() => {
 .s-contact-title {
   padding-top: 20px;
   border-top: 2px solid var(--bg-primary);
-  @apply px-20 mt-40 md:mt-60 lg:mt-80;
+  height: 150px;
+  @apply px-20 mt-80;
 
   h2 {
     line-height: 1.2;
