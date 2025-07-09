@@ -69,7 +69,7 @@ onBeforeUnmount(() => {
   border-bottom: 2px solid var(--text-primary);
   background-color: var(--bg-primary);
 
-  @apply md:flex-row mb-60 sm:pb-80 md:pb-100 lg:pb-160  md:items-center;
+  @apply pt-20 md:flex-row mb-60 sm:pb-80 md:pb-100 lg:pb-160  md:items-center;
 
   &__illustration {
     @apply md:w-[50%];

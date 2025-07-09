@@ -330,7 +330,7 @@ const handleTouchEnd = () => {
       pointer-events: none;
       line-height: 1.5;
       white-space: pre-line;
-      @apply text-neg-5-14 p-10 md:text-neg-5-16 md:p-30;
+      @apply text-pos-5-14 p-10 md:text-pos-5-16 md:p-30;
 
       &::before {
         position: absolute;

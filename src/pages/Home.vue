@@ -206,7 +206,7 @@ onBeforeUnmount(() => {
   background-color: var(--bg-primary);
   gap: 20px;
 
-  @apply md:flex-row md:pt-120 md:px-10;
+  @apply pb-20 md:flex-row md:pt-120 md:px-10;
 
   &__me {
     color: var(--text-secondary);
