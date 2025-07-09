@@ -132,14 +132,19 @@ onMounted(() => {
   padding: 80px 20px;
   z-index: 3;
   width: 100%;
+  font-family: "Sour Gummy", sans-serif;
 
   &__subtitle {
     margin-bottom: 30px;
     white-space: pre-line;
+    // color: var(--text-secondary);
+    // text-shadow: rgba(251, 0, 255, 0.96) 0px 0px 46px;
     color: var(--text-secondary);
-    text-shadow: rgba(251, 0, 255, 0.96) 0px 0px 46px;
+    text-shadow: rgb(251, 53, 254) 0px 0px 5px;
     text-align: center;
-    @apply text-pos-5-18 md:text-pos-5-20 lg:text-pos-5-20;
+    font-family: "Sour Gummy", sans-serif !important;
+    line-height: 1.2;
+    @apply text-pos-5-20 md:text-pos-5-24 lg:text-pos-5-26;
   }
 
   form {
@@ -203,7 +208,7 @@ onMounted(() => {
       backdrop-filter: blur(35px);
       background-image: radial-gradient(ellipse at center center, rgba(173, 173, 173, 0.197), rgba(79, 79, 79, 0.148));
       box-shadow: rgba(96, 109, 110, 0.25) 0px 50px 100px -20px, rgba(255, 255, 255, 0.3) 0px 30px 60px -30px, rgba(76, 82, 82, 0.35) 0px -2px 6px 0px inset;
-      color: rgba(219, 255, 255, 0.96);
+      color: var(--text-secondary);
       outline: none;
       padding-block: 12px;
       padding-right: 24px;
@@ -216,10 +221,10 @@ onMounted(() => {
       }
 
       &::placeholder {
-        color: rgba(219, 255, 255, 0.96);
+        color: var(--text-secondary);
       }
 
-      @apply text-pos-5-16 lg:text-pos-5-18 font-light;
+      @apply text-pos-5-16 lg:text-pos-5-20 font-normal;
 
       &:placeholder-shown {
         border-color: rgba(255, 255, 255, 0.222) !important;
@@ -257,15 +262,14 @@ onMounted(() => {
 
   .btn-submit {
     color: var(--text-secondary);
-    text-shadow: rgba(251, 0, 255, 0.96) 0px 0px 46px;
     text-align: center;
-    background-color: rgba(251, 0, 255, 0.247);
+    background-color: rgba(251, 38, 255, 0.6);
     border-radius: 999px;
     width: 100%;
     max-width: 200px;
-    box-shadow: rgba(255, 94, 250, 0.25) 0px 50px 100px -20px, rgba(255, 8, 239, 0.3) 0px 30px 60px -30px, rgba(210, 31, 255, 0.35) 0px -2px 6px 0px inset;
     transition: letter-spacing 0.5s ease, max-width 0.5s ease;
-    @apply text-pos-5-18 md:text-pos-5-20 lg:text-pos-5-20 px-24 pb-10 pt-12 font-semibold;
+    line-height: 1.6;
+    @apply text-pos-5-18 md:text-pos-5-20 lg:text-pos-5-20 px-24 py-7 font-semibold;
 
     &:hover {
       width: 100%;
@@ -329,23 +333,24 @@ onMounted(() => {
 
   h2 {
     line-height: 1.2;
-    transition: all 0.5s ease;
+    transition: color 0.01s ease, font-size 0.5s ease, letter-spacing 0.5s ease;
     @apply text-neg-5-42 lg:text-neg-5-50 3xl:text-neg-5-70;
   }
   .subtitle {
-    transition: color 0.5s ease;
+    transition: color 0.01s ease;
     @apply uppercase text-pos-5-18 lg:text-pos-5-20 font-normal pb-60 md:pb-80 lg:pb-120;
   }
   &.animated {
     border-top: 2px solid #ff00aa6b;
     h2 {
       color: var(--text-secondary);
-      text-shadow: rgba(251, 0, 255, 0.36) 0px 0px 10px;
-      -webkit-text-stroke: 1px #ff00aa6b; /* Contour rose flashy */
-      text-stroke: 1px #ff00aa6b;
+      text-shadow: rgb(251, 0, 255) 0px 0px 10px;
+      font-family: "Sour Gummy", sans-serif;
+
       @apply text-pos-5-32 lg:text-pos-5-60 3xl:text-pos-5-70;
     }
     .subtitle {
+      font-family: "Sour Gummy", sans-serif;
       color: #ff00aa6b;
     }
 

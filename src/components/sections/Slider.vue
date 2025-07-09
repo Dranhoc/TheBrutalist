@@ -201,7 +201,7 @@ const handleTouchEnd = () => {
   width: 100%;
   background-color: var(--bg-primary);
   z-index: 1;
-  @apply sm:px-10 lg:pr-10 lg:pl-0 -mt-60;
+  @apply sm:px-10 lg:pr-10 lg:pl-0 -mt-60 mb-60 sm:mb-0;
 
   .web {
     position: absolute;
@@ -254,7 +254,7 @@ const handleTouchEnd = () => {
   }
 
   &__title {
-    @apply py-20 px-20 sm:px-0 sm:py-40 mb-20 sm:mb-40 md:mb-60 lg:mb-80;
+    @apply py-40 px-20 sm:px-0 mb-20 sm:mb-40 md:mb-60 lg:mb-80;
   }
 
   .btn-site {

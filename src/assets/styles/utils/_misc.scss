@@ -83,35 +83,30 @@
   }
 
   .animate-btn-theme {
-    // margin-left: 20px;
     margin-right: auto;
-    padding-inline: 20px;
-    font-weight: 400 !important;
-
+    padding-block: 5px;
+    padding-inline: 30px;
+    font-weight: 600 !important;
     transition:
       margin 0.3s ease,
-      padding 0.3s ease,
-      font-size 0.3s ease;
-    @apply text-pos-5-16;
+      padding 0.3s ease;
+    line-height: 1.6;
+    font-family: "Sour Gummy", sans-serif !important;
+    @apply text-pos-5-20;
     span {
-      font-weight: 400 !important;
+      font-weight: 600 !important;
       & > * {
-        font-weight: 400 !important;
+        font-weight: 600 !important;
       }
     }
   }
 
   .animate-btn-bg-theme {
-    background-color: rgba(251, 0, 255, 0);
-    backdrop-filter: blur(35px);
-    background-image: radial-gradient(ellipse at center center, rgba(173, 173, 173, 0.197), rgba(79, 79, 79, 0.148));
-    box-shadow:
-      rgba(96, 109, 110, 0.25) 0px 50px 100px -20px,
-      rgba(255, 255, 255, 0.3) 0px 30px 60px -30px,
-      rgba(76, 82, 82, 0.35) 0px -2px 6px 0px inset;
+    border-top: unset;
+    background-color: rgba(251, 38, 255, 0.6);
     border-radius: 999px;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-
+    transform: translateY(2px);
     transition:
       background-color 0.3s ease,
       border-radius 0.3s ease,
