@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import { useDetectMouse } from "@/composables/useDetectMouse";
 import meBottom from "@/assets/img/me-bottom.png?w=100;150;300;450&format=webp&as=srcset";
 import meTop from "@/assets/img/me-top.png?w=100;150;300;450&format=webp&as=srcset";
 import Footer from "@/components/sections/Footer.vue";
@@ -12,6 +13,8 @@ import GlitchAnimation from "@/components/GlitchAnimation.vue";
 import Slider from "@/components/sections/Slider.vue";
 import Contact from "@/components/sections/Contact.vue";
 import HelloTrustMe from "@/components/sections/HelloTrustMe.vue";
+
+const { hasMouseSupport } = useDetectMouse();
 
 useSEO({
   title: "SlenderDev - Front-end Developer Portfolio",
@@ -61,6 +64,7 @@ onBeforeUnmount(() => {
 <template>
   <main>
     <CursorFilter
+      v-if="hasMouseSupport"
       :style-rules="[
         { selector: '.s-about', size: 90 },
         { selector: '.s-work-with', size: 90 },
