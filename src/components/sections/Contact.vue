@@ -249,8 +249,9 @@ onMounted(() => {
     textarea {
       overflow: hidden;
       resize: none;
-      min-height: 200px;
+      min-height: 120px;
       border-radius: 20px;
+      @apply md:min-h-200;
     }
   }
 
@@ -323,13 +324,13 @@ onMounted(() => {
 .s-contact-title {
   padding-top: 20px;
   border-top: 2px solid var(--bg-primary);
-  height: 150px;
+  height: 160px;
   @apply px-20 mt-80;
 
   h2 {
     line-height: 1.2;
     transition: all 0.5s ease;
-    @apply text-neg-5-36 lg:text-neg-5-50 3xl:text-neg-5-70;
+    @apply text-neg-5-42 lg:text-neg-5-50 3xl:text-neg-5-70;
   }
   .subtitle {
     transition: color 0.5s ease;

@@ -155,6 +155,7 @@ aside {
   background-color: var(--bg-primary);
   flex-shrink: 0;
   transition: background-color 0.3s ease;
+
   &.animate-sidebar {
     background-color: var(--bg-body);
     nav {
