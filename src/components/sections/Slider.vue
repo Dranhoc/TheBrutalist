@@ -213,6 +213,7 @@ const handleTouchEnd = () => {
     transform: translate(35%, -35%) rotate(20deg);
     filter: blur(5px);
     animation: blur 10s linear infinite;
+    z-index: -1;
     @screen 2xl {
       width: 30vw;
       height: 30vw;
@@ -285,6 +286,7 @@ const handleTouchEnd = () => {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    z-index: 1;
     @apply px-20 sm:px-0 gap-10 lg:gap-20 sm:justify-center;
   }
 
