@@ -203,7 +203,7 @@ onBeforeUnmount(() => {
   background-color: var(--bg-primary);
   gap: 20px;
 
-  @apply md:flex-row pt-120;
+  @apply md:flex-row md:pt-120;
 
   &__me {
     padding: 60px 20px 100px;

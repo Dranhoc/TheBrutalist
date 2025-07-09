@@ -208,11 +208,16 @@ const handleTouchEnd = () => {
     right: 0%;
     top: 0%;
     z-index: 10;
-    width: 25vw;
-    height: 25vw;
+    width: 40vw;
+    height: 40vw;
     transform: translate(35%, -35%) rotate(20deg);
     filter: blur(5px);
     animation: blur 10s linear infinite;
+    @screen 2xl {
+      width: 30vw;
+      height: 30vw;
+      max-width: 600px;
+    }
     @keyframes blur {
       0% {
         filter: blur(5px);

@@ -65,11 +65,11 @@ onBeforeUnmount(() => {
 .s-work-with {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  // align-items: center;
   border-bottom: 2px solid var(--text-primary);
   background-color: var(--bg-primary);
 
-  @apply md:flex-row mb-60 sm:pb-80 md:pb-100 lg:pb-160 pt-40;
+  @apply md:flex-row mb-60 sm:pb-80 md:pb-100 lg:pb-160 md:py-80 md:items-center;
 
   &__illustration {
     @apply md:w-[50%];
@@ -78,12 +78,11 @@ onBeforeUnmount(() => {
   &__stack {
     display: flex;
     flex-direction: column;
-    // padding: 60px 20px 100px;
-    padding: 20px;
+    padding: 60px 20px;
     color: var(--text-secondary);
     background-color: var(--bg-primary);
     flex-shrink: 0;
-    @apply md:w-[50%];
+    @apply md:w-[50%] md:py-40 md:px-20;
     ul {
       margin-top: 20px;
       list-style-type: disc;

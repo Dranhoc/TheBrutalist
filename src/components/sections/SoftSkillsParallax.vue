@@ -114,7 +114,7 @@ function easeInOutCubic(t: number): number {
   flex-direction: column;
   justify-items: center;
   background-color: var(--bg-primary);
-  @apply min-h-500 h-screen max-h-[2500px];
+  @apply min-h-500 h-screen max-h-[2500px] md:px-10 lg:px-0;
 
   &__content {
     margin-block: auto;
@@ -123,11 +123,11 @@ function easeInOutCubic(t: number): number {
   .bg-video {
     position: relative;
     height: 180px;
-    width: calc(100% · 10px);
     z-index: 0;
-    border-radius: 20px;
+
     overflow: hidden;
     pointer-events: none;
+    @apply md:rounded-[20px] lg:w-[calc(100%-10px)];
 
     video {
       position: absolute;
