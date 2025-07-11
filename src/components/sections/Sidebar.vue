@@ -184,7 +184,7 @@ nav {
   gap: 20px;
   transition: gap 0.5s ease-out, margin-top 1.2s linear;
   z-index: 1;
-  @apply lg:text-neg-5-12 xl:text-neg-5-14 2xl:text-neg-5-18 3xl:text-pos-5-20 2xl:left-10 3xl:left-20 4xl:w-[calc((100vw-1920px)/2)];
+  @apply lg:text-neg-5-12 xl:text-neg-5-14 2xl:text-neg-5-18 3xl:text-neg-5-20 2xl:left-10 3xl:left-20 4xl:w-[calc((100vw-1920px)/2)];
 
   .btn-theme {
     position: relative;

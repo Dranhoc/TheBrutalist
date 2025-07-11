@@ -42,8 +42,8 @@ const sectionRef = ref<HTMLElement | null>(null);
   }
 
   .me-top {
-    animation: openMouth 1s forwards 2.5s;
     position: relative;
+    animation: openMouth 1s forwards 2.5s;
   }
 
   &__me {
