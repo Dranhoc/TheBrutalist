@@ -73,9 +73,7 @@ onBeforeUnmount(() => {
 <style lang="scss">
 .s-about {
   position: relative;
-  // ✅ Plus de contrainte de hauteur fixe - scroll naturel
   background-color: var(--bg-primary);
-  // ❌ Plus besoin de styles d'overflow spécifiques - géré par le main
 
   &__content {
     display: flex;
@@ -83,10 +81,9 @@ onBeforeUnmount(() => {
     align-items: center;
     justify-content: space-between;
     min-height: calc(100vh - 8vh);
-    padding: 40px;
     gap: 40px;
     background-color: var(--bg-primary);
-    @apply md:flex-row;
+    @apply md:flex-row p-20 md:p-40;
   }
 
   &__me {
@@ -98,22 +95,6 @@ onBeforeUnmount(() => {
 
     p {
       padding-top: 40px;
-    }
-  }
-
-  &__extra-content {
-    margin-top: 40px;
-
-    h3 {
-      margin-top: 30px;
-      margin-bottom: 15px;
-      font-size: 1.2em;
-      font-weight: bold;
-    }
-
-    p {
-      padding-top: 10px;
-      line-height: 1.6;
     }
   }
 

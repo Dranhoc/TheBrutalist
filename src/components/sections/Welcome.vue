@@ -36,19 +36,15 @@ const sectionRef = ref<HTMLElement | null>(null);
 
   &__content {
     position: relative;
-    padding: 40px;
     background-color: var(--bg-body);
     height: calc(100vh - 8vh);
+    @apply p-20 md:p-40;
   }
 
   .me-top {
     animation: openMouth 1s forwards 2.5s;
     position: relative;
   }
-
-  // .me-bottom {
-  //   border-bottom-left-radius: 20px;
-  // }
 
   &__me {
     position: absolute;

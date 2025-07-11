@@ -8,7 +8,7 @@ let resizeObserver: ResizeObserver;
 
 onMounted(() => {
   setTimeout(() => {
-    const illustrationElement = document.querySelector(".s-work-with__illustration") as HTMLElement;
+    const illustrationElement = document.querySelector(".s-stack__illustration") as HTMLElement;
     if (illustrationElement) {
       let oldWidth = illustrationElement.getBoundingClientRect().width;
       let oldHeight = illustrationElement.getBoundingClientRect().height;
@@ -41,37 +41,52 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section class="s-work-with">
-    <div class="s-work-with__illustration">
-      <CabinCanvas :key="magnifierKey" />
-    </div>
-    <div class="s-work-with__stack">
-      <h3><GlitchAnimation text="THINGS I ARGUE WITH DAILY." /></h3>
-      <ul>
-        <li>Vue3</li>
-        <li>React</li>
-        <li>Caffeine</li>
-        <li>Typescript</li>
-        <li>VITE</li>
-        <li>SCSS/Tailwind</li>
-        <li>Supabase, Paracetamol, Laravel</li>
-        <li>Git, Figma</li>
-      </ul>
+  <section class="s-stack">
+    <div class="s-stack__content">
+      <div class="s-stack__stack">
+        <h3><GlitchAnimation text="THINGS I ARGUE WITH DAILY." /></h3>
+        <ul>
+          <li>HTML/CSS</li>
+          <li>Vue3, React</li>
+          <li>Caffeine</li>
+          <li>SCSS/TailwindCSS</li>
+          <li>Javascript</li>
+          <li>Typescript</li>
+          <li>VITE</li>
+          <li>Supabase, Laravel</li>
+          <li>Paracetamol</li>
+          <li>Git/Github</li>
+          <li>Figma</li>
+        </ul>
+      </div>
+      <div class="s-stack__illustration">
+        <CabinCanvas :key="magnifierKey" />
+      </div>
     </div>
   </section>
 </template>
 
 <style scoped lang="scss">
-.s-work-with {
-  display: flex;
-  flex-direction: column;
-  // align-items: center;
-  border-bottom: 2px solid var(--text-primary);
+.s-stack {
+  position: relative;
   background-color: var(--bg-primary);
+  z-index: 1;
 
-  @apply pt-20 md:flex-row mb-60 sm:pb-80 md:pb-100 lg:pb-160  md:items-center;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: calc(100vh - 8vh);
+    gap: 40px;
+    background-color: var(--bg-primary);
+    z-index: 1;
+    @apply md:flex-row p-20 md:p-40;
+  }
 
   &__illustration {
+    display: flex;
+    justify-content: center;
     @apply md:w-[50%];
   }
 
@@ -81,7 +96,8 @@ onBeforeUnmount(() => {
     color: var(--text-secondary);
     background-color: var(--bg-primary);
     flex-shrink: 0;
-    @apply md:w-[50%] py-60 px-20 md:px-10;
+    width: 100%;
+    @apply md:w-[50%];
     ul {
       margin-top: 20px;
       list-style-type: disc;

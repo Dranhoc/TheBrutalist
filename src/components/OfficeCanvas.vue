@@ -219,11 +219,11 @@ onBeforeUnmount(() => {
 <style scoped>
 .magnifier-canvas {
   position: relative;
-  overflow: hidden;
   cursor: none;
   box-shadow: rgba(181, 181, 181, 0.35) -5px 0px 20px;
   max-height: 700px;
   max-width: 700px;
+  width: calc(100% + 40px);
   @screen md {
     border-radius: 20px;
     aspect-ratio: 1/1;
@@ -258,6 +258,7 @@ onBeforeUnmount(() => {
   display: block;
   max-height: 700px;
   max-width: 700px;
-  min-height: 500px;
+  object-fit: cover;
+  @apply md:rounded-[20px];
 }
 </style>

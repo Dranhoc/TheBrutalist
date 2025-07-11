@@ -192,7 +192,6 @@ const handleTouchEnd = () => {
       </div>
     </div>
   </section>
-  <div class="decor"></div>
 </template>
 
 <style scoped lang="scss">
@@ -200,13 +199,12 @@ const handleTouchEnd = () => {
   position: relative;
   width: 100%;
   background-color: var(--bg-primary);
-  z-index: 1;
+  z-index: -1;
 
   .web {
     position: absolute;
     right: 0%;
     top: 0%;
-    z-index: 10;
     width: 40vw;
     height: 40vw;
     transform: translate(35%, -35%) rotate(20deg);
@@ -243,8 +241,8 @@ const handleTouchEnd = () => {
     background-color: var(--bg-body);
     z-index: 2;
     width: 100%;
-    padding: 40px;
     min-height: 100%;
+    @apply p-20 md:p-40;
   }
 
   &__title {
@@ -267,7 +265,6 @@ const handleTouchEnd = () => {
     transition: all 0.3s ease;
     z-index: 10;
     margin-inline: auto;
-    // @apply lg:bottom-100 2xl:bottom-130;
 
     &:hover {
       border-color: var(--bg-primary);
@@ -281,7 +278,7 @@ const handleTouchEnd = () => {
     align-items: center;
     flex-wrap: wrap;
     z-index: 1;
-    @apply px-20 sm:px-0 gap-10 lg:gap-20 sm:justify-center;
+    @apply gap-10 lg:gap-20 sm:justify-center;
   }
 
   &__container {
@@ -291,10 +288,20 @@ const handleTouchEnd = () => {
   .slides-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 16/10;
+    aspect-ratio: 16/12;
+    @screen sm {
+      aspect-ratio: 16/11;
+    }
+    @screen md {
+      aspect-ratio: 16/10.5;
+    }
     @screen lg {
+      aspect-ratio: 16/10;
       max-width: 80%;
       margin: 0 auto;
+    }
+    @screen 2xl {
+      max-width: 70%;
     }
   }
 
@@ -401,25 +408,6 @@ const handleTouchEnd = () => {
   }
 }
 
-.decor {
-  position: relative;
-  width: 100%;
-  @apply h-60 lg:h-80 2xl:h-100;
-  background-color: var(--bg-primary);
-  &::before {
-    position: absolute;
-    content: "";
-    bottom: 0;
-    left: 0;
-    width: 150%;
-    height: 100%;
-    background: radial-gradient(ellipse at 60% 10%, #333333, #54545482 10%, transparent 50%);
-    transform: scaleX(1.7) scaleY(1.2) translateY(20%) rotate(180deg);
-    filter: blur(20px);
-    animation: pulse 8s forwards infinite;
-    animation-delay: 3s;
-  }
-}
 .btn-spider {
   position: relative;
 

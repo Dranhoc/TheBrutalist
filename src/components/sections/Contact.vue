@@ -56,16 +56,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="decor"></div>
   <section class="s-contact-title" :class="{ animated: isTitleAnimated }">
-    <div class="s-contact-content">
+    <div class="s-contact-title__content">
       <h2 class="reset">LET'S WORK TOGETHER</h2>
       <div class="subtitle">Type fast before this cute moment melts into the void.</div>
     </div>
   </section>
 
   <ScrollAnimation animation-class="fade-in" :delay="0" :threshold="0.1" :once="false" :emit-intersection="true" @intersection="handleContactIntersection">
-    <section id="contact" class="s-contact">
+    <section id="contact" class="s-contact" :class="{ animated: isTitleAnimated }">
       <form @submit.prevent="handleSubmit">
         <div class="s-contact__form">
           <img :srcset="bgUnicorn" alt="" role="presentation" />
@@ -127,18 +126,18 @@ onMounted(() => {
 
 <style lang="scss">
 .s-contact {
-  position: relative;
-  background-color: var(--bg-secondary);
-  padding: 80px 20px;
-  z-index: 3;
+  // background-color: var(--bg-primary);
   width: 100%;
   font-family: "Sour Gummy", sans-serif;
+  // transition: background-color 0.3s ease;
+
+  &.animated {
+    // background-color: var(--bg-body);
+  }
 
   &__subtitle {
     margin-bottom: 30px;
     white-space: pre-line;
-    // color: var(--text-secondary);
-    // text-shadow: rgba(251, 0, 255, 0.96) 0px 0px 46px;
     color: var(--text-secondary);
     text-shadow: rgb(251, 53, 254) 0px 0px 5px;
     text-align: center;
@@ -153,6 +152,7 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     width: 100%;
+    @apply py-40 px-20;
   }
 
   div {
@@ -169,7 +169,7 @@ onMounted(() => {
     border-radius: 30px;
     width: 100%;
     max-width: 750px;
-    background-color: transparent;
+    // background-color: var(--bg-primary);
     box-shadow: rgba(255, 94, 250, 0.25) 0px 50px 100px -20px, rgba(255, 8, 239, 0.3) 0px 30px 60px -30px, rgba(210, 31, 255, 0.35) 0px -2px 6px 0px inset;
     @apply px-20 py-40 sm:px-40 sm:py-50 md:p-60 lg:px-60 lg:pt-60 lg:pb-80;
 
@@ -305,31 +305,15 @@ onMounted(() => {
   }
 }
 
-.decor {
-  position: relative;
-  width: 100%;
-  @apply h-60 lg:h-80 2xl:h-100;
-  background-color: var(--bg-primary);
-  &::before {
-    position: absolute;
-    content: "";
-    top: -20px;
-    left: -50%;
-    width: 150%;
-    height: 100%;
-    background: radial-gradient(ellipse at 60% 10%, #333333, #54545482 10%, transparent 50%);
-    transform: scaleX(1.7) scaleY(1.2);
-    filter: blur(15px);
-    animation: pulse 8s forwards infinite;
-    animation-delay: 3s;
-  }
-}
-
 .s-contact-title {
-  padding-top: 20px;
-  border-top: 2px solid var(--bg-primary);
-  height: 160px;
-  @apply px-20 mt-80;
+  height: 300px;
+  transition: background-color 0.5s ease;
+  color: var(--text-secondary);
+  @apply pt-80;
+
+  &__content {
+    @apply p-40;
+  }
 
   h2 {
     line-height: 1.2;
@@ -341,7 +325,9 @@ onMounted(() => {
     @apply uppercase text-pos-5-18 lg:text-pos-5-20 font-normal pb-60 md:pb-80 lg:pb-120;
   }
   &.animated {
-    border-top: 2px solid #ff00aa6b;
+    &__content {
+      border-top: 2px solid #ff00aa6b;
+    }
     h2 {
       color: var(--text-secondary);
       text-shadow: rgb(251, 0, 255) 0px 0px 10px;

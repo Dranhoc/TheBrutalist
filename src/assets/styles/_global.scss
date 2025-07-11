@@ -1,3 +1,8 @@
+:root {
+  --mobile-width: calc(100vw - 16px);
+  --desktop-width: calc(100vw - 16vw);
+}
+
 html {
   scroll-behavior: smooth;
 
@@ -18,7 +23,7 @@ body {
   color: var(--text-primary);
   height: 100vh;
   width: 100vw;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.5s ease;
   &.is-contact {
     background-color: var(--bg-body);
 
@@ -26,6 +31,9 @@ body {
       background: url("/bg-unicorn-4.png") center / cover no-repeat;
       filter: unset;
       animation: fadeIn 0.3s ease;
+    }
+    .main {
+      background-color: var(--bg-body);
     }
   }
 }
@@ -58,15 +66,15 @@ body {
   flex-direction: column;
   flex-grow: 1;
   height: calc(100vh - 8vh);
-  width: calc(100% - 16vw);
+  width: var(--mobile-width);
   max-width: 1920px;
   container-type: inline-size;
   margin-inline: auto;
   margin-top: 4vh;
   overflow-y: auto;
   z-index: 1;
-  background-color: var(--bg-body);
-  border-radius: 50px;
+  background-color: var(--bg-primary);
+  border-radius: 20px;
 
   backface-visibility: hidden;
   transform: translateZ(0);
@@ -77,9 +85,17 @@ body {
   &::-webkit-scrollbar {
     display: none;
   }
+
+  transition: background-color 0.5s ease;
+
+  @screen md {
+    border-radius: 50px;
+    width: var(--desktop-width);
+  }
 }
 
 section {
+  position: relative;
   backface-visibility: hidden;
   transform: translateZ(0);
   scroll-behavior: auto;
@@ -98,18 +114,21 @@ figure {
 }
 
 .shadow-screen {
-  position: fixed; // ✅ Fixed au lieu d'absolute
+  position: fixed;
   height: calc(100vh - 8vh);
-  width: calc(100% - 16vw + 1px);
+  width: calc(100% - 16px + 1px);
   max-width: 1920px;
   inset: 0;
   margin-inline: auto;
   margin-top: 4vh;
   pointer-events: none;
-  border-radius: 50px;
+  border-radius: 20px;
   box-shadow:
     rgba(60, 60, 60, 0.3) 5px 15px 40px 15px inset,
     rgba(60, 60, 60, 0.3) -5px -10px 40px 15px inset;
   z-index: 99999;
-  // transform: translate(9.5%, 0%);
+  @screen md {
+    width: calc(100% - 16vw + 1px);
+    border-radius: 50px;
+  }
 }

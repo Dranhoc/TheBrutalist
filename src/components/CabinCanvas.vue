@@ -221,6 +221,8 @@ onBeforeUnmount(() => {
   overflow: hidden;
   cursor: none;
   box-shadow: rgba(181, 181, 181, 0.35) 5px 0px 20px;
+  max-height: 700px;
+  max-width: 700px;
   aspect-ratio: 1/1;
   @apply lg:!ml-0;
 }
@@ -228,17 +230,13 @@ onBeforeUnmount(() => {
 @screen md {
   .magnifier-canvas {
     border-radius: 20px;
-    margin-left: 10px;
-    width: calc(100% - 20px);
-    max-height: 700px;
-    z-index: 1;
   }
 }
 
 .slenderdev {
   position: absolute;
-  bottom: 20%;
-  right: 20%;
+  bottom: 15%;
+  left: 30%;
   width: 20px;
   transition: opacity 0.1s ease, clip-path 0.05s ease-out;
   opacity: 0;
@@ -248,9 +246,10 @@ onBeforeUnmount(() => {
 
 :deep(canvas) {
   display: block;
-  width: 100% !important;
-  height: 100% !important;
+  max-height: 700px;
+  max-width: 700px;
   object-fit: cover;
   object-position: center bottom;
+  @apply md:rounded-[20px];
 }
 </style>

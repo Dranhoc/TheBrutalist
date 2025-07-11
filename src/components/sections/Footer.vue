@@ -4,7 +4,6 @@ import slenderdev from "@/assets/img/slenderdev.png?w=150;200;300;450&format=web
 
 const isSlenderVisible = ref(false);
 const footerContent = ref<HTMLElement | null>(null);
-
 let timeoutId: number | null = null;
 
 onMounted(() => {
@@ -28,11 +27,12 @@ onMounted(() => {
   if (footerContent.value) {
     observer.observe(footerContent.value);
   }
+});
 
-  onUnmounted(() => {
-    observer.disconnect();
-    if (timeoutId) clearTimeout(timeoutId);
-  });
+onUnmounted(() => {
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+  }
 });
 </script>
 
@@ -42,7 +42,7 @@ onMounted(() => {
       <img :srcset="slenderdev" alt="" role="presentation" :class="{ 'slender-animate': isSlenderVisible }" />
     </div>
     <div class="footer__content" ref="footerContent">
-      <span class="title-4 px-10">Wait...<br />Did you find the SlenderDev&nbsp;?</span>
+      <span class="title-4 px-10">Wait... Did you find the SlenderDev&nbsp;?</span>
     </div>
   </footer>
 </template>
@@ -50,18 +50,18 @@ onMounted(() => {
 <style scoped lang="scss">
 .footer {
   position: relative;
-  background-color: var(--bg-primary);
+  background-color: var(--bg-body);
   padding-bottom: 10px;
   margin-top: 50px;
   z-index: 1;
-  overflow: hidden;
+  // overflow-x: hidden;
 
   &__slenderdev {
     position: relative;
     display: flex;
     justify-content: center;
     background-color: #eeeeee;
-    height: 100vh;
+    min-height: calc(100vh - 16vh);
     z-index: 1;
 
     img {
@@ -83,11 +83,8 @@ onMounted(() => {
     position: relative;
     text-align: center;
     font-family: "Special Elite", system-ui;
-    padding-bottom: 20px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    padding: 20px;
     background-color: #eeeeee;
-    // background-color: white;
     color: var(--text-primary);
     z-index: -1;
     @apply flex w-full justify-center;

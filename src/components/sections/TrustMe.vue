@@ -45,7 +45,6 @@ onMounted(() => {
   background-color: var(--bg-primary);
   width: 100%;
   aspect-ratio: 16/10;
-  overflow: hidden;
 
   &__video {
     position: absolute;
