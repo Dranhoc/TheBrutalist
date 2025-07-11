@@ -3,7 +3,7 @@ import { useSEO } from "@/composables/useSEO";
 
 import Welcome from "@/components/sections/Welcome.vue";
 import About from "@/components/sections/About.vue";
-import Slider from "@/components/sections/Slider.vue";
+import Work from "@/components/sections/Work.vue";
 import TrustMe from "@/components/sections/TrustMe.vue";
 import Contact from "@/components/sections/Contact.vue";
 import Footer from "@/components/sections/Footer.vue";
@@ -21,7 +21,7 @@ useSEO({
   <main class="main">
     <Welcome />
     <About />
-    <Slider />
+    <Work />
     <TrustMe />
     <Contact />
     <Footer />

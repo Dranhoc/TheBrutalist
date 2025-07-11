@@ -54,14 +54,13 @@ onUnmounted(() => {
   padding-bottom: 10px;
   margin-top: 50px;
   z-index: 1;
-  // overflow-x: hidden;
 
   &__slenderdev {
     position: relative;
     display: flex;
     justify-content: center;
     background-color: #eeeeee;
-    min-height: calc(100vh - 16vh);
+    min-height: calc(100vh);
     z-index: 1;
 
     img {
