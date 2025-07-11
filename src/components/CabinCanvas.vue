@@ -220,7 +220,7 @@ onBeforeUnmount(() => {
   position: relative;
   overflow: hidden;
   cursor: none;
-  box-shadow: rgba(181, 181, 181, 0.35) 5px 0px 20px;
+  box-shadow: rgba(155, 155, 155, 0.35) 0px -1px 8px;
   max-height: 700px;
   max-width: 700px;
   aspect-ratio: 1/1;
@@ -229,7 +229,7 @@ onBeforeUnmount(() => {
 
 @screen md {
   .magnifier-canvas {
-    border-radius: 20px;
+    border-radius: 10px;
   }
 }
 
@@ -250,6 +250,6 @@ onBeforeUnmount(() => {
   max-width: 700px;
   object-fit: cover;
   object-position: center bottom;
-  @apply md:rounded-[20px];
+  @apply md:rounded-[10px];
 }
 </style>

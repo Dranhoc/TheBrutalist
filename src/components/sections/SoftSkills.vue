@@ -127,24 +127,20 @@ function easeInOutCubic(t: number): number {
 <style scoped lang="scss">
 .s-softskills {
   position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-items: center;
+  justify-content: center;
   background-color: var(--bg-primary);
-  min-height: calc(100vh - 8vh);
+  min-height: calc(92vh - 60px);
 
   &__content {
-    margin-block: auto;
     background-color: var(--bg-primary);
-    padding-block: 60px;
   }
 
   .bg-video {
     position: relative;
     height: 180px;
     z-index: 0;
-    overflow: hidden;
     pointer-events: none;
 
     video {
@@ -182,10 +178,11 @@ function easeInOutCubic(t: number): number {
   }
 
   &__text-wrapper {
-    z-index: 99;
-
+    position: relative;
     overflow: hidden;
     padding-top: 60px;
+    height: 320px;
+    @apply md:h-335 3xl:h-400;
   }
 
   .text {
@@ -196,15 +193,13 @@ function easeInOutCubic(t: number): number {
     color: var(--text-secondary);
     z-index: 3;
     width: 250vw;
-    height: 320px;
     overflow-y: hidden;
     line-height: 2;
     font-family: "Special Elite", system-ui;
 
-    @apply text-pos-5-18 md:text-pos-5-26 font-normal 4xl:h-400;
+    @apply text-pos-5-18 md:text-pos-5-26 font-normal;
     @screen md {
       line-height: 1.5;
-      height: 340px;
     }
 
     .killer {
