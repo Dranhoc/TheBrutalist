@@ -44,12 +44,18 @@ const textOffset = ref(0);
 let ticking = false;
 
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll, { passive: true });
-  handleScroll();
+  const mainElement = document.querySelector(".main");
+  if (mainElement) {
+    mainElement.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+  }
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener("scroll", handleScroll);
+  const mainElement = document.querySelector(".main");
+  if (mainElement) {
+    mainElement.removeEventListener("scroll", handleScroll);
+  }
 });
 
 function handleScroll() {
@@ -66,19 +72,28 @@ function updateParallax() {
   }
 
   const section = sectionRef.value;
-  const sectionRect = section.getBoundingClientRect();
-  const sectionHeight = section.offsetHeight;
-  const windowHeight = window.innerHeight;
+  const mainElement = document.querySelector(".main") as HTMLElement;
 
-  const sectionTop = sectionRect.top;
-  const sectionBottom = sectionRect.bottom;
+  if (!mainElement) {
+    ticking = false;
+    return;
+  }
+
+  const mainRect = mainElement.getBoundingClientRect();
+  const sectionRect = section.getBoundingClientRect();
+
+  const sectionTop = sectionRect.top - mainRect.top;
+  const sectionBottom = sectionRect.bottom - mainRect.top;
+  const sectionHeight = section.offsetHeight;
+  const mainHeight = mainElement.clientHeight;
+
   const triggerOffset = 200;
   const adjustedSectionTop = sectionTop + triggerOffset;
 
-  const isVisible = sectionBottom > triggerOffset && adjustedSectionTop < windowHeight;
+  const isVisible = sectionBottom > triggerOffset && adjustedSectionTop < mainHeight;
 
   if (isVisible) {
-    const progress = Math.max(0, Math.min(1, (windowHeight - adjustedSectionTop) / (windowHeight + sectionHeight)));
+    const progress = Math.max(0, Math.min(1, (mainHeight - adjustedSectionTop) / (mainHeight + sectionHeight)));
 
     const maxTitleOffset = 320;
     const maxTextOffset = -480;
@@ -114,20 +129,21 @@ function easeInOutCubic(t: number): number {
   flex-direction: column;
   justify-items: center;
   background-color: var(--bg-primary);
-  @apply min-h-500 h-screen max-h-[2500px] md:px-10 lg:px-0;
+  min-height: calc(100vh - 8vh);
+
+  @apply md:px-10 lg:px-0 pb-[8vh];
 
   &__content {
     margin-block: auto;
+    background-color: var(--bg-primary);
   }
 
   .bg-video {
     position: relative;
     height: 180px;
     z-index: 0;
-
     overflow: hidden;
     pointer-events: none;
-    @apply md:rounded-[20px] lg:w-[calc(100%-10px)];
 
     video {
       position: absolute;
@@ -137,7 +153,7 @@ function easeInOutCubic(t: number): number {
       width: 100%;
       z-index: -1;
       filter: grayscale(100%) brightness(200%) contrast(150%) sepia(0%) hue-rotate(0deg) saturate(100%);
-      animation: vampiricFlash 10s infinite;
+      animation: vampiricFlash 8s infinite;
     }
   }
 
@@ -165,11 +181,9 @@ function easeInOutCubic(t: number): number {
 
   &__text-wrapper {
     z-index: 99;
-    width: calc(100% · 10px);
+
     overflow: hidden;
     padding-top: 60px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
   }
 
   .text {
@@ -177,7 +191,6 @@ function easeInOutCubic(t: number): number {
     display: flex;
     will-change: transform;
     transition: transform 0.3s ease;
-    color: var(--text-primary);
     color: var(--text-secondary);
     z-index: 3;
     width: 250vw;
@@ -186,12 +199,14 @@ function easeInOutCubic(t: number): number {
     line-height: 2;
     font-family: "Special Elite", system-ui;
 
-    @apply text-pos-5-18 md:text-pos-5-26 4xl:w-[3000px] md:h-340  font-normal;
+    @apply text-pos-5-18 md:text-pos-5-26 font-normal;
     @screen md {
       line-height: 1.5;
+      height: 340px;
     }
+
     .killer {
-      animation: vampiricFlash 10s infinite;
+      animation: vampiricFlash 8s infinite;
     }
   }
 }

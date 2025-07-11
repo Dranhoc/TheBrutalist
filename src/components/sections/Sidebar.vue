@@ -3,7 +3,6 @@ import { useScrollTrigger } from "@/composables/useScrollTrigger";
 import { ref, onMounted, onUnmounted, watch } from "vue";
 import type { Ref } from "vue";
 import GlitchAnimation from "@/components/GlitchAnimation.vue";
-import bg from "@/assets/img/bg-wall.png?w=150;200&format=webp&as=srcset";
 
 const { sidebarAnimated } = useScrollTrigger();
 
@@ -18,7 +17,8 @@ let lastThrottleTime = 0;
 
 const resetNavigation = () => {
   if (nav.value) {
-    nav.value.style.gap = "40px";
+    nav.value.style.gap = "20px";
+    nav.value.style.marginTop = "0px";
     const links = nav.value.querySelectorAll("a");
     links.forEach((link) => {
       (link as HTMLElement).style.transform = "rotate(0deg) translateY(0px)";
@@ -28,7 +28,13 @@ const resetNavigation = () => {
 };
 
 const updateScrollVelocity = () => {
-  const currentScrollY = window.scrollY;
+  const mainElement = document.querySelector(".main") as HTMLElement;
+  if (!mainElement) {
+    ticking = false;
+    return;
+  }
+
+  const currentScrollY = mainElement.scrollTop;
   const rawVelocity = currentScrollY - lastScrollY;
   const scrollDirection = rawVelocity > 0 ? "down" : "up";
 
@@ -41,7 +47,7 @@ const updateScrollVelocity = () => {
 
     if (sidebarAnimated.value) {
       smoothedVelocity = smoothedVelocity * 0.85;
-      const currentGap = parseFloat(nav.value.style.gap) || 40;
+      const currentGap = parseFloat(nav.value.style.gap) || 20;
       const targetGap = 40;
       const newGap = currentGap + (targetGap - currentGap) * 0.2;
       nav.value.style.gap = `${newGap}px`;
@@ -56,9 +62,11 @@ const updateScrollVelocity = () => {
       const velocityRatio = Math.min(smoothedVelocity / 100, 1);
 
       if (scrollDirection === "down") {
-        const maxGap = 40;
+        const maxGap = 20;
         const newGap = maxGap * (1 - velocityRatio);
         nav.value.style.gap = `${newGap}px`;
+
+        nav.value.style.marginTop = "0px";
 
         links.forEach((link, index) => {
           const isFirst = index === 0;
@@ -66,19 +74,22 @@ const updateScrollVelocity = () => {
           (link as HTMLElement).style.transform = `rotate(${rotation}deg)`;
         });
       } else {
-        nav.value.style.gap = "40px";
+        const maxGap = 20;
+        const newGap = maxGap * (1 - velocityRatio);
+        nav.value.style.gap = `${newGap}px`;
+
+        const totalAvailableHeight = window.innerHeight * 0.96 - 40;
+
+        const estimatedButtonsHeight = 4 * 50 + 3 * newGap;
+
+        const maxMarginTop = totalAvailableHeight - estimatedButtonsHeight;
+        const marginTop = velocityRatio * maxMarginTop;
+        nav.value.style.marginTop = `${marginTop}px`;
 
         links.forEach((link, index) => {
-          const isLast = index === links.length - 1;
-
-          if (isLast) {
-            (link as HTMLElement).style.transform = "rotate(0deg)";
-          } else {
-            const rotation = velocityRatio * (index % 2 === 0 ? -6 : 6);
-            const adjustedVelocity = Math.pow(velocityRatio, 0.5);
-            const moveDistance = adjustedVelocity * 40 * (links.length - 1 - index);
-            (link as HTMLElement).style.transform = `rotate(${rotation}deg) translateY(${moveDistance}px)`;
-          }
+          const isFirst = index === 0;
+          const rotation = isFirst ? 0 : velocityRatio * (index % 2 === 0 ? -6 : 6);
+          (link as HTMLElement).style.transform = `rotate(${rotation}deg)`;
         });
       }
     }
@@ -115,7 +126,11 @@ watch(sidebarAnimated, (newValue) => {
 });
 
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll, { passive: true });
+  const mainElement = document.querySelector(".main");
+  if (mainElement) {
+    mainElement.addEventListener("scroll", handleScroll, { passive: true });
+    lastScrollY = mainElement.scrollTop;
+  }
 
   if (sidebarVideo.value) {
     sidebarVideo.value.playbackRate = 0.8;
@@ -123,7 +138,10 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
+  const mainElement = document.querySelector(".main");
+  if (mainElement) {
+    mainElement.removeEventListener("scroll", handleScroll);
+  }
   if (debounceTimer) {
     clearTimeout(debounceTimer);
   }
@@ -132,10 +150,6 @@ onUnmounted(() => {
 
 <template>
   <aside :class="{ 'animate-sidebar': sidebarAnimated }">
-    <img :srcset="bg" alt="" role="presentation" />
-    <video ref="sidebarVideo" class="sidebar-video" muted playsinline aria-hidden="true" preload="auto">
-      <source src="/cloudy-bg.mp4" type="video/mp4" />
-    </video>
     <nav ref="nav">
       <a class="btn-theme" href="#home"><GlitchAnimation text="HOME" trigger="hover" /></a>
       <a class="btn-theme" href="#about"><GlitchAnimation text="ABOUT" trigger="hover" /></a>
@@ -147,73 +161,30 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 aside {
-  position: relative;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  width: 180px;
-  background-color: var(--bg-primary);
+  position: fixed;
+  height: 100%;
+  z-index: 5;
   flex-shrink: 0;
   transition: background-color 0.3s ease;
 
   &.animate-sidebar {
     background-color: var(--bg-body);
-    nav {
-      @screen 4xl {
-        left: calc((100vw - 2050px) / 2 + 10px);
-      }
-    }
   }
 
-  @apply py-40 hidden lg:flex justify-center;
-
-  img {
-    position: fixed;
-    width: 160px;
-    top: 10px;
-    left: 10px;
-    height: calc(100vh - 20px);
-    opacity: 0.9;
-    transition: opacity 1s ease;
-    z-index: 1;
-    border-radius: 20px;
-    @screen 4xl {
-      left: calc((100vw - 2050px) / 2 + 10px);
-    }
-  }
-
-  .sidebar-video {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    width: 160px;
-    height: calc(100% - 20px);
-    border-radius: 20px;
-    opacity: 0;
-    object-fit: cover;
-    transform-origin: center;
-    transition: opacity 1s ease;
-    z-index: 1;
-    overflow: hidden;
-    @apply hidden lg:block;
-    @screen 4xl {
-      left: calc((100vw - 2050px) / 2 + 10px);
-    }
-  }
+  @apply hidden xl:flex;
 }
 
 nav {
   position: fixed;
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  transition: gap 0.5s ease-out;
+  height: calc(100vh - 8vh - 80px);
+  top: calc(4vh + 40px);
+  left: 5px;
+  gap: 20px;
+  transition: gap 0.5s ease-out, margin-top 1.2s linear;
   z-index: 1;
-  @apply px-20 text-neg-5-30;
-
-  @screen 4xl {
-    left: calc((100vw - 2050px) / 2 + 5px);
-  }
+  @apply lg:text-neg-5-12 xl:text-neg-5-14 2xl:text-neg-5-18 3xl:text-pos-5-20 2xl:left-10 3xl:left-20 4xl:w-[calc((100vw-1920px)/2)];
 
   .btn-theme {
     position: relative;
@@ -223,10 +194,11 @@ nav {
     width: fit-content;
     color: var(--text-secondary);
     padding: 10px;
-    margin-left: auto;
+    // margin-left: auto;
     line-height: 1;
     z-index: 1;
     transition: margin 0.3s ease, padding 0.3s ease, font-size 0.3s ease, transform 0.5s ease-out;
+    @apply 4xl:ml-auto 4xl:mr-40;
 
     &::before {
       position: absolute;

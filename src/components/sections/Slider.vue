@@ -201,7 +201,6 @@ const handleTouchEnd = () => {
   width: 100%;
   background-color: var(--bg-primary);
   z-index: 1;
-  @apply sm:px-10 lg:pr-10 lg:pl-0 -mt-60 mb-60 sm:mb-0;
 
   .web {
     position: absolute;
@@ -244,17 +243,12 @@ const handleTouchEnd = () => {
     background-color: var(--bg-body);
     z-index: 2;
     width: 100%;
-    margin-top: 20px;
-    overflow: hidden;
-    @apply sm:px-20;
-    @screen sm {
-      border-radius: 20px;
-      width: calc(100% - 10px);
-    }
+    padding: 40px;
+    min-height: 100%;
   }
 
   &__title {
-    @apply py-40 px-20 sm:px-0 mb-20 sm:mb-40 md:mb-60 lg:mb-80;
+    @apply pb-60 sm:pb-80 md:pb-100 lg:pb-120;
   }
 
   .btn-site {
@@ -273,7 +267,7 @@ const handleTouchEnd = () => {
     transition: all 0.3s ease;
     z-index: 10;
     margin-inline: auto;
-    @apply lg:bottom-100 2xl:bottom-130;
+    // @apply lg:bottom-100 2xl:bottom-130;
 
     &:hover {
       border-color: var(--bg-primary);
@@ -297,15 +291,10 @@ const handleTouchEnd = () => {
   .slides-container {
     position: relative;
     width: 100%;
-    min-height: calc(100vw / (280 / 150) + 80px);
-
+    aspect-ratio: 16/10;
     @screen lg {
-      max-width: 65%;
+      max-width: 80%;
       margin: 0 auto;
-      min-height: calc(65vw / (280 / 150) + 80px);
-    }
-    @screen 4xl {
-      min-height: calc((2050px * 0.65) / (280 / 150) + 80px);
     }
   }
 
@@ -455,7 +444,7 @@ const handleTouchEnd = () => {
     z-index: 2;
     width: 40px;
     height: 40px;
-    @apply bottom-40 lg:bottom-100 2xl:bottom-130;
+    @apply bottom-40;
   }
 
   .btn-site:hover ~ .spider-figure {

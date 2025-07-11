@@ -83,16 +83,16 @@
   }
 
   .animate-btn-theme {
-    margin-right: auto;
+    // margin-right: auto;
     padding-block: 5px;
-    padding-inline: 30px;
+    padding-inline: 16px;
     font-weight: 600 !important;
     transition:
       margin 0.3s ease,
       padding 0.3s ease;
     line-height: 1.6;
     font-family: "Sour Gummy", sans-serif !important;
-    @apply text-pos-5-20;
+    @apply lg:text-pos-5-12 xl:text-pos-5-14 2xl:text-pos-5-16 3xl:text-pos-5-18;
     span {
       font-weight: 600 !important;
       & > * {

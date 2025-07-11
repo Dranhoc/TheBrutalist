@@ -218,13 +218,12 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .magnifier-canvas {
-  /* width: 100%; */
-  /* min-height: 500px; */
   position: relative;
   overflow: hidden;
   cursor: none;
   box-shadow: rgba(181, 181, 181, 0.35) -5px 0px 20px;
-  /* @apply lg:!w-[(calc(100%-50px))]; */
+  max-height: 700px;
+  max-width: 700px;
   @screen md {
     border-radius: 20px;
     aspect-ratio: 1/1;
@@ -257,8 +256,8 @@ onBeforeUnmount(() => {
 
 :deep(canvas) {
   display: block;
-  width: 100% !important;
-  height: 100% !important;
+  max-height: 700px;
+  max-width: 700px;
   min-height: 500px;
 }
 </style>
