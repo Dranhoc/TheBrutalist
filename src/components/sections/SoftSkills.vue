@@ -2,7 +2,7 @@
   <section class="s-softskills" ref="sectionRef">
     <div class="s-softskills__content">
       <div class="bg-video">
-        <video autoplay muted loop playsinline preload="auto" src="/rain-bg.mp4" poster="/bg-wall-h.png" aria-hidden="true"></video>
+        <video autoplay muted loop playsinline preload="auto" src="/rain-bg.mp4" aria-hidden="true"></video>
         <div class="title" ref="titleRef" :style="{ transform: `translateX(${titleOffset}px)` }">
           <span class="title-2" v-for="n in 15" :key="n">SOFT&nbsp;SKILLS</span>
         </div>
