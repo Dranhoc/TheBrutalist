@@ -30,13 +30,12 @@ const sectionRef = ref<HTMLElement | null>(null);
   display: flex;
   flex-direction: column;
   height: calc(100vh - 8vh);
-  background-color: var(--bg-primary);
+  background-color: var(--bg-body);
   width: 100%;
-  z-index: 2;
+  z-index: 1;
 
   &__content {
     position: relative;
-    background-color: var(--bg-body);
     height: calc(100vh - 8vh);
     @apply p-20 md:p-40;
   }
@@ -45,14 +44,16 @@ const sectionRef = ref<HTMLElement | null>(null);
     position: relative;
     animation: openMouth 1s forwards 2.5s;
   }
+  .me-bottom {
+  }
 
   &__me {
     position: absolute;
     display: flex;
     flex-direction: column;
-    z-index: 1;
+    z-index: 2;
     opacity: 0;
-    animation: translateFromBottom 0.5s forwards 1.5s;
+    animation: translateFromBottompx 0.5s forwards 1.3s;
     left: -20px;
     bottom: 0px;
     @apply w-[50%] sm:w-[30%] md:w-[25%] lg:w-[20%];
@@ -61,7 +62,7 @@ const sectionRef = ref<HTMLElement | null>(null);
       height: 100%;
       width: auto;
       object-fit: cover;
-      z-index: -1;
+      z-index: 2;
     }
   }
 
@@ -71,11 +72,11 @@ const sectionRef = ref<HTMLElement | null>(null);
     transform: translate(90%, -20%);
     opacity: 0;
     line-height: 1;
-    background-color: var(--text-primary);
+    background-color: rgba(0, 0, 0, 0.9);
     color: var(--text-secondary);
     padding: 1.5vw;
-    z-index: 2;
     animation: translateFromMouth 0.5s forwards 2.5s;
+    z-index: 1;
     @apply text-neg-5-16 md:text-neg-5-24 4xl:p-30;
   }
 }

@@ -74,6 +74,7 @@ onBeforeUnmount(() => {
 .s-about {
   position: relative;
   background-color: var(--bg-primary);
+  z-index: 3;
 
   &__content {
     display: flex;
@@ -83,6 +84,7 @@ onBeforeUnmount(() => {
     min-height: calc(100vh - 8vh);
     gap: 40px;
     background-color: var(--bg-primary);
+    z-index: 3;
     @apply md:flex-row p-20 md:p-40;
   }
 
