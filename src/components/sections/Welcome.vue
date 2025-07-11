@@ -56,14 +56,14 @@ function startTypewriter() {
   position: relative;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 8vh);
+  height: calc(100dvh - 8dvh);
   background-color: var(--bg-body);
   width: 100%;
   z-index: 1;
 
   &__content {
     position: relative;
-    height: calc(100vh - 8vh);
+    height: calc(100dvh - 8dvh);
     @apply p-20 md:p-40;
   }
 

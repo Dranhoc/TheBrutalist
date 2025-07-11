@@ -178,8 +178,8 @@ nav {
   position: fixed;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 8vh - 80px);
-  top: calc(4vh + 40px);
+  height: calc(100dvh - 8dvh - 80px);
+  top: calc(4dvh + 40px);
   left: 5px;
   gap: 20px;
   transition: gap 0.5s ease-out, margin-top 1.2s linear;

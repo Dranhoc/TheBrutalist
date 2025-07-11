@@ -60,7 +60,7 @@ onUnmounted(() => {
     display: flex;
     justify-content: center;
     background-color: #eeeeee;
-    min-height: calc(100vh);
+    min-height: calc(100dvh);
     z-index: 1;
 
     img {
