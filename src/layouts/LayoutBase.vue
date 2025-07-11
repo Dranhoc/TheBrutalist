@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted } from "vue";
 import Sidebar from "@/components/sections/Sidebar.vue";
 import CursorFilter from "@/components/CursorFilter.vue";
 import { useDetectMouse } from "@/composables/useDetectMouse";
