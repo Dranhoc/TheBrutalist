@@ -26,15 +26,8 @@ body {
   transition: background-color 0.5s ease;
   &.is-contact {
     background-color: var(--bg-body);
-
-    // .page::before {
-    //   background: url("/bg-unicorn-4.png") center / cover no-repeat;
-    //   filter: unset;
-    //   animation: fadeIn 0.3s ease;
-    // }
     .main {
       background-color: var(--bg-body);
-      // display: none;
     }
     .shadow-screen {
       box-shadow:
@@ -60,17 +53,6 @@ body {
   color: var(--ws-primary-color);
   overflow: hidden;
   z-index: 2;
-  // &::before {
-  //   content: "";
-  //   position: absolute;
-  //   height: 100dvh;
-  //   width: 100vw;
-  //   inset: 0;
-  //   filter: saturate(0%) brightness(200%);
-  //   @screen md {
-  //     // background: url("/horror-bg.png") center / cover no-repeat;
-  //   }
-  // }
 }
 
 .main {
@@ -115,6 +97,12 @@ section {
   scroll-behavior: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  // overflow-x: hidden;
+  max-width: var(--mobile-width);
+  @screen md {
+    max-width: var(--desktop-width);
+  }
+
   &::-webkit-scrollbar {
     display: none;
   }

@@ -242,6 +242,7 @@ const handleTouchEnd = () => {
     z-index: 2;
     width: 100%;
     min-height: 100%;
+    overflow-x: hidden;
     @apply p-20 md:p-40;
   }
 

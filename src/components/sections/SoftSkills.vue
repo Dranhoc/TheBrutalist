@@ -132,9 +132,11 @@ function easeInOutCubic(t: number): number {
   justify-content: center;
   background-color: var(--bg-primary);
   min-height: calc(92dvh - 60px);
+  overflow-x: hidden;
 
   &__content {
     background-color: var(--bg-primary);
+    overflow-x: hidden;
   }
 
   .bg-video {
@@ -163,6 +165,7 @@ function easeInOutCubic(t: number): number {
     will-change: transform;
     transition: transform 0.2s ease;
     z-index: 5;
+    overflow-x: hidden;
     @apply w-[300vw] md:w-[200vw] lg:w-[180vw] 4xl:w-[3000px];
 
     span {
