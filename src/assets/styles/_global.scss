@@ -27,13 +27,14 @@ body {
   &.is-contact {
     background-color: var(--bg-body);
 
-    .page::before {
-      background: url("/bg-unicorn-4.png") center / cover no-repeat;
-      filter: unset;
-      animation: fadeIn 0.3s ease;
-    }
+    // .page::before {
+    //   background: url("/bg-unicorn-4.png") center / cover no-repeat;
+    //   filter: unset;
+    //   animation: fadeIn 0.3s ease;
+    // }
     .main {
       background-color: var(--bg-body);
+      // display: none;
     }
     .shadow-screen {
       box-shadow:
@@ -59,15 +60,17 @@ body {
   color: var(--ws-primary-color);
   overflow: hidden;
   z-index: 2;
-  &::before {
-    content: "";
-    position: absolute;
-    height: 100dvh;
-    width: 100vw;
-    inset: 0;
-    background: url("/horror-bg.png") center / cover no-repeat;
-    filter: saturate(0%) brightness(200%);
-  }
+  // &::before {
+  //   content: "";
+  //   position: absolute;
+  //   height: 100dvh;
+  //   width: 100vw;
+  //   inset: 0;
+  //   filter: saturate(0%) brightness(200%);
+  //   @screen md {
+  //     // background: url("/horror-bg.png") center / cover no-repeat;
+  //   }
+  // }
 }
 
 .main {
