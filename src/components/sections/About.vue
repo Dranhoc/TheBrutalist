@@ -81,13 +81,18 @@ onBeforeUnmount(() => {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    height: calc(100vh - 8vh);
-    height: calc(100dvh - 8dvh);
-    max-height: 1200px;
+    min-height: calc(100vh - 8vh);
+    min-height: calc(100dvh - 8dvh);
     gap: 40px;
     background-color: var(--bg-primary);
     z-index: 3;
     @apply md:flex-row p-20 md:p-40;
+    @screen 4xl {
+      min-height: unset;
+      height: calc(100vh - 8vh);
+      height: calc(100dvh - 8dvh);
+      max-height: 1200px;
+    }
   }
 
   &__me {

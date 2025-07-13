@@ -131,10 +131,15 @@ function easeInOutCubic(t: number): number {
   flex-direction: column;
   justify-content: center;
   background-color: var(--bg-primary);
-  height: calc(92vh - 60px);
-  height: calc(92dvh - 60px);
-  max-height: 750px;
+  min-height: calc(92vh - 60px);
+  min-height: calc(92dvh - 60px);
   overflow-x: hidden;
+  @screen 4xl {
+    min-height: unset;
+    height: calc(92vh - 60px);
+    height: calc(92dvh - 60px);
+    max-height: 1000px;
+  }
 
   &__content {
     background-color: var(--bg-primary);
