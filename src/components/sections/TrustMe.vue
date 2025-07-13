@@ -44,7 +44,15 @@ onMounted(() => {
   display: flex;
   background-color: var(--bg-primary);
   width: 100%;
-  aspect-ratio: 16/10;
+  min-height: 92vh;
+  min-height: 92dvh;
+  height: 92vh;
+  height: 92dvh;
+  @screen 4xl {
+    min-height: unset;
+    height: unset;
+    aspect-ratio: 16/10;
+  }
 
   &__video {
     position: absolute;
@@ -68,7 +76,7 @@ onMounted(() => {
     z-index: 2;
     left: 0;
     bottom: 0;
-    @apply w-[50%] md:w-[40%];
+    @apply w-[100%] md:w-[40%];
 
     img {
       height: 100%;
@@ -81,8 +89,8 @@ onMounted(() => {
   .s-hello__text {
     position: absolute;
     width: 100%;
-    top: 0;
-    left: 80%;
+    top: -50%;
+    left: 0%;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -92,34 +100,38 @@ onMounted(() => {
     font-weight: bold;
     text-align: center;
     font-family: "Special Elite", system-ui;
-    @apply md:w-[60vw];
+    @screen md {
+      width: 60vw;
+      top: 0;
+      left: 80%;
+    }
 
     .creepy-text {
       opacity: 0;
       transform: scale(1.2);
-      filter: blur(8px);
-      animation: vaporZoom 5s infinite;
+      // filter: blur(8px);
       animation-timing-function: ease-in-out;
       user-select: none;
-      perspective: 1000px;
-      transform-style: preserve-3d;
 
       &:nth-child(1) {
+        animation: vaporZoomToLeft 5s infinite;
         animation-delay: 0.4s;
-        @apply text-neg-5-16 sm:text-neg-5-24 lg:text-neg-5-70;
+        @apply text-neg-5-24 sm:text-neg-5-36 lg:text-neg-5-70;
       }
       &:nth-child(2) {
+        animation: vaporZoomToRight 5s infinite;
         animation-delay: 1.7s;
-        @apply text-neg-5-18 sm:text-neg-5-32 lg:text-neg-5-80;
+        @apply text-neg-5-24 sm:text-neg-5-40 lg:text-neg-5-80;
       }
       &:nth-child(3) {
+        animation: vaporZoomToLeft 5s infinite;
         animation-delay: 2.9s;
-        @apply text-neg-5-12 sm:text-neg-5-16 lg:text-neg-5-50;
+        @apply text-neg-5-20 sm:text-neg-5-28 lg:text-neg-5-50;
       }
     }
   }
 
-  @keyframes vaporZoom {
+  @keyframes vaporZoomToLeft {
     0% {
       opacity: 0;
       transform: scale(0) translateY(10px) translateX(0);
@@ -132,13 +144,37 @@ onMounted(() => {
     }
     50% {
       opacity: 0.7;
-      transform: scale(1.05) translateY(-5px) rotate(-10deg);
+      transform: scale(1.5) translateY(-5px) rotate(-10deg);
       filter: blur(4px);
       color: white;
     }
     100% {
-      opacity: 0;
+      opacity: 0.1;
       transform: scale(3) translateY(10px) rotate(30deg) translateX(-20%);
+      filter: blur(8px);
+      color: rgb(113, 1, 1);
+    }
+  }
+  @keyframes vaporZoomToRight {
+    0% {
+      opacity: 0;
+      transform: scale(0) translateY(10px) translateX(0);
+      filter: blur(15px);
+    }
+    20% {
+      opacity: 1;
+      transform: scale(1) translateY(0) translateX(0);
+      filter: blur(1px);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.5) translateY(-5px) rotate(10deg);
+      filter: blur(4px);
+      color: white;
+    }
+    100% {
+      opacity: 0.1;
+      transform: scale(3) translateY(10px) rotate(30deg) translateX(20%);
       filter: blur(8px);
       color: rgb(113, 1, 1);
     }
@@ -152,8 +188,8 @@ onMounted(() => {
   }
 
   .left-spiral {
-    top: 37%;
-    left: 38%;
+    top: 39%;
+    left: 39%;
     transform: scale(0);
     animation: fadeInSpiral 0.3s ease forwards, spinAndPulse 4s infinite linear;
     animation-delay: 2s, 2.5s;
@@ -163,22 +199,18 @@ onMounted(() => {
       animation-delay: 2s, 2.5s;
     }
     @screen md {
-      top: 39%;
-      left: 39%;
       animation: fadeInSpiral-sm 0.5s ease forwards, spinAndPulse-md 4s infinite linear;
       animation-delay: 2s, 2.5s;
     }
     @screen 2xl {
-      top: 39%;
-      left: 39%;
       animation: fadeInSpiral-2xl 0.5s ease forwards, spinAndPulse-2xl 4s infinite linear;
       animation-delay: 2s, 2.5s;
     }
   }
 
   .right-spiral {
-    top: 37%;
-    left: 56%;
+    top: 39%;
+    left: 58%;
     transform: scale(0);
     animation: fadeInSpiral 0.3s ease forwards, spinAndPulse 4s infinite linear reverse;
     animation-delay: 2s, 2.5s;
@@ -188,14 +220,10 @@ onMounted(() => {
       animation-delay: 2s, 2.5s;
     }
     @screen md {
-      top: 39%;
-      left: 58%;
       animation: fadeInSpiral-sm 0.5s ease forwards, spinAndPulse-md 4s infinite linear reverse;
       animation-delay: 2s, 2.5s;
     }
     @screen 2xl {
-      top: 39%;
-      left: 58%;
       animation: fadeInSpiral-2xl 0.5s ease forwards, spinAndPulse-2xl 4s infinite linear reverse;
       animation-delay: 2s, 2.5s;
     }
