@@ -248,7 +248,7 @@ const handleTouchEnd = () => {
     @apply pb-20 md:pb-60;
 
     &-head {
-      @apply px-20 pt-60 md:px-40 md:pt-40;
+      @apply px-15 pt-60 md:px-35 md:pt-40;
     }
   }
 
@@ -289,7 +289,7 @@ const handleTouchEnd = () => {
   }
 
   &__container {
-    padding: 20px 0;
+    padding: 20px 5px;
   }
 
   .slides-container {
