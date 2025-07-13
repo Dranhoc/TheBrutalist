@@ -160,15 +160,17 @@ const handleTouchEnd = () => {
 <template>
   <section class="s-slider full-w" id="work">
     <div class="s-slider__content">
-      <figure class="web"><VueSVG src="/svg/web.svg" /></figure>
-      <div class="s-slider__title">
-        <h2><GlitchAnimation text="WORK AND WONDERS" /></h2>
-        <div class="text-pos-5-18 lg:text-pos-5-20 font-normal">A SELECTION OF A FEW THINGS I MADE HAPPEN</div>
-      </div>
-      <div class="s-slider__buttons">
-        <button class="btn-primary" v-for="(slide, index) in slides" :key="slide.id" :class="{ active: index === currentSlideIndex }" @click="goToSlide(index)">
-          <GlitchAnimation :text="slide.title" trigger="hover" />
-        </button>
+      <div class="s-slider__content-head">
+        <figure class="web"><VueSVG src="/svg/web.svg" /></figure>
+        <div class="s-slider__title">
+          <h2><GlitchAnimation text="WORK AND WONDERS" /></h2>
+          <div class="text-pos-5-18 lg:text-pos-5-20 font-normal">A SELECTION OF A FEW THINGS I MADE HAPPEN</div>
+        </div>
+        <div class="s-slider__buttons">
+          <button class="btn-primary" v-for="(slide, index) in slides" :key="slide.id" :class="{ active: index === currentSlideIndex }" @click="goToSlide(index)">
+            <GlitchAnimation :text="slide.title" trigger="hover" />
+          </button>
+        </div>
       </div>
       <div class="s-slider__container" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd">
         <div class="slides-container">
@@ -243,7 +245,11 @@ const handleTouchEnd = () => {
     width: 100%;
     min-height: 100%;
     overflow-x: hidden;
-    @apply p-20 md:p-40;
+    @apply pb-20 md:pb-60;
+
+    &-head {
+      @apply px-20 pt-60 md:px-40 md:pt-40;
+    }
   }
 
   &__title {

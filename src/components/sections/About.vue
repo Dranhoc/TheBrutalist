@@ -86,7 +86,7 @@ onBeforeUnmount(() => {
     gap: 40px;
     background-color: var(--bg-primary);
     z-index: 3;
-    @apply md:flex-row p-20 md:p-40;
+    @apply md:flex-row px-20 pt-60 md:p-40;
     @screen 4xl {
       min-height: unset;
       height: calc(100vh - 8vh);

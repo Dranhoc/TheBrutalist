@@ -66,7 +66,7 @@ function startTypewriter() {
     position: relative;
     height: calc(100vh - 8vh);
     height: calc(100dvh - 8dvh);
-    @apply p-20 md:p-40;
+    @apply px-20 py-40 md:p-40;
   }
 
   .me-top {

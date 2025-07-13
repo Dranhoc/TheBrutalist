@@ -57,6 +57,7 @@
     transition:
       transform 0.5s ease-out,
       color 0.15 ease;
+    @apply text-neg-5-14 md:text-neg-5-16;
 
     &::before {
       position: absolute;

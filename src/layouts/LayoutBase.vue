@@ -70,7 +70,7 @@ onMounted(() => {
   height: 100dvh;
   width: 100vw;
   inset: 0;
-  filter: saturate(0%) brightness(200%);
+  filter: saturate(0%) brightness(150%);
 
   .bg-dark-mobile,
   .bg-unicorn-mobile {

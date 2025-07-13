@@ -312,7 +312,7 @@ onMounted(() => {
   @apply pt-80;
 
   &__content {
-    @apply p-40;
+    @apply px-20 py-40 md:p-40;
   }
 
   h2 {
