@@ -77,7 +77,9 @@ onBeforeUnmount(() => {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    min-height: calc(100dvh - 8dvh);
+    height: calc(100vh - 8vh);
+    height: calc(100dvh - 8dvh);
+    max-height: 1000px;
     gap: 40px;
     background-color: var(--bg-primary);
     z-index: 1;

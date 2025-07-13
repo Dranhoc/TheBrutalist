@@ -21,6 +21,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-primary);
   color: var(--text-primary);
+  height: 100vh;
   height: 100dvh;
   width: 100vw;
   transition: background-color 0.5s ease;
@@ -44,6 +45,7 @@ body {
 
 .page {
   position: relative;
+  height: 100vh;
   height: 100dvh;
   width: 100vw;
   margin-inline: auto;
@@ -64,11 +66,13 @@ body {
   max-width: 1920px;
   container-type: inline-size;
   margin-inline: auto;
+  margin-top: 4vh;
   margin-top: 4dvh;
   overflow-y: auto;
   z-index: 1;
   background-color: var(--bg-primary);
   border-radius: 20px;
+  height: calc(100vh - 8vh);
   height: calc(100dvh - 8dvh);
 
   backface-visibility: hidden;
@@ -86,6 +90,7 @@ body {
   @screen md {
     border-radius: 50px;
     width: var(--desktop-width);
+    margin-top: 4vh;
     margin-top: 4dvh;
   }
 }
@@ -117,11 +122,13 @@ figure {
 
 .shadow-screen {
   position: fixed;
+  height: calc(100vh - 8vh);
   height: calc(100dvh - 8dvh);
   width: calc(100% - 16px + 1px);
   max-width: 1920px;
   inset: 0;
   margin-inline: auto;
+  margin-top: 4vh;
   margin-top: 4dvh;
   pointer-events: none;
   border-radius: 20px;

@@ -66,6 +66,7 @@ onMounted(() => {
 .page__bg {
   position: absolute;
   content: "";
+  height: 100vh;
   height: 100dvh;
   width: 100vw;
   inset: 0;
