@@ -286,6 +286,10 @@ const handleTouchEnd = () => {
     flex-wrap: wrap;
     z-index: 1;
     @apply gap-10 lg:gap-20 sm:justify-center;
+
+    .btn-primary {
+      @apply text-neg-5-14 md:text-neg-5-16;
+    }
   }
 
   &__container {
