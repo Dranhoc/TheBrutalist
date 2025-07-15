@@ -3,6 +3,33 @@ import { useScrollTrigger } from "@/composables/useScrollTrigger";
 import { ref, onMounted, onUnmounted, watch } from "vue";
 import type { Ref } from "vue";
 import GlitchAnimation from "@/components/GlitchAnimation.vue";
+import hoverGlitchURL from "@/assets/sounds/blank.mp3";
+
+let audioContext: AudioContext;
+let buffer: AudioBuffer | null = null;
+
+async function loadSound(url: string) {
+  audioContext = new AudioContext();
+  const response = await fetch(url);
+  const arrayBuffer = await response.arrayBuffer();
+  buffer = await audioContext.decodeAudioData(arrayBuffer);
+}
+
+function playGlitch() {
+  if (!buffer || !audioContext) return;
+
+  const source = audioContext.createBufferSource();
+  source.buffer = buffer;
+  const gainNode = audioContext.createGain();
+  gainNode.gain.value = 0.01;
+
+  source.connect(gainNode).connect(audioContext.destination);
+  source.start(0);
+}
+
+onMounted(() => {
+  loadSound(hoverGlitchURL);
+});
 
 const { sidebarAnimated } = useScrollTrigger();
 
@@ -74,17 +101,13 @@ const updateScrollVelocity = () => {
           (link as HTMLElement).style.transform = `rotate(${rotation}deg)`;
         });
       } else {
+        // Pour le scroll up, on garde seulement l'effet de gap et rotation
         const maxGap = 20;
         const newGap = maxGap * (1 - velocityRatio);
         nav.value.style.gap = `${newGap}px`;
 
-        const totalAvailableHeight = window.innerHeight * 0.96 - 40;
-
-        const estimatedButtonsHeight = 4 * 50 + 3 * newGap;
-
-        const maxMarginTop = totalAvailableHeight - estimatedButtonsHeight;
-        const marginTop = velocityRatio * maxMarginTop;
-        nav.value.style.marginTop = `${marginTop}px`;
+        // On garde le margin-top à 0 au lieu de le modifier
+        nav.value.style.marginTop = "0px";
 
         links.forEach((link, index) => {
           const isFirst = index === 0;
@@ -151,10 +174,10 @@ onUnmounted(() => {
 <template>
   <aside :class="{ 'animate-sidebar': sidebarAnimated }">
     <nav ref="nav">
-      <a class="btn-theme" href="#home"><GlitchAnimation text="HOME" trigger="hover" /></a>
-      <a class="btn-theme" href="#about"><GlitchAnimation text="ABOUT" trigger="hover" /></a>
-      <a class="btn-theme" href="#work"><GlitchAnimation text="WORK" trigger="hover" /></a>
-      <a class="btn-theme" href="#contact"><GlitchAnimation text="CONTACT" trigger="hover" /></a>
+      <a class="btn-theme" href="#home"><GlitchAnimation text="HOME" trigger="hover" @mouseenter="playGlitch" /></a>
+      <a class="btn-theme" href="#about"><GlitchAnimation text="ABOUT" trigger="hover" @mouseenter="playGlitch" /></a>
+      <a class="btn-theme" href="#work"><GlitchAnimation text="WORK" trigger="hover" @mouseenter="playGlitch" /></a>
+      <a class="btn-theme" href="#contact"><GlitchAnimation text="CONTACT" trigger="hover" @mouseenter="playGlitch" /></a>
     </nav>
   </aside>
 </template>
@@ -196,7 +219,6 @@ nav {
     width: fit-content;
     color: var(--text-secondary);
     padding: 10px;
-    // margin-left: auto;
     line-height: 1;
     z-index: 1;
     transition: margin 0.3s ease, padding 0.3s ease, font-size 0.3s ease, transform 0.5s ease-out;
