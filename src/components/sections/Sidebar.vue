@@ -3,7 +3,7 @@ import { useScrollTrigger } from "@/composables/useScrollTrigger";
 import { ref, onMounted, onUnmounted, watch } from "vue";
 import type { Ref } from "vue";
 import GlitchAnimation from "@/components/GlitchAnimation.vue";
-import hoverGlitchURL from "@/assets/sounds/blank.mp3";
+import hoverGlitchURL from "@/assets/sounds/hover-glitch.mp3";
 
 let audioContext: AudioContext;
 let buffer: AudioBuffer | null = null;
@@ -21,7 +21,7 @@ function playGlitch() {
   const source = audioContext.createBufferSource();
   source.buffer = buffer;
   const gainNode = audioContext.createGain();
-  gainNode.gain.value = 0.01;
+  gainNode.gain.value = 0.5;
 
   source.connect(gainNode).connect(audioContext.destination);
   source.start(0);
@@ -101,18 +101,19 @@ const updateScrollVelocity = () => {
           (link as HTMLElement).style.transform = `rotate(${rotation}deg)`;
         });
       } else {
-        // Pour le scroll up, on garde seulement l'effet de gap et rotation
-        const maxGap = 20;
-        const newGap = maxGap * (1 - velocityRatio);
-        nav.value.style.gap = `${newGap}px`;
-
-        // On garde le margin-top à 0 au lieu de le modifier
-        nav.value.style.marginTop = "0px";
+        nav.value.style.gap = "20px";
 
         links.forEach((link, index) => {
-          const isFirst = index === 0;
-          const rotation = isFirst ? 0 : velocityRatio * (index % 2 === 0 ? -6 : 6);
-          (link as HTMLElement).style.transform = `rotate(${rotation}deg)`;
+          const isLast = index === links.length - 1;
+
+          if (isLast) {
+            (link as HTMLElement).style.transform = "rotate(0deg)";
+          } else {
+            const rotation = velocityRatio * (index % 2 === 0 ? -6 : 6);
+            const adjustedVelocity = Math.pow(velocityRatio, 0.5);
+            const moveDistance = adjustedVelocity * 20 * (links.length - 1 - index);
+            (link as HTMLElement).style.transform = `rotate(${rotation}deg) translateY(${moveDistance}px)`;
+          }
         });
       }
     }

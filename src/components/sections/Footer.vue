@@ -1,18 +1,43 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
+import riseSound from "@/assets/sounds/rise-slenderdev.mp3";
 import slenderdev from "@/assets/img/slenderdev.png?w=150;200;300;450&format=webp&as=srcset";
 
 const isSlenderVisible = ref(false);
 const footerContent = ref<HTMLElement | null>(null);
 let timeoutId: number | null = null;
 
-onMounted(() => {
+let riseAudioContext: AudioContext;
+let riseBuffer: AudioBuffer | null = null;
+
+async function loadRiseSound(url: string) {
+  riseAudioContext = new AudioContext();
+  const response = await fetch(url);
+  const arrayBuffer = await response.arrayBuffer();
+  riseBuffer = await riseAudioContext.decodeAudioData(arrayBuffer);
+}
+
+function playRiseSound() {
+  if (!riseBuffer || !riseAudioContext) return;
+  const source = riseAudioContext.createBufferSource();
+  source.buffer = riseBuffer;
+  const gainNode = riseAudioContext.createGain();
+  gainNode.gain.value = 0.7;
+
+  source.connect(gainNode).connect(riseAudioContext.destination);
+  source.start(0);
+}
+
+onMounted(async () => {
+  await loadRiseSound(riseSound);
+
   const observer = new IntersectionObserver(
     ([entry]) => {
       if (entry.isIntersecting) {
         timeoutId = window.setTimeout(() => {
           isSlenderVisible.value = true;
-        }, 1500);
+          playRiseSound();
+        }, 500);
       } else {
         if (timeoutId) {
           clearTimeout(timeoutId);
@@ -27,6 +52,12 @@ onMounted(() => {
   if (footerContent.value) {
     observer.observe(footerContent.value);
   }
+
+  window.addEventListener("click", () => {
+    if (riseAudioContext?.state === "suspended") {
+      riseAudioContext.resume();
+    }
+  });
 });
 
 onUnmounted(() => {
@@ -75,6 +106,7 @@ onUnmounted(() => {
 
       &.slender-animate {
         animation: slenderCircle 3s forwards;
+        animation-delay: 1000ms;
       }
     }
   }

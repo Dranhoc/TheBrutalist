@@ -9,7 +9,7 @@ import TrustMe from "@/components/sections/TrustMe.vue";
 import Contact from "@/components/sections/Contact.vue";
 import Footer from "@/components/sections/Footer.vue";
 
-import BGsound from "@/assets/sounds/bg-suspense.mp3";
+import BGsound from "@/assets/sounds/bg-suspense-without-bell.mp3";
 
 let audioContext: AudioContext;
 let buffer: AudioBuffer | null = null;
@@ -30,7 +30,7 @@ function playBackgroundLoop() {
   source.loop = true;
 
   const gainNode = audioContext.createGain();
-  gainNode.gain.value = 0.3; // Volume modéré
+  gainNode.gain.value = 1.5;
 
   source.connect(gainNode).connect(audioContext.destination);
   source.start(0);
@@ -40,7 +40,6 @@ function playBackgroundLoop() {
 onMounted(() => {
   loadAndSetupSound(BGsound);
 
-  // Déclenche le son à la première interaction
   const unlockAudio = () => {
     if (audioContext?.state === "suspended") {
       audioContext.resume();

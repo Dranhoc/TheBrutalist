@@ -38,10 +38,116 @@
 <script lang="ts" setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
+import bellSound from "@/assets/sounds/horror-orchestra.mp3";
+
 const sectionRef = ref<HTMLElement | null>(null);
+const isVisible = ref(false);
+
+let bellAudioContext: AudioContext;
+let bellBuffer: AudioBuffer | null = null;
+let bellInterval: number | null = null;
+
+async function loadBellSound(url: string) {
+  bellAudioContext = new AudioContext();
+  const response = await fetch(url);
+  const arrayBuffer = await response.arrayBuffer();
+  bellBuffer = await bellAudioContext.decodeAudioData(arrayBuffer);
+}
+
+function playBell() {
+  if (!bellBuffer || !bellAudioContext) return;
+  const source = bellAudioContext.createBufferSource();
+  source.buffer = bellBuffer;
+  const gainNode = bellAudioContext.createGain();
+  gainNode.gain.value = 0.2;
+
+  source.connect(gainNode).connect(bellAudioContext.destination);
+  source.start(0);
+}
+function startCycle() {
+  if (!isVisible.value) return;
+
+  activateAnimation();
+  playBell();
+
+  bellInterval = window.setInterval(() => {
+    if (!isVisible.value) return;
+    activateAnimation();
+    playBell();
+  }, 10000);
+}
+
+function stopCycle() {
+  deactivateAnimation();
+  if (bellInterval) {
+    clearInterval(bellInterval);
+    bellInterval = null;
+  }
+}
+
+function activateAnimation() {
+  const el = sectionRef.value;
+  if (!el) return;
+
+  el.classList.remove("flash-active");
+
+  void el.offsetHeight;
+
+  el.classList.add("flash-active");
+
+  setTimeout(() => {
+    if (el) {
+      el.classList.remove("flash-active");
+    }
+  }, 2000);
+}
+
+function deactivateAnimation() {
+  const el = sectionRef.value;
+  if (el) {
+    el.classList.remove("flash-active");
+  }
+}
+
+function handleIntersection(entries: IntersectionObserverEntry[]) {
+  const entry = entries[0];
+  isVisible.value = entry.isIntersecting;
+
+  if (isVisible.value) {
+    setTimeout(() => {
+      if (isVisible.value) {
+        startCycle();
+      }
+    }, 1000);
+  } else {
+    stopCycle();
+  }
+}
+
+onMounted(async () => {
+  await loadBellSound(bellSound);
+
+  const observer = new IntersectionObserver(handleIntersection, {
+    threshold: 0.3,
+  });
+
+  if (sectionRef.value) {
+    observer.observe(sectionRef.value);
+  }
+
+  window.addEventListener("click", () => {
+    if (bellAudioContext?.state === "suspended") {
+      bellAudioContext.resume();
+    }
+  });
+});
+
+onBeforeUnmount(() => {
+  stopCycle();
+});
+
 const titleRef = ref<HTMLElement | null>(null);
 const textRef = ref<HTMLElement | null>(null);
-
 const titleOffset = ref(-600);
 const textOffset = ref(0);
 let ticking = false;
@@ -160,7 +266,6 @@ function easeInOutCubic(t: number): number {
       width: 100%;
       z-index: -1;
       filter: grayscale(100%) brightness(200%) contrast(150%) sepia(0%) hue-rotate(0deg) saturate(100%);
-      animation: vampiricFlash 8s infinite;
     }
   }
 
@@ -211,9 +316,15 @@ function easeInOutCubic(t: number): number {
     @screen md {
       line-height: 1.5;
     }
+  }
 
-    .killer {
-      animation: vampiricFlash 8s infinite;
+  &.flash-active {
+    .bg-video video {
+      animation: vampiricFlash 1.5s ease-in-out;
+    }
+
+    .text .killer {
+      animation: vampiricFlash 1.5s ease-in-out;
     }
   }
 }
