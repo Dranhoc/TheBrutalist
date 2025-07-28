@@ -30,7 +30,7 @@ function playBackgroundLoop() {
   source.loop = true;
 
   const gainNode = audioContext.createGain();
-  gainNode.gain.value = 1.5;
+  gainNode.gain.value = 0.3;
 
   source.connect(gainNode).connect(audioContext.destination);
   source.start(0);

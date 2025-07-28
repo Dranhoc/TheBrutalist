@@ -59,7 +59,7 @@ function playBell() {
   const source = bellAudioContext.createBufferSource();
   source.buffer = bellBuffer;
   const gainNode = bellAudioContext.createGain();
-  gainNode.gain.value = 0.2;
+  gainNode.gain.value = 0.1;
 
   source.connect(gainNode).connect(bellAudioContext.destination);
   source.start(0);
