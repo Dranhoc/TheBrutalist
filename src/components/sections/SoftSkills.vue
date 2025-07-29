@@ -75,7 +75,7 @@ function startCycle() {
     if (!isVisible.value) return;
     activateAnimation();
     playBell();
-  }, 10000);
+  }, 20000);
 }
 
 function stopCycle() {
@@ -100,7 +100,7 @@ function activateAnimation() {
     if (el) {
       el.classList.remove("flash-active");
     }
-  }, 2000);
+  }, 5000);
 }
 
 function deactivateAnimation() {
@@ -119,7 +119,7 @@ function handleIntersection(entries: IntersectionObserverEntry[]) {
       if (isVisible.value) {
         startCycle();
       }
-    }, 1000);
+    }, 4000);
   } else {
     stopCycle();
   }

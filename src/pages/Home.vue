@@ -8,6 +8,7 @@ import Work from "@/components/sections/Work.vue";
 import TrustMe from "@/components/sections/TrustMe.vue";
 import Contact from "@/components/sections/Contact.vue";
 import Footer from "@/components/sections/Footer.vue";
+import AudioToggle from "@/components/AudioToggle.vue";
 
 import BGsound from "@/assets/sounds/bg-suspense-without-bell.mp3";
 
@@ -37,20 +38,15 @@ function playBackgroundLoop() {
   isPlaying = true;
 }
 
+async function handleUnlockAudio() {
+  if (audioContext?.state === "suspended") {
+    await audioContext.resume();
+  }
+  playBackgroundLoop();
+}
+
 onMounted(() => {
   loadAndSetupSound(BGsound);
-
-  const unlockAudio = () => {
-    if (audioContext?.state === "suspended") {
-      audioContext.resume();
-    }
-    playBackgroundLoop();
-    window.removeEventListener("click", unlockAudio);
-    window.removeEventListener("keydown", unlockAudio);
-  };
-
-  window.addEventListener("click", unlockAudio);
-  window.addEventListener("keydown", unlockAudio);
 });
 
 useSEO({
@@ -64,6 +60,7 @@ useSEO({
 
 <template>
   <main class="main">
+    <AudioToggle @unlock="handleUnlockAudio" />
     <Welcome />
     <About />
     <Work />

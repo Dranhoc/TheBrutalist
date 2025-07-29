@@ -32,12 +32,12 @@ body {
     }
     .shadow-screen {
       box-shadow:
-        rgba(63, 255, 249, 0.03) 5px 15px 20px 15px inset,
-        rgba(63, 255, 249, 0.03) -5px -10px 20px 15px inset;
+        rgba(63, 255, 249, 0) 0px 0px 0px 15px inset,
+        rgba(63, 255, 249, 0) 0px 0px 0px 15px inset;
       @screen md {
         box-shadow:
-          rgba(63, 255, 249, 0.1) 5px 15px 20px 15px inset,
-          rgba(63, 255, 249, 0.1) -5px -10px 20px 15px inset;
+          rgba(63, 255, 249, 0) 0px 0px 0px 15px inset,
+          rgba(63, 255, 249, 0) 0px 0px 0px 15px inset;
       }
     }
   }
@@ -143,5 +143,10 @@ figure {
       rgba(60, 60, 60, 0.3) -5px -10px 40px 15px inset;
     width: calc(100% - 16vw + 1px);
     border-radius: 50px;
+  }
+  @screen 4xl {
+    box-shadow:
+      rgba(60, 60, 60, 0.1) 5px 15px 40px 5px inset,
+      rgba(60, 60, 60, 0.1) -5px -10px 40px 5px inset;
   }
 }
