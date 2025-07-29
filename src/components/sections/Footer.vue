@@ -2,6 +2,9 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import riseSound from "@/assets/sounds/rise-slenderdev.mp3";
 import slenderdev from "@/assets/img/slenderdev.png?w=150;200;300;450&format=webp&as=srcset";
+import { useAudioStore } from "@/stores/audio";
+
+const audioStore = useAudioStore();
 
 const isSlenderVisible = ref(false);
 const footerContent = ref<HTMLElement | null>(null);
@@ -18,7 +21,7 @@ async function loadRiseSound(url: string) {
 }
 
 function playRiseSound() {
-  if (!riseBuffer || !riseAudioContext) return;
+  if (!audioStore.isUnlocked || !riseBuffer || !riseAudioContext) return;
   const source = riseAudioContext.createBufferSource();
   source.buffer = riseBuffer;
   const gainNode = riseAudioContext.createGain();
