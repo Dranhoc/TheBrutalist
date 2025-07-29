@@ -1,35 +1,12 @@
 <script setup lang="ts">
-import { useScrollTrigger } from "@/composables/useScrollTrigger";
 import { ref, onMounted, onUnmounted, watch } from "vue";
 import type { Ref } from "vue";
+
+import { useScrollTrigger } from "@/composables/useScrollTrigger";
 import GlitchAnimation from "@/components/GlitchAnimation.vue";
-import hoverGlitchURL from "@/assets/sounds/hover-glitch.mp3";
+import useGlitchSound from "@/composables/useGlitchSound";
 
-let audioContext: AudioContext;
-let buffer: AudioBuffer | null = null;
-
-async function loadSound(url: string) {
-  audioContext = new AudioContext();
-  const response = await fetch(url);
-  const arrayBuffer = await response.arrayBuffer();
-  buffer = await audioContext.decodeAudioData(arrayBuffer);
-}
-
-function playGlitch() {
-  if (!buffer || !audioContext) return;
-
-  const source = audioContext.createBufferSource();
-  source.buffer = buffer;
-  const gainNode = audioContext.createGain();
-  gainNode.gain.value = 0.5;
-
-  source.connect(gainNode).connect(audioContext.destination);
-  source.start(0);
-}
-
-onMounted(() => {
-  loadSound(hoverGlitchURL);
-});
+const { playGlitch } = useGlitchSound();
 
 const { sidebarAnimated } = useScrollTrigger();
 
@@ -96,8 +73,7 @@ const updateScrollVelocity = () => {
         nav.value.style.marginTop = "0px";
 
         links.forEach((link, index) => {
-          const isFirst = index === 0;
-          const rotation = isFirst ? 0 : velocityRatio * (index % 2 === 0 ? -6 : 6);
+          const rotation = index === 0 ? 0 : velocityRatio * (index % 2 === 0 ? -6 : 6);
           (link as HTMLElement).style.transform = `rotate(${rotation}deg)`;
         });
       } else {
@@ -105,15 +81,10 @@ const updateScrollVelocity = () => {
 
         links.forEach((link, index) => {
           const isLast = index === links.length - 1;
-
-          if (isLast) {
-            (link as HTMLElement).style.transform = "rotate(0deg)";
-          } else {
-            const rotation = velocityRatio * (index % 2 === 0 ? -6 : 6);
-            const adjustedVelocity = Math.pow(velocityRatio, 0.5);
-            const moveDistance = adjustedVelocity * 20 * (links.length - 1 - index);
-            (link as HTMLElement).style.transform = `rotate(${rotation}deg) translateY(${moveDistance}px)`;
-          }
+          const rotation = isLast ? 0 : velocityRatio * (index % 2 === 0 ? -6 : 6);
+          const adjustedVelocity = Math.pow(velocityRatio, 0.5);
+          const moveDistance = adjustedVelocity * 20 * (links.length - 1 - index);
+          (link as HTMLElement).style.transform = `rotate(${rotation}deg) translateY(${moveDistance}px)`;
         });
       }
     }
@@ -124,14 +95,12 @@ const updateScrollVelocity = () => {
 
 const handleScroll = () => {
   const now = Date.now();
-  if (now - lastThrottleTime < 50) {
-    return;
-  }
+  if (now - lastThrottleTime < 50) return;
   lastThrottleTime = now;
-  if (debounceTimer) {
-    clearTimeout(debounceTimer);
-  }
+
+  if (debounceTimer) clearTimeout(debounceTimer);
   debounceTimer = setTimeout(resetNavigation, 500);
+
   if (!ticking) {
     requestAnimationFrame(updateScrollVelocity);
     ticking = true;

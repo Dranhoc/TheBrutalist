@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 import GlitchAnimation from "@/components/GlitchAnimation.vue";
+import useGlitchSound from "@/composables/useGlitchSound";
+
 import VueSVG from "@/components/VueSVG.vue";
 import slider1 from "@/assets/img/Portfolio/weshre-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 import slider2 from "@/assets/img/Portfolio/sypra-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 import slider3 from "@/assets/img/Portfolio/magvice-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
-// import slider4 from "@/assets/img/Portfolio/studio-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 import slider5 from "@/assets/img/Portfolio/alpsy-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 import slider6 from "@/assets/img/Portfolio/immovision-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 import slider7 from "@/assets/img/Portfolio/weshre-app-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 import slider8 from "@/assets/img/Portfolio/inception-1.png?w=150;350;700;900;1200;1600&format=webp&as=srcset";
 
+const { initSound, playGlitch } = useGlitchSound();
 const currentSlideIndex = ref(0);
 const previousSlideIndex = ref(0);
 const isAnimating = ref(false);
@@ -45,13 +47,6 @@ const slides = [
     text: "2025 \n Inception \n Design: Me",
     link: "https://www.youtube.com/watch?v=xm3YgoEiEDc&list=RDxm3YgoEiEDc&start_radio=1&t=2s&autoplay=1",
   },
-  // {
-  //   id: 4,
-  //   title: "WS STUDIO",
-  //   image: slider4,
-  //   text: "2025 \n WeShre Studio \n Design: Hugo \n Agency : WeShre Studio",
-  //   link: "#",
-  // },
   {
     id: 5,
     title: "ALPSY",
@@ -155,6 +150,10 @@ const handleTouchEnd = () => {
   touchEndX.value = 0;
   touchEndY.value = 0;
 };
+
+onMounted(() => {
+  initSound();
+});
 </script>
 
 <template>
@@ -167,7 +166,7 @@ const handleTouchEnd = () => {
           <div class="text-pos-5-18 lg:text-pos-5-20 font-normal">A SELECTION OF A FEW THINGS I MADE HAPPEN</div>
         </div>
         <div class="s-slider__buttons">
-          <button class="btn-primary" v-for="(slide, index) in slides" :key="slide.id" :class="{ active: index === currentSlideIndex }" @click="goToSlide(index)">
+          <button class="btn-primary" v-for="(slide, index) in slides" :key="slide.id" :class="{ active: index === currentSlideIndex }" @mouseenter="playGlitch" @click="goToSlide(index)">
             <GlitchAnimation :text="slide.title" trigger="hover" />
           </button>
         </div>

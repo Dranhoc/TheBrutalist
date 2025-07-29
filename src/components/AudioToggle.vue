@@ -11,14 +11,17 @@
 </template>
 
 <script setup lang="ts">
+import { useAudioStore } from "@/stores/audio";
 import { ref } from "vue";
 import VueSVG from "./VueSVG.vue";
 
+const store = useAudioStore();
 const emit = defineEmits(["unlock"]);
 
 const audioStarted = ref(false);
 
 function unlockAudio() {
+  store.unlock();
   audioStarted.value = true;
   emit("unlock");
 }

@@ -36,13 +36,14 @@
 </template>
 
 <script lang="ts" setup>
-//test
 import { ref, onMounted, onBeforeUnmount } from "vue";
-
+import { useAudioStore } from "@/stores/audio";
 import bellSound from "@/assets/sounds/horror-orchestra.mp3";
+let entryTimeout: number | null = null;
 
 const sectionRef = ref<HTMLElement | null>(null);
 const isVisible = ref(false);
+const audioStore = useAudioStore();
 
 let bellAudioContext: AudioContext;
 let bellBuffer: AudioBuffer | null = null;
@@ -56,7 +57,8 @@ async function loadBellSound(url: string) {
 }
 
 function playBell() {
-  if (!bellBuffer || !bellAudioContext) return;
+  if (!audioStore.isUnlocked || !bellBuffer || !bellAudioContext) return;
+
   const source = bellAudioContext.createBufferSource();
   source.buffer = bellBuffer;
   const gainNode = bellAudioContext.createGain();
@@ -65,8 +67,14 @@ function playBell() {
   source.connect(gainNode).connect(bellAudioContext.destination);
   source.start(0);
 }
+
 function startCycle() {
   if (!isVisible.value) return;
+
+  if (bellInterval) {
+    clearInterval(bellInterval);
+    bellInterval = null;
+  }
 
   activateAnimation();
   playBell();
@@ -75,14 +83,41 @@ function startCycle() {
     if (!isVisible.value) return;
     activateAnimation();
     playBell();
-  }, 20000);
+  }, 15000);
 }
 
 function stopCycle() {
   deactivateAnimation();
+
   if (bellInterval) {
     clearInterval(bellInterval);
     bellInterval = null;
+  }
+
+  if (entryTimeout) {
+    clearTimeout(entryTimeout);
+    entryTimeout = null;
+  }
+}
+
+function handleIntersection(entries: IntersectionObserverEntry[]) {
+  const entry = entries[0];
+  isVisible.value = entry.isIntersecting;
+
+  if (isVisible.value) {
+    if (entryTimeout) {
+      clearTimeout(entryTimeout);
+      entryTimeout = null;
+    }
+
+    entryTimeout = window.setTimeout(() => {
+      if (isVisible.value) {
+        startCycle();
+      }
+      entryTimeout = null;
+    }, 4000);
+  } else {
+    stopCycle();
   }
 }
 
@@ -107,21 +142,6 @@ function deactivateAnimation() {
   const el = sectionRef.value;
   if (el) {
     el.classList.remove("flash-active");
-  }
-}
-
-function handleIntersection(entries: IntersectionObserverEntry[]) {
-  const entry = entries[0];
-  isVisible.value = entry.isIntersecting;
-
-  if (isVisible.value) {
-    setTimeout(() => {
-      if (isVisible.value) {
-        startCycle();
-      }
-    }, 4000);
-  } else {
-    stopCycle();
   }
 }
 
